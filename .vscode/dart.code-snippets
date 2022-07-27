@@ -1,0 +1,8 @@
+{
+  "cl": {
+    "scope": "dart",
+    "prefix": "cl",
+    "description": "Class (with constructor)",
+    "body": ["class ${1:MyClass} {", "  const ${1:MyClass}();", "", "", "}"]
+  }
+}

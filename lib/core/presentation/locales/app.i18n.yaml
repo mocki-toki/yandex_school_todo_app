@@ -1,0 +1,13 @@
+myTasks: "My Tasks"
+tasksCompleted(int count): "Сompleted — $count"
+newTask: "New"
+
+saveTask: "Save"
+taskEditHint: "What need to do..."
+taskImportance: "Importance"
+taskDeadline: "Deadline"
+taskDelete: "Delete"
+
+taskImportanceBasic: "None"
+taskImportanceLow: "Low"
+taskImportanceHigh: "High"

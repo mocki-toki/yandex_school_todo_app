@@ -56,20 +56,20 @@ mixin _$TaskEditState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TaskEditStateInitial value) newTask,
-    required TResult Function(TaskEditStateLoaded value) editTask,
+    required TResult Function(TaskEditStateNewTask value) newTask,
+    required TResult Function(TaskEditStateEditTask value) editTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -123,11 +123,11 @@ class _$TaskEditStateCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$$TaskEditStateInitialCopyWith<$Res>
+abstract class _$$TaskEditStateNewTaskCopyWith<$Res>
     implements $TaskEditStateCopyWith<$Res> {
-  factory _$$TaskEditStateInitialCopyWith(_$TaskEditStateInitial value,
-          $Res Function(_$TaskEditStateInitial) then) =
-      __$$TaskEditStateInitialCopyWithImpl<$Res>;
+  factory _$$TaskEditStateNewTaskCopyWith(_$TaskEditStateNewTask value,
+          $Res Function(_$TaskEditStateNewTask) then) =
+      __$$TaskEditStateNewTaskCopyWithImpl<$Res>;
   @override
   $Res call(
       {TextEditingController textController,
@@ -136,15 +136,15 @@ abstract class _$$TaskEditStateInitialCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TaskEditStateInitialCopyWithImpl<$Res>
+class __$$TaskEditStateNewTaskCopyWithImpl<$Res>
     extends _$TaskEditStateCopyWithImpl<$Res>
-    implements _$$TaskEditStateInitialCopyWith<$Res> {
-  __$$TaskEditStateInitialCopyWithImpl(_$TaskEditStateInitial _value,
-      $Res Function(_$TaskEditStateInitial) _then)
-      : super(_value, (v) => _then(v as _$TaskEditStateInitial));
+    implements _$$TaskEditStateNewTaskCopyWith<$Res> {
+  __$$TaskEditStateNewTaskCopyWithImpl(_$TaskEditStateNewTask _value,
+      $Res Function(_$TaskEditStateNewTask) _then)
+      : super(_value, (v) => _then(v as _$TaskEditStateNewTask));
 
   @override
-  _$TaskEditStateInitial get _value => super._value as _$TaskEditStateInitial;
+  _$TaskEditStateNewTask get _value => super._value as _$TaskEditStateNewTask;
 
   @override
   $Res call({
@@ -152,7 +152,7 @@ class __$$TaskEditStateInitialCopyWithImpl<$Res>
     Object? importance = freezed,
     Object? deadline = freezed,
   }) {
-    return _then(_$TaskEditStateInitial(
+    return _then(_$TaskEditStateNewTask(
       textController: textController == freezed
           ? _value.textController
           : textController // ignore: cast_nullable_to_non_nullable
@@ -171,8 +171,8 @@ class __$$TaskEditStateInitialCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskEditStateInitial implements TaskEditStateInitial {
-  const _$TaskEditStateInitial(
+class _$TaskEditStateNewTask implements TaskEditStateNewTask {
+  const _$TaskEditStateNewTask(
       {required this.textController, required this.importance, this.deadline});
 
   @override
@@ -191,7 +191,7 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskEditStateInitial &&
+            other is _$TaskEditStateNewTask &&
             const DeepCollectionEquality()
                 .equals(other.textController, textController) &&
             const DeepCollectionEquality()
@@ -208,8 +208,8 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
 
   @JsonKey(ignore: true)
   @override
-  _$$TaskEditStateInitialCopyWith<_$TaskEditStateInitial> get copyWith =>
-      __$$TaskEditStateInitialCopyWithImpl<_$TaskEditStateInitial>(
+  _$$TaskEditStateNewTaskCopyWith<_$TaskEditStateNewTask> get copyWith =>
+      __$$TaskEditStateNewTaskCopyWithImpl<_$TaskEditStateNewTask>(
           this, _$identity);
 
   @override
@@ -261,8 +261,8 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TaskEditStateInitial value) newTask,
-    required TResult Function(TaskEditStateLoaded value) editTask,
+    required TResult Function(TaskEditStateNewTask value) newTask,
+    required TResult Function(TaskEditStateEditTask value) editTask,
   }) {
     return newTask(this);
   }
@@ -270,8 +270,8 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
   }) {
     return newTask?.call(this);
   }
@@ -279,8 +279,8 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
     required TResult orElse(),
   }) {
     if (newTask != null) {
@@ -290,11 +290,11 @@ class _$TaskEditStateInitial implements TaskEditStateInitial {
   }
 }
 
-abstract class TaskEditStateInitial implements TaskEditState {
-  const factory TaskEditStateInitial(
+abstract class TaskEditStateNewTask implements TaskEditState {
+  const factory TaskEditStateNewTask(
       {required final TextEditingController textController,
       required final Importance importance,
-      final DateTime? deadline}) = _$TaskEditStateInitial;
+      final DateTime? deadline}) = _$TaskEditStateNewTask;
 
   @override
   TextEditingController get textController;
@@ -304,16 +304,16 @@ abstract class TaskEditStateInitial implements TaskEditState {
   DateTime? get deadline;
   @override
   @JsonKey(ignore: true)
-  _$$TaskEditStateInitialCopyWith<_$TaskEditStateInitial> get copyWith =>
+  _$$TaskEditStateNewTaskCopyWith<_$TaskEditStateNewTask> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TaskEditStateLoadedCopyWith<$Res>
+abstract class _$$TaskEditStateEditTaskCopyWith<$Res>
     implements $TaskEditStateCopyWith<$Res> {
-  factory _$$TaskEditStateLoadedCopyWith(_$TaskEditStateLoaded value,
-          $Res Function(_$TaskEditStateLoaded) then) =
-      __$$TaskEditStateLoadedCopyWithImpl<$Res>;
+  factory _$$TaskEditStateEditTaskCopyWith(_$TaskEditStateEditTask value,
+          $Res Function(_$TaskEditStateEditTask) then) =
+      __$$TaskEditStateEditTaskCopyWithImpl<$Res>;
   @override
   $Res call(
       {Task editedTask,
@@ -325,15 +325,15 @@ abstract class _$$TaskEditStateLoadedCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$TaskEditStateLoadedCopyWithImpl<$Res>
+class __$$TaskEditStateEditTaskCopyWithImpl<$Res>
     extends _$TaskEditStateCopyWithImpl<$Res>
-    implements _$$TaskEditStateLoadedCopyWith<$Res> {
-  __$$TaskEditStateLoadedCopyWithImpl(
-      _$TaskEditStateLoaded _value, $Res Function(_$TaskEditStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$TaskEditStateLoaded));
+    implements _$$TaskEditStateEditTaskCopyWith<$Res> {
+  __$$TaskEditStateEditTaskCopyWithImpl(_$TaskEditStateEditTask _value,
+      $Res Function(_$TaskEditStateEditTask) _then)
+      : super(_value, (v) => _then(v as _$TaskEditStateEditTask));
 
   @override
-  _$TaskEditStateLoaded get _value => super._value as _$TaskEditStateLoaded;
+  _$TaskEditStateEditTask get _value => super._value as _$TaskEditStateEditTask;
 
   @override
   $Res call({
@@ -342,7 +342,7 @@ class __$$TaskEditStateLoadedCopyWithImpl<$Res>
     Object? importance = freezed,
     Object? deadline = freezed,
   }) {
-    return _then(_$TaskEditStateLoaded(
+    return _then(_$TaskEditStateEditTask(
       editedTask: editedTask == freezed
           ? _value.editedTask
           : editedTask // ignore: cast_nullable_to_non_nullable
@@ -372,8 +372,8 @@ class __$$TaskEditStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$TaskEditStateLoaded implements TaskEditStateLoaded {
-  const _$TaskEditStateLoaded(
+class _$TaskEditStateEditTask implements TaskEditStateEditTask {
+  const _$TaskEditStateEditTask(
       {required this.editedTask,
       required this.textController,
       required this.importance,
@@ -397,7 +397,7 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskEditStateLoaded &&
+            other is _$TaskEditStateEditTask &&
             const DeepCollectionEquality()
                 .equals(other.editedTask, editedTask) &&
             const DeepCollectionEquality()
@@ -417,8 +417,8 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
 
   @JsonKey(ignore: true)
   @override
-  _$$TaskEditStateLoadedCopyWith<_$TaskEditStateLoaded> get copyWith =>
-      __$$TaskEditStateLoadedCopyWithImpl<_$TaskEditStateLoaded>(
+  _$$TaskEditStateEditTaskCopyWith<_$TaskEditStateEditTask> get copyWith =>
+      __$$TaskEditStateEditTaskCopyWithImpl<_$TaskEditStateEditTask>(
           this, _$identity);
 
   @override
@@ -470,8 +470,8 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(TaskEditStateInitial value) newTask,
-    required TResult Function(TaskEditStateLoaded value) editTask,
+    required TResult Function(TaskEditStateNewTask value) newTask,
+    required TResult Function(TaskEditStateEditTask value) editTask,
   }) {
     return editTask(this);
   }
@@ -479,8 +479,8 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
   }) {
     return editTask?.call(this);
   }
@@ -488,8 +488,8 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(TaskEditStateInitial value)? newTask,
-    TResult Function(TaskEditStateLoaded value)? editTask,
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateEditTask value)? editTask,
     required TResult orElse(),
   }) {
     if (editTask != null) {
@@ -499,12 +499,12 @@ class _$TaskEditStateLoaded implements TaskEditStateLoaded {
   }
 }
 
-abstract class TaskEditStateLoaded implements TaskEditState {
-  const factory TaskEditStateLoaded(
+abstract class TaskEditStateEditTask implements TaskEditState {
+  const factory TaskEditStateEditTask(
       {required final Task editedTask,
       required final TextEditingController textController,
       required final Importance importance,
-      final DateTime? deadline}) = _$TaskEditStateLoaded;
+      final DateTime? deadline}) = _$TaskEditStateEditTask;
 
   Task get editedTask;
   @override
@@ -515,6 +515,6 @@ abstract class TaskEditStateLoaded implements TaskEditState {
   DateTime? get deadline;
   @override
   @JsonKey(ignore: true)
-  _$$TaskEditStateLoadedCopyWith<_$TaskEditStateLoaded> get copyWith =>
+  _$$TaskEditStateEditTaskCopyWith<_$TaskEditStateEditTask> get copyWith =>
       throw _privateConstructorUsedError;
 }

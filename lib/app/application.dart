@@ -1,6 +1,5 @@
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:todo_app/core/presentation/presentation.dart';
-import 'package:todo_app/app/app.dart';
 
 class Application extends StatefulWidget {
   const Application({super.key});
@@ -10,24 +9,28 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
-  final router = AppRouter();
+  final nagivator = AppNavigator();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: CorePresentationConstants.appName,
-      theme: lightThemeData,
-      darkTheme: darkThemeData,
-      localizationsDelegates: [
-        AppLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: AppLocalizations.supportedLocales,
-      routerDelegate: router.delegate(),
-      routeInformationParser: router.defaultRouteParser(),
+    return Provider.value(
+      value: nagivator,
+      child: MaterialApp(
+        navigatorKey: nagivator.key,
+        debugShowCheckedModeBanner: false,
+        title: CorePresentationConstants.appName,
+        theme: lightThemeData,
+        darkTheme: darkThemeData,
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: AppLocalizations.supportedLocales,
+        onGenerateRoute: AppRoutes.onGenerateRoute,
+        initialRoute: AppRoutes.taskList,
+      ),
     );
   }
 }

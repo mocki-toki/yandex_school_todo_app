@@ -5,6 +5,7 @@ import 'package:todo_app/modules/task/presentation/presentation.dart';
 import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
 Future<void> main() async {
+  await initHive();
   initLogger();
   final scope = await initDinoScope();
 
@@ -16,12 +17,25 @@ Future<void> main() async {
   );
 }
 
-// TODO: вынести?
+Future<void> initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalTaskAdapter());
+
+  // TODO: добавить поддержку forced-миграции
+  await Hive.openBox<LocalTask>(
+    TaskInfrastructureConstants.taskListDataBoxName,
+  );
+  await Hive.openBox(
+    TaskInfrastructureConstants.taskListPropertiesBoxName,
+  );
+}
+
 void initLogger() {
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
-      print('${record.level.name}: ${record.time}: ${record.message}');
+      print('${record.level.name}: ${record.time}: ${record.loggerName}'
+          '\n${record.message}');
     }
   });
 }
@@ -29,14 +43,25 @@ void initLogger() {
 Future<ServiceScope> initDinoScope() async {
   final ServiceCollection services = RuntimeServiceCollection();
 
+  services.addInstance(await DeviceIdentificatorProvider.resolve());
   services.addInstance(DioFactory.create());
 
-  services.addSingletonFactory<TaskRestClient>(
-    (sp) => TaskRestClient(sp.getRequired<Dio>()),
+  services.addInstance(StorageTaskPropertiesBackend());
+  services.addInstance(StorageTaskBackend());
+  services.addSingletonFactory<NetworkTaskBackend>(
+    (sp) => NetworkTaskBackend(sp.getRequired<Dio>()),
   );
 
+  services.addSingletonFactory<TaskPropertiesRepository>(
+    (sp) => TaskPropertiesRepositoryImpl(
+      sp.getRequired<StorageTaskPropertiesBackend>(),
+    ),
+  );
   services.addSingletonFactory<TaskRepository>(
-    (sp) => TaskRepositoryImpl(sp.getRequired<TaskRestClient>()),
+    (sp) => TaskRepositoryImpl(
+      sp.getRequired<StorageTaskBackend>(),
+      sp.getRequired<NetworkTaskBackend>(),
+    ),
   );
 
   final scope = services.buildRootScope();

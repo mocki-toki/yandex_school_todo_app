@@ -40,6 +40,9 @@ final ThemeData darkThemeData = ThemeData(
     secondary: darkThemeColorBlue,
     onSecondary: darkThemeColorWhite,
     primary: darkThemeColorBlue,
+    surface: darkThemeColorBlue,
+    onSurface: darkThemeColorWhite,
+    onPrimary: darkThemeColorWhite,
   ),
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
@@ -53,6 +56,7 @@ final ThemeData darkThemeData = ThemeData(
   scaffoldBackgroundColor: _colorBackPrimary,
   iconTheme: const IconThemeData(color: _colorLabelTertiary),
   cardTheme: getCardTheme(_colorBackSecondary),
+  dialogBackgroundColor: _colorBackSecondary,
   hintColor: _colorLabelTertiary,
   dividerColor: _colorSupportSeparator,
   disabledColor: _colorLabelDisable,

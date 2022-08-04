@@ -12,4 +12,8 @@ class TaskListResponse extends ServerResponse<Task> {
 
   factory TaskListResponse.fromJson(Map<String, dynamic> json) =>
       _$TaskListResponseFromJson(json);
+
+  @override
+  String toString() =>
+      'TaskListResponse { status: $status, revision: $revision, list: $list }';
 }

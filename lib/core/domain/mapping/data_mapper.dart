@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:todo_app/core/domain/domain.dart';
 
 extension DataMapper<T> on Future<T> {
@@ -6,32 +8,55 @@ extension DataMapper<T> on Future<T> {
       final response = await this;
       return Right(extract?.call(response) ?? response as R);
     } on DioError catch (e) {
-      ServerFailureType failureType;
+      BackendFailureType failureType;
       final statusCode = e.response?.statusCode;
 
       switch (statusCode) {
         case 400:
-          if (e.response?.data == 'unsynchronizedData') {
-            failureType = ServerFailureType.unsynchronizedData;
+          if (e.response?.data == 'duplicate item') {
+            failureType = BackendFailureType.duplicateItem;
+          } else if (e.response?.data == 'unsynchronized data') {
+            failureType = BackendFailureType.unsynchronizedData;
           } else {
-            failureType = ServerFailureType.unexpected;
+            failureType = BackendFailureType.unexpected;
           }
           break;
-        case 401:
-          failureType = ServerFailureType.notAuthorized;
-          break;
         case 404:
-          failureType = ServerFailureType.notFound;
+          failureType = BackendFailureType.notFound;
           break;
+        case 503:
         case 500:
-          failureType = ServerFailureType.serverError;
+          failureType = BackendFailureType.serverError;
           break;
         default:
-          failureType = ServerFailureType.unexpected;
+          failureType = BackendFailureType.unexpected;
           break;
       }
 
-      return Left(ServerFailure(
+      if (e.error is SocketException) {
+        failureType = BackendFailureType.connectionError;
+      }
+
+      return Left(BackendFailure(
+        failureType,
+        exception: e,
+      ));
+    } on StorageException catch (e) {
+      BackendFailureType failureType;
+
+      switch (e.type) {
+        case StorageExceptionType.notFound:
+          failureType = BackendFailureType.notFound;
+          break;
+        case StorageExceptionType.duplicateItem:
+          failureType = BackendFailureType.duplicateItem;
+          break;
+        case StorageExceptionType.unexpected:
+          failureType = BackendFailureType.unexpected;
+          break;
+      }
+
+      return Left(BackendFailure(
         failureType,
         exception: e,
       ));

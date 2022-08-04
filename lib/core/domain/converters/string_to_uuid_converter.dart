@@ -5,6 +5,10 @@ class StringToUuidConvertor implements JsonConverter<UuidValue, String> {
 
   @override
   UuidValue fromJson(String uuidString) {
+    if (uuidString.isEmpty) {
+      throw Exception('Uuid must not be empty');
+    }
+
     return UuidValue(uuidString, false);
   }
 

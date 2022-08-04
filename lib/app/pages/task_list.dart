@@ -1,6 +1,7 @@
-import 'package:todo_app/app/app.dart';
-import 'package:todo_app/modules/task/domain/domain.dart';
+import 'dart:async';
+
 import 'package:todo_app/modules/task/presentation/presentation.dart';
+import 'package:todo_app/core/infrastructure/infrastructure.dart';
 
 class TaskListScreen extends StatelessWidget {
   const TaskListScreen({super.key});
@@ -13,20 +14,56 @@ class TaskListScreen extends StatelessWidget {
   }
 }
 
-class _TaskListPage extends StatelessWidget {
+class _TaskListPage extends StatefulWidget {
   const _TaskListPage();
+
+  @override
+  State<_TaskListPage> createState() => _TaskListPageState();
+}
+
+class _TaskListPageState extends State<_TaskListPage>
+    with WidgetsBindingObserver {
+  late StreamSubscription connectivitySubscription;
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
+      Logger("TaskListPage").info('App resumed');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
+    connectivitySubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
+      Logger("TaskListPage").info('Connectivity changed: $result');
+    });
+  }
+
+  @override
+  void dispose() {
+    connectivitySubscription.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TaskListViewModel, TaskListState>(
       builder: (context, state) => state.maybeWhen(
-        loaded: (tasks, visibleDoneTasks, syncState) => Scaffold(
+        loaded: (data, visibleDoneTasks, syncState) => Scaffold(
           floatingActionButton: FloatingActionButton(
             child: const Icon(Icons.add),
             onPressed: () => _onAddTask(context),
           ),
           body: _TaskListPageLoaded(
-            tasks.toList(),
+            data,
             visibleDoneTasks,
             syncState,
           ),
@@ -50,33 +87,28 @@ class _TaskListPage extends StatelessWidget {
   }
 
   void _onAddTask(BuildContext context) {
-    context.navigateTo(TaskEditRoute());
+    context.navigateTo(AppRoutes.editTask);
   }
 }
 
 class _TaskListPageLoaded extends StatelessWidget {
   const _TaskListPageLoaded(
-    this.tasks,
+    this.data,
     this.visibleDoneTasks,
     this.syncState,
   );
 
-  final List<Task> tasks;
+  final TaskListData data;
   final bool visibleDoneTasks;
   final TaskListSyncState syncState;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: рефакторить?
-    final taskCompletedCount = tasks.where((task) => task.done).length;
-    final tasksToShow =
-        visibleDoneTasks ? tasks : tasks.where((task) => !task.done).toList();
-
     return CustomScrollView(
       slivers: [
         SliverPersistentHeader(
           delegate: TaskListHeader(
-            taskCompletedCount: taskCompletedCount,
+            taskCompletedCount: data.completedTasksCount,
             statusBarHeight: context.mediaQuery.viewPadding.top,
             visibilityButtonValue: visibleDoneTasks,
             onVisibilityButtonChanged:
@@ -85,23 +117,34 @@ class _TaskListPageLoaded extends StatelessWidget {
           ),
           pinned: true,
         ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 8)
+              .copyWith(top: 4, bottom: 100),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == data.sortedTasks.length) {
+                  return TaskListItemShadowConstructor(
+                    isFirst: index == 0,
+                    isLast: true,
+                    child: TaskQuickCreator(
+                      onCreate:
+                          context.read<TaskListViewModel>().quickCreateTask,
+                    ),
+                  );
+                }
 
-        // TODO: сделать без shrinkWrap
-        SliverToBoxAdapter(
-          child: Card(
-            clipBehavior: Clip.antiAlias,
-            margin:
-                const EdgeInsets.symmetric(horizontal: 8).copyWith(bottom: 100),
-            child: ListView.builder(
-              padding: EdgeInsets.zero,
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (context, index) => TaskListItem(
-                tasksToShow[index],
-                onDeleted: context.read<TaskListViewModel>().deleteTask,
-                onCompleted: context.read<TaskListViewModel>().setDoneTask,
-              ),
-              itemCount: tasksToShow.length,
+                return TaskListItemShadowConstructor(
+                  isFirst: index == 0,
+                  isLast: false,
+                  child: TaskListItem(
+                    data.sortedTasks[index],
+                    onDeleted: context.read<TaskListViewModel>().deleteTask,
+                    onCompleted: context.read<TaskListViewModel>().setDoneTask,
+                  ),
+                );
+              },
+              childCount: data.sortedTasks.length + 1,
             ),
           ),
         ),

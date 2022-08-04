@@ -41,6 +41,7 @@ final ThemeData lightThemeData = ThemeData(
     onSecondary: lightThemeColorWhite,
     primary: lightThemeColorBlue,
   ),
+  // TODO: криво работает на андроид
   appBarTheme: const AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
       statusBarBrightness: Brightness.light,

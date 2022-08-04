@@ -1,4 +1,3 @@
-import 'package:todo_app/app/app.dart';
 import 'package:todo_app/modules/task/domain/domain.dart';
 import 'package:todo_app/modules/task/presentation/presentation.dart';
 
@@ -17,8 +16,8 @@ class TaskListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key('${task.id}'),
-      onDismissed: _onDismissed,
+      key: UniqueKey(),
+      confirmDismiss: _onDismissed,
       background: const _DismissibleCheckBackground(),
       secondaryBackground: const _DismissibleDeleteBackground(),
       child: Padding(
@@ -29,7 +28,7 @@ class TaskListItem extends StatelessWidget {
             Stack(
               alignment: Alignment.center,
               children: [
-                if (task.importance == Importance.important)
+                if (task.importance == Importance.high)
                   Container(
                     color: context.theme.colorRed.withOpacity(0.1),
                     height: 15,
@@ -56,12 +55,12 @@ class TaskListItem extends StatelessWidget {
                 child: Text.rich(
                   TextSpan(
                     children: [
-                      if (!task.done && task.importance != Importance.basic)
+                      if (!task.done && task.importance != Importance.none)
                         WidgetSpan(
-                          child: _getPrefixIcon(context),
+                          child: _PrefixIcon(importance: task.importance),
                           alignment: PlaceholderAlignment.middle,
                         ),
-                      TextSpan(text: task.text),
+                      TextSpan(text: _getFormattedText()),
                       if (task.deadline != null)
                         TextSpan(
                           text: _getFormattedDeadlineText(context),
@@ -88,25 +87,28 @@ class TaskListItem extends StatelessWidget {
   String _getFormattedDeadlineText(BuildContext context) =>
       '\n${DateFormat.yMMMMd(context.localizations.locale).format(task.deadline!)}';
 
-  void _onDismissed(DismissDirection direction) {
+  Future<bool> _onDismissed(DismissDirection direction) async {
     if (direction == DismissDirection.endToStart) {
-      //onDeleted(task);
+      onDeleted(task);
+      return true;
     }
 
     if (direction == DismissDirection.startToEnd) {
-      //onCompleted(task, true);
+      onCompleted(task, !task.done);
     }
+
+    return false;
   }
 
   void _onEdit(BuildContext context) {
-    context.navigateTo(TaskEditRoute(task: task));
+    context.navigateTo(AppRoutes.editTask, arguments: task);
   }
 
   Color _getCheckboxBorderColor(BuildContext context) {
     if (task.done) return context.theme.colorGreen;
 
     switch (task.importance) {
-      case Importance.important:
+      case Importance.high:
         return context.theme.colorRed;
       default:
         return context.theme.dividerColor;
@@ -124,23 +126,35 @@ class TaskListItem extends StatelessWidget {
     return context.textTheme.bodyText1!;
   }
 
-  Widget _getPrefixIcon(BuildContext context) {
-    var widget = Icon(
-      Icons.arrow_downward,
-      color: context.theme.colorGray,
-      size: 20,
+  String _getFormattedText() => task.text.replaceAll('\n', ' ');
+}
+
+class _PrefixIcon extends StatelessWidget {
+  const _PrefixIcon({required this.importance});
+
+  final Importance importance;
+
+  @override
+  Widget build(BuildContext context) {
+    var widget = SvgPicture.asset(
+      AppIcons.lowPriority,
+      width: 10,
+      height: 16,
     );
 
-    if (task.importance == Importance.important) {
-      widget = Icon(
-        Icons.priority_high,
+    if (importance == Importance.high) {
+      widget = SvgPicture.asset(
+        AppIcons.highPriority,
         color: context.theme.colorRed,
-        size: 20,
+        width: 10,
+        height: 16,
       );
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(right: 4),
+    return Container(
+      width: 20,
+      height: 16,
+      padding: const EdgeInsets.only(right: 6),
       child: widget,
     );
   }

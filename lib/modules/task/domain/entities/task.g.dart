@@ -40,7 +40,7 @@ Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
     };
 
 const _$ImportanceEnumMap = {
+  Importance.none: 'basic',
   Importance.low: 'low',
-  Importance.basic: 'basic',
-  Importance.important: 'important',
+  Importance.high: 'important',
 };

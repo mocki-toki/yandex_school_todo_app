@@ -8,6 +8,5 @@ class TaskRequest extends ServerRequest<Task> {
     required super.element,
   });
 
-  factory TaskRequest.fromJson(Map<String, dynamic> json) =>
-      _$TaskRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$TaskRequestToJson(this);
 }

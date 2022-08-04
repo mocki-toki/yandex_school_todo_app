@@ -42,9 +42,10 @@ class App {
   String get taskImportance => """Importance""";
   String get taskDeadline => """Deadline""";
   String get taskDelete => """Delete""";
-  String get taskImportanceBasic => """None""";
-  String get taskImportanceLow => """Low""";
-  String get taskImportanceHigh => """High""";
+  String get none => """None""";
+  String get low => """Low""";
+  String get high => """High""";
+  String get notFoundText => """Everything will be found. With time""";
 }
 
 Map<String, String> get appMap => {
@@ -55,7 +56,8 @@ Map<String, String> get appMap => {
       """taskImportance""": """Importance""",
       """taskDeadline""": """Deadline""",
       """taskDelete""": """Delete""",
-      """taskImportanceBasic""": """None""",
-      """taskImportanceLow""": """Low""",
-      """taskImportanceHigh""": """High""",
+      """none""": """None""",
+      """low""": """Low""",
+      """high""": """High""",
+      """notFoundText""": """Everything will be found. With time""",
     };

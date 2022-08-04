@@ -8,6 +8,8 @@ taskImportance: "Важность"
 taskDeadline: "Сделать до"
 taskDelete: "Удалить"
 
-taskImportanceBasic: "Нет"
-taskImportanceLow: "Низкий"
-taskImportanceHigh: "Высокий"
+none: "Нет"
+low: "Низкий"
+high: "Высокий"
+
+notFoundText: "Найдётся всё. Со временем"

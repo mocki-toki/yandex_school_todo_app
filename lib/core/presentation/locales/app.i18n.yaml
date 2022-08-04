@@ -8,6 +8,8 @@ taskImportance: "Importance"
 taskDeadline: "Deadline"
 taskDelete: "Delete"
 
-taskImportanceBasic: "None"
-taskImportanceLow: "Low"
-taskImportanceHigh: "High"
+none: "None"
+low: "Low"
+high: "High"
+
+notFoundText: "Everything will be found. With time"

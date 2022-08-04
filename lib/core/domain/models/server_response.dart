@@ -9,5 +9,6 @@ abstract class ServerResponse<T> extends DataProvidable<T> {
   });
 
   final String status;
-  final int revision;
+  @IntToRevisionConvertor()
+  final Revision revision;
 }

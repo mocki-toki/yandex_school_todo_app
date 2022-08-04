@@ -9,12 +9,12 @@ class TaskEditState with _$TaskEditState {
     required TextEditingController textController,
     required Importance importance,
     DateTime? deadline,
-  }) = TaskEditStateInitial;
+  }) = TaskEditStateNewTask;
 
   const factory TaskEditState.editTask({
     required Task editedTask,
     required TextEditingController textController,
     required Importance importance,
     DateTime? deadline,
-  }) = TaskEditStateLoaded;
+  }) = TaskEditStateEditTask;
 }

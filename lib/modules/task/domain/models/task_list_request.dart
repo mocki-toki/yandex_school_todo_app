@@ -8,6 +8,5 @@ class TaskListRequest extends ServerRequest<Task> {
     required Iterable<Task> super.list,
   });
 
-  factory TaskListRequest.fromJson(Map<String, dynamic> json) =>
-      _$TaskListRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$TaskListRequestToJson(this);
 }

@@ -1,7 +1,7 @@
 abstract class Failure<T> {
   const Failure(
     this.type, {
-    required this.exception,
+    this.exception,
   });
 
   final T type;

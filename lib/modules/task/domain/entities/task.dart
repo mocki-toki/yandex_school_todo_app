@@ -7,7 +7,6 @@ part 'task.g.dart';
 
 @freezed
 class Task with _$Task {
-  // TODO: есть решение лучше?
   const factory Task({
     @StringToUuidConvertor() required UuidValue id,
     required String text,
@@ -30,7 +29,9 @@ class Task with _$Task {
 }
 
 enum Importance {
+  @JsonValue('basic')
+  none,
   low,
-  basic,
-  important,
+  @JsonValue('important')
+  high,
 }

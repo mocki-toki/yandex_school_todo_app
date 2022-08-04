@@ -1,6 +1,6 @@
 import 'package:todo_app/core/infrastructure/infrastructure.dart';
 
-class AuthInterceptor extends Interceptor {
+class DioAuthInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     final newHeaders = Map<String, dynamic>.from(options.headers);

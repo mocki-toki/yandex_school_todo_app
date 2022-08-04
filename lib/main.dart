@@ -43,7 +43,7 @@ void initLogger() {
 Future<ServiceScope> initDinoScope() async {
   final ServiceCollection services = RuntimeServiceCollection();
 
-  services.addInstance(await DeviceIdentificatorProvider.resolve());
+  services.addInstance(await DeviceIdentifierProvider.resolve());
   services.addInstance(DioFactory.create());
 
   services.addInstance(StorageTaskPropertiesBackend());

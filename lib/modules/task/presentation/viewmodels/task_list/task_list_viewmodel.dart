@@ -12,7 +12,7 @@ class TaskListViewModelProvider extends ViewModelProvider<TaskListViewModel> {
           (_, sp) => TaskListViewModel(
             sp.getRequired<TaskRepository>(),
             sp.getRequired<TaskPropertiesRepository>(),
-            sp.getRequired<DeviceIdentificator>(),
+            sp.getRequired<DeviceIdentifier>(),
           ),
         );
 }
@@ -21,7 +21,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
   TaskListViewModel(
     this._taskRepository,
     this._taskPropertiesRepository,
-    this._deviceIdentificator,
+    this._deviceIdentifier,
   ) : super(const TaskListState.initial(
           visibleDoneTasks: false,
           syncState: TaskListSyncState.error,
@@ -34,7 +34,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
 
   final TaskRepository _taskRepository;
   final TaskPropertiesRepository _taskPropertiesRepository;
-  final DeviceIdentificator _deviceIdentificator;
+  final DeviceIdentifier _deviceIdentifier;
 
   Timer? _syncTimer;
   Timer? _retrySyncAfterErrorTimer;
@@ -160,7 +160,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
         task.copyWith(
           done: value,
           changedAt: DateTime.now(),
-          lastUpdatedBy: _deviceIdentificator,
+          lastUpdatedBy: _deviceIdentifier,
         ),
       ),
     );
@@ -184,7 +184,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
         deadline: null,
         createdAt: DateTime.now(),
         changedAt: DateTime.now(),
-        lastUpdatedBy: _deviceIdentificator,
+        lastUpdatedBy: _deviceIdentifier,
       ),
     );
   }

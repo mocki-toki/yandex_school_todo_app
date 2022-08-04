@@ -10,7 +10,7 @@ class TaskEditViewModelProvider extends ViewModelProvider<TaskEditViewModel> {
   }) : super(
           (_, sp) => TaskEditViewModel(
             sp.getRequired<TaskRepository>(),
-            sp.getRequired<DeviceIdentificator>(),
+            sp.getRequired<DeviceIdentifier>(),
             editedTask,
           ),
         );
@@ -19,7 +19,7 @@ class TaskEditViewModelProvider extends ViewModelProvider<TaskEditViewModel> {
 class TaskEditViewModel extends Cubit<TaskEditState> {
   TaskEditViewModel(
     this._taskRepository,
-    this._deviceIdentificator,
+    this._deviceIdentifier,
     this._editedTask,
   ) : super(
           TaskEditState.newTask(
@@ -40,7 +40,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   }
 
   final TaskRepository _taskRepository;
-  final DeviceIdentificator _deviceIdentificator;
+  final DeviceIdentifier _deviceIdentifier;
   final Task? _editedTask;
 
   Future<void> getData() async {
@@ -145,7 +145,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
         color: null,
         createdAt: DateTime.now(),
         changedAt: DateTime.now(),
-        lastUpdatedBy: _deviceIdentificator,
+        lastUpdatedBy: _deviceIdentifier,
       );
     }
   }

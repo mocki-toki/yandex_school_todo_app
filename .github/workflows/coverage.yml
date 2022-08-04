@@ -1,11 +1,13 @@
-name: test
+name: coverage
 
 on:
-  - push
+  push:
+    branches:
+      - "developer"
 
 jobs:
   build:
-    name: Testing
+    name: Upload coverage
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,4 +28,16 @@ jobs:
         run: flutter analyze .
 
       # - name: Run tests
-      #   run: flutter test
+      #   run: flutter test --coverage
+
+      # - name: Install lcov
+      #   run: sudo apt-get install -y lcov
+
+      # - name: Remove generated files from code coverage report
+      #   run: lcov --remove coverage/lcov.info 'lib/*/*.freezed.dart' 'lib/*/*.g.dart' -o coverage/lcov.info
+
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v1.2.1
+      #   with:
+      #     file: coverage/lcov.info
+      #     token: "${{ secrets.CODECOV_TOKEN }}"

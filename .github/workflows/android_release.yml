@@ -1,11 +1,12 @@
-name: android
+name: android_release
 
 on:
-  - push
+  push:
+    tags: ["v*"]
 
 jobs:
   build:
-    name: Build and uploading artifacts
+    name: Build and publish
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v2
@@ -34,8 +35,8 @@ jobs:
       - name: Building APK
         run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
 
-      - name: Uploading artifacts
-        uses: actions/upload-artifact@v1
+      - name: Publishing release
+        uses: ncipollo/release-action@v1
         with:
-          name: app
-          path: build/app/outputs/apk/release
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.TOKEN }}

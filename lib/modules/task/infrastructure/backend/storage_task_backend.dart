@@ -98,7 +98,9 @@ class StorageTaskBackend {
           break;
         case LocalTaskState.deleted:
           mergedTasks.removeWhere(
-            (element) => element.id == localTask.task.id,
+            (element) =>
+                element.id == localTask.task.id &&
+                element.changedAt == localTask.task.changedAt,
           );
           break;
         case LocalTaskState.edited:

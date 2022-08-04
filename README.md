@@ -1,6 +1,6 @@
 <h6 align="center">
     <picture>
-      <img alt="Done" src="https://user-images.githubusercontent.com/25152332/182933522-14b6fa07-c3c0-4cac-bce5-15bb53505be8.png">
+      <img alt="Done" src="assets/app_icon.png">
     </picture>
     <br>
 </h6>

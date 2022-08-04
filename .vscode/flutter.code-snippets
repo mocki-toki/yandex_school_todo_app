@@ -1,0 +1,17 @@
+{
+  "st": {
+    "scope": "dart",
+    "prefix": "st",
+    "description": "StatelessWidget",
+    "body": [
+      "class ${1:MyWidget} extends StatelessWidget {",
+      "  const ${1:MyWidget}({super.key});",
+      "",
+      "  @override",
+      "  Widget build(BuildContext context) {",
+      "    return Container();",
+      "  }",
+      "}"
+    ]
+  }
+}

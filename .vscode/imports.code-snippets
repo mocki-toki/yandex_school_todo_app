@@ -1,0 +1,45 @@
+{
+  "app": {
+    "scope": "dart",
+    "prefix": "app",
+    "body": ["import 'package:todo_app/app/app.dart';"]
+  },
+
+  "core-domain": {
+    "scope": "dart",
+    "prefix": "core-domain",
+    "body": ["import 'package:todo_app/core/domain/domain.dart';"]
+  },
+  "core-infrastructure": {
+    "scope": "dart",
+    "prefix": "core-infrastructure",
+    "body": [
+      "import 'package:todo_app/core/infrastructure/infrastructure.dart';"
+    ]
+  },
+  "core-presentation": {
+    "scope": "dart",
+    "prefix": "core-presentation",
+    "body": ["import 'package:todo_app/core/presentation/presentation.dart';"]
+  },
+
+  "task-domain": {
+    "scope": "dart",
+    "prefix": "task-domain",
+    "body": ["import 'package:todo_app/modules/task/domain/domain.dart';"]
+  },
+  "task-infrastructure": {
+    "scope": "dart",
+    "prefix": "task-infrastructure",
+    "body": [
+      "import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';"
+    ]
+  },
+  "task-presentation": {
+    "scope": "dart",
+    "prefix": "task-presentation",
+    "body": [
+      "import 'package:todo_app/modules/task/presentation/presentation.dart';"
+    ]
+  }
+}

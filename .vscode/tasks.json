@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Generate indexes",
+      "command": "flutter pub run index_generator",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Generate code",
+      "command": "flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Pub upgrade major versions",
+      "command": "flutter pub upgrade --major-versions",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Clean code",
+      "command": "flutter clean && rm pubspec.lock",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

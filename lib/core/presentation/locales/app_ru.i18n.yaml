@@ -1,0 +1,13 @@
+myTasks: "Мои дела"
+tasksCompleted(int count): "Выполнено — $count"
+newTask: "Новое"
+
+saveTask: "Сохранить"
+taskEditHint: "Что надо сделать..."
+taskImportance: "Важность"
+taskDeadline: "Сделать до"
+taskDelete: "Удалить"
+
+taskImportanceBasic: "Нет"
+taskImportanceLow: "Низкий"
+taskImportanceHigh: "Высокий"

@@ -57,12 +57,12 @@ class TaskRepositoryImpl implements TaskRepository {
                 responseFromNetwork.revision.value,
                 TaskListRequest(list: mergedTaskList),
               )
-              .toEntity<TaskResponse>()
+              .toEntity<TaskListResponse>()
             ..log(Logger('TaskNetworkBackend'))
             ..onData((data) async {
               await _storage.saveStorageRevision(data.revision);
               await _storage.resetLocalTaskStatesForSynchonizedTaskList(
-                [data.element!.id],
+                data.list!.map((e) => e.id),
               );
             });
 

@@ -252,7 +252,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
           emit(
             state.copyWith(
               visibleDoneTasks: state.visibleDoneTasks,
-              syncState: TaskListSyncState.error,
+              syncState: TaskListSyncState.loading,
             ),
           );
         } else {

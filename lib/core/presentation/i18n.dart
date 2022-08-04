@@ -41,5 +41,4 @@ class _AppLocalizationsDelegate
   bool shouldReload(LocalizationsDelegate<AppLocalizations> old) => false;
 }
 
-
 // TODO: перенести task локализацию в модуль

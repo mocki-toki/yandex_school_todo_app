@@ -1,0 +1,42 @@
+name: android
+
+on:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    name: Build and publish
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check code format
+        run: flutter format --set-exit-if-changed .
+
+      - name: Code generation
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Statically analyze
+        run: flutter analyze .
+
+      # - name: Passing tests
+      #   run: flutter test
+
+      - name: Building APK
+        run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
+
+      - name: Publishing release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "build/app/outputs/apk/release/*.apk"
+          token: ${{ secrets.TOKEN }}

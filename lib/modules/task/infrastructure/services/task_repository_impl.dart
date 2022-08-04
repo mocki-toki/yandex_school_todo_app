@@ -44,8 +44,8 @@ class TaskRepositoryImpl implements TaskRepository {
       (mergedTaskList) async {
         // если это имело смысл,
         // или если данные в storage и network не совпадают,
-        // то сохраняем данные в storage
-        // и отправляем замерженные данные в network и возвращаем результат
+        // то сохраняем данные в storage,
+        // отправляем замерженные данные в network и возвращаем результат
         if (!listEquals(
                 mergedTaskList.toList(), taskListFromStorage.toList()) ||
             !listEquals(

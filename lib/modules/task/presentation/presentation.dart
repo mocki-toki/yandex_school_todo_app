@@ -4,6 +4,7 @@ library presentation;
 
 export 'exports.dart';
 export 'helpers/task_importance_localization.dart';
+export 'theme/themes.dart';
 export 'viewmodels/task_edit/task_edit_state.dart';
 export 'viewmodels/task_edit/task_edit_viewmodel.dart';
 export 'viewmodels/task_list/task_list_state.dart';

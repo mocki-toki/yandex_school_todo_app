@@ -8,6 +8,7 @@
     "**/*.freezed.dart": true,
     "**/*.g.dart": true,
     "**/*.i18n.dart": true,
+    "**/firebase_options.dart": true,
 
     "**/.flutter-plugins": true,
     "**/.flutter-plugins-dependencies": true,

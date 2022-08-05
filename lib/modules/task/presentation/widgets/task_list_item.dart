@@ -30,7 +30,7 @@ class TaskListItem extends StatelessWidget {
               children: [
                 if (task.importance == Importance.high)
                   Container(
-                    color: context.theme.colorRed.withOpacity(0.1),
+                    color: getHighImportanceColor(context).withOpacity(0.1),
                     height: 15,
                     width: 15,
                   ),
@@ -109,7 +109,7 @@ class TaskListItem extends StatelessWidget {
 
     switch (task.importance) {
       case Importance.high:
-        return context.theme.colorRed;
+        return getHighImportanceColor(context);
       default:
         return context.theme.dividerColor;
     }
@@ -145,7 +145,7 @@ class _PrefixIcon extends StatelessWidget {
     if (importance == Importance.high) {
       widget = SvgPicture.asset(
         AppIcons.highPriority,
-        color: context.theme.colorRed,
+        color: getHighImportanceColor(context),
         width: 10,
         height: 16,
       );

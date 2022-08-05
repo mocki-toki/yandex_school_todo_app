@@ -50,7 +50,7 @@ class StorageTaskBackend {
     await box.clear();
     return box.putAll(
       {
-        for (var task in tasksFromServer)
+        for (final task in tasksFromServer)
           task.id.uuid: LocalTask(task, state: LocalTaskState.unchanged)
       },
     );
@@ -76,7 +76,7 @@ class StorageTaskBackend {
     await box.deleteAll(deletedLocalTaskList.map((e) => e.task.id.uuid));
     return box.putAll(
       {
-        for (var task in unsynchronizedLocalTaskList)
+        for (final task in unsynchronizedLocalTaskList)
           task.task.id.uuid: LocalTask(
             task.task,
             state: LocalTaskState.unchanged,

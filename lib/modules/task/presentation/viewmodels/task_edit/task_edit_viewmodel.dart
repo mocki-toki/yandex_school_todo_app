@@ -65,10 +65,10 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
 
   void setDeadline(DateTime? dateTime) {
     if (state is TaskEditStateEditTask) {
-      var typedState = state as TaskEditStateEditTask;
+      final typedState = state as TaskEditStateEditTask;
       emit(typedState.copyWith(deadline: dateTime));
     } else {
-      var typedState = state as TaskEditStateNewTask;
+      final typedState = state as TaskEditStateNewTask;
       emit(typedState.copyWith(deadline: dateTime));
     }
   }

@@ -1,0 +1,29 @@
+name: test
+
+on:
+  - push
+
+jobs:
+  build:
+    name: Testing
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Check code format
+        run: flutter format --set-exit-if-changed .
+
+      - name: Code generation
+        run: flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator
+
+      - name: Statically analyze
+        run: flutter analyze .
+
+      # - name: Run tests
+      #   run: flutter test

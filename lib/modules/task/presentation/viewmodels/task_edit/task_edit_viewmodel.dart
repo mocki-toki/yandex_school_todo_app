@@ -43,12 +43,12 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   final DeviceIdentifier _deviceIdentifier;
   final Task? _editedTask;
 
-  Future<void> getData() async {
+  Future<void> getData() {
     assert(state is TaskEditStateEditTask);
     final typedState = state as TaskEditStateEditTask;
 
     final response = _taskRepository.getTask(typedState.editedTask.id);
-    await response.last.then((event) {
+    return response.last.then((event) {
       emit(event.fold(
         (failure) => state,
         (data) => TaskEditState.editTask(
@@ -65,10 +65,10 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
 
   void setDeadline(DateTime? dateTime) {
     if (state is TaskEditStateEditTask) {
-      var typedState = state as TaskEditStateEditTask;
+      final typedState = state as TaskEditStateEditTask;
       emit(typedState.copyWith(deadline: dateTime));
     } else {
-      var typedState = state as TaskEditStateNewTask;
+      final typedState = state as TaskEditStateNewTask;
       emit(typedState.copyWith(deadline: dateTime));
     }
   }
@@ -79,7 +79,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
     }
   }
 
-  Future<void> createTask([Task? requestTask]) async {
+  Future<void> createTask([Task? requestTask]) {
     requestTask ??= _requestTaskFromState;
 
     final response = _taskRepository
@@ -97,7 +97,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
     return response.handleFirstEvent((event) => null);
   }
 
-  Future<void> editTask([Task? requestTask]) async {
+  Future<void> editTask([Task? requestTask]) {
     requestTask ??= _requestTaskFromState;
 
     final response = _taskRepository.editTask(requestTask).asBroadcastStream();
@@ -111,7 +111,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
     return response.handleFirstEvent((event) => null);
   }
 
-  Future<void> deleteTask() async {
+  Future<void> deleteTask() {
     assert(state is TaskEditStateEditTask);
 
     final typedState = state as TaskEditStateEditTask;

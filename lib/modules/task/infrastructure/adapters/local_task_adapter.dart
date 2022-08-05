@@ -9,7 +9,7 @@ class LocalTaskAdapter extends TypeAdapter<LocalTask> {
 
   @override
   LocalTask read(BinaryReader reader) {
-    var json = reader.readString();
+    final json = reader.readString();
     return LocalTask.fromJson(jsonDecode(json));
   }
 

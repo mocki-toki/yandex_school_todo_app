@@ -91,7 +91,7 @@ class _TaskQuickCreatorState extends State<TaskQuickCreator> {
     setState(() => taskDone = value);
   }
 
-  void _onCreate(BuildContext context) async {
+  void _onCreate(BuildContext context) {
     widget.onCreate(_textController.text, taskDone);
     _textController.clear();
   }

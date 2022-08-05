@@ -15,7 +15,7 @@ class AppNavigator {
     return _key.currentState!.pop(result);
   }
 
-  Future<T?> pushDialog<T>(RawDialogRoute<T> route) async {
+  Future<T?> pushDialog<T>(RawDialogRoute<T> route) {
     return _key.currentState!.push<T>(route);
   }
 }

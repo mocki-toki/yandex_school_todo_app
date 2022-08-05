@@ -20,9 +20,9 @@ class Task with _$Task {
     @StringToDateTimeConvertor()
     @JsonKey(name: 'changed_at')
         required DateTime changedAt,
-    @StringToDeviceIdentificatorConvertor()
+    @StringToDeviceIdentifierConvertor()
     @JsonKey(name: 'last_updated_by')
-        required DeviceIdentificator lastUpdatedBy,
+        required DeviceIdentifier lastUpdatedBy,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

@@ -108,7 +108,7 @@ class TaskListHeader extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 150;
+  double get maxExtent => 180;
 
   @override
   double get minExtent => statusBarHeight + kToolbarHeight;

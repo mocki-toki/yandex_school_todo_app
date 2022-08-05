@@ -12,7 +12,7 @@ class TaskListViewModelProvider extends ViewModelProvider<TaskListViewModel> {
           (_, sp) => TaskListViewModel(
             sp.getRequired<TaskRepository>(),
             sp.getRequired<TaskPropertiesRepository>(),
-            sp.getRequired<DeviceIdentificator>(),
+            sp.getRequired<DeviceIdentifier>(),
           ),
         );
 }
@@ -21,7 +21,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
   TaskListViewModel(
     this._taskRepository,
     this._taskPropertiesRepository,
-    this._deviceIdentificator,
+    this._deviceIdentifier,
   ) : super(const TaskListState.initial(
           visibleDoneTasks: false,
           syncState: TaskListSyncState.error,
@@ -34,7 +34,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
 
   final TaskRepository _taskRepository;
   final TaskPropertiesRepository _taskPropertiesRepository;
-  final DeviceIdentificator _deviceIdentificator;
+  final DeviceIdentifier _deviceIdentifier;
 
   Timer? _syncTimer;
   Timer? _retrySyncAfterErrorTimer;
@@ -154,26 +154,26 @@ class TaskListViewModel extends Cubit<TaskListState> {
     }
   }
 
-  Future<void> setDoneTask(Task task, bool value) async {
+  Future<void> setDoneTask(Task task, bool value) {
     return _handleResponse(
       _taskRepository.editTask(
         task.copyWith(
           done: value,
           changedAt: DateTime.now(),
-          lastUpdatedBy: _deviceIdentificator,
+          lastUpdatedBy: _deviceIdentifier,
         ),
       ),
     );
   }
 
-  Future<void> deleteTask(Task task) async {
+  Future<void> deleteTask(Task task) {
     return _handleResponse(
       _taskRepository.deleteTask(task.id),
       deleted: true,
     );
   }
 
-  Future<void> quickCreateTask(String text, bool done) async {
+  Future<void> quickCreateTask(String text, bool done) {
     return _createTask(
       Task(
         id: const Uuid().v1obj(),
@@ -184,12 +184,12 @@ class TaskListViewModel extends Cubit<TaskListState> {
         deadline: null,
         createdAt: DateTime.now(),
         changedAt: DateTime.now(),
-        lastUpdatedBy: _deviceIdentificator,
+        lastUpdatedBy: _deviceIdentifier,
       ),
     );
   }
 
-  Future<void> _createTask(Task task) async {
+  Future<void> _createTask(Task task) {
     return _handleResponse(
       _taskRepository.createTask(task),
     );
@@ -198,7 +198,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
   Future<void> _handleResponse(
     Stream<Either<Failure<dynamic>, Task>> response, {
     bool deleted = false,
-  }) async {
+  }) {
     response = response.asBroadcastStream();
 
     emit(
@@ -268,7 +268,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     );
   }
 
-  Future<void> restoreVisibleDoneTasksState() async {
+  void restoreVisibleDoneTasksState() {
     final doneTasksVisibility = _taskPropertiesRepository.getDoneTasksVisiblity;
     emit(state.copyWith(visibleDoneTasks: doneTasksVisibility));
   }

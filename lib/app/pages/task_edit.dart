@@ -156,7 +156,7 @@ class _TaskEditPageDefault extends StatelessWidget {
     context.pop();
   }
 
-  void onDeadlineChanged(BuildContext context, bool value) async {
+  Future<void> onDeadlineChanged(BuildContext context, bool value) async {
     FocusScope.of(context).unfocus();
 
     final viewModel = context.read<TaskEditViewModel>();

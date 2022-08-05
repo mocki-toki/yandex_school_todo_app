@@ -11,7 +11,7 @@ extension TaskStreamExtensions<T> on Stream<Either<Failure, T>> {
       final lastEvent = await last;
 
       lastEvent.fold(
-        (failure) async {
+        (failure) {
           if (failure.type == BackendFailureType.unsynchronizedData) {
             onUnsynchronized();
           } else {

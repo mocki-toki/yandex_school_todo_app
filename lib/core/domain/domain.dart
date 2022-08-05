@@ -15,6 +15,7 @@ export 'entities/revision.dart';
 export 'exceptions/storage_exception.dart';
 export 'exports.dart';
 export 'mapping/data_mapper.dart';
+export 'mapping/either_mapper.dart';
 export 'models/data_providable.dart';
 export 'models/server_request.dart';
 export 'models/server_response.dart';

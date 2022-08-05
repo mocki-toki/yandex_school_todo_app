@@ -6,7 +6,7 @@ import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 const _revisionKey = 'revision';
 
 class StorageTaskBackend {
-  Future<Iterable<Task>> getTaskList() async {
+  Iterable<Task> getTaskList() {
     final box = _taskListDataBox();
 
     final localTasks = box.values.where(
@@ -85,9 +85,9 @@ class StorageTaskBackend {
     );
   }
 
-  Future<Iterable<Task>> getMergedTaskList(
+  Iterable<Task> getMergedTaskList(
     Iterable<Task> tasksFromServer,
-  ) async {
+  ) {
     final box = _taskListDataBox();
     final mergedTasks = tasksFromServer.toList();
 
@@ -121,7 +121,7 @@ class StorageTaskBackend {
     return mergedTasks;
   }
 
-  Future<Task> getTask(UuidValue taskId) async {
+  Task getTask(UuidValue taskId) {
     final box = _taskListDataBox();
 
     final localTask = box.get(taskId.uuid);

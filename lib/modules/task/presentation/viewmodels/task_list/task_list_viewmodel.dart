@@ -154,7 +154,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     }
   }
 
-  Future<void> setDoneTask(Task task, bool value) async {
+  Future<void> setDoneTask(Task task, bool value) {
     return _handleResponse(
       _taskRepository.editTask(
         task.copyWith(
@@ -166,14 +166,14 @@ class TaskListViewModel extends Cubit<TaskListState> {
     );
   }
 
-  Future<void> deleteTask(Task task) async {
+  Future<void> deleteTask(Task task) {
     return _handleResponse(
       _taskRepository.deleteTask(task.id),
       deleted: true,
     );
   }
 
-  Future<void> quickCreateTask(String text, bool done) async {
+  Future<void> quickCreateTask(String text, bool done) {
     return _createTask(
       Task(
         id: const Uuid().v1obj(),
@@ -189,7 +189,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     );
   }
 
-  Future<void> _createTask(Task task) async {
+  Future<void> _createTask(Task task) {
     return _handleResponse(
       _taskRepository.createTask(task),
     );
@@ -198,7 +198,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
   Future<void> _handleResponse(
     Stream<Either<Failure<dynamic>, Task>> response, {
     bool deleted = false,
-  }) async {
+  }) {
     response = response.asBroadcastStream();
 
     emit(
@@ -268,7 +268,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     );
   }
 
-  Future<void> restoreVisibleDoneTasksState() async {
+  void restoreVisibleDoneTasksState() {
     final doneTasksVisibility = _taskPropertiesRepository.getDoneTasksVisiblity;
     emit(state.copyWith(visibleDoneTasks: doneTasksVisibility));
   }

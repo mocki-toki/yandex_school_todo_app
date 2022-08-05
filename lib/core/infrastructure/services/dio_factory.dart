@@ -16,10 +16,12 @@ class DioFactory {
     );
 
     (dio.transformer as DefaultTransformer).jsonDecodeCallback = (string) =>
-        string.length > 5000 ? _convertToJson : compute(_convertToJson, string);
+        string.length > 5000
+            ? _convertFromJson
+            : compute(_convertFromJson, string);
     dio.interceptors.add(DioAuthInterceptor());
     return dio;
   }
 
-  static dynamic _convertToJson(String string) => json.decode(string);
+  static dynamic _convertFromJson(String string) => json.decode(string);
 }

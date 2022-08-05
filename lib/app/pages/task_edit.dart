@@ -23,35 +23,29 @@ class _TaskEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskEditViewModel, TaskEditState>(
-      builder: (context, state) {
-        return state.when(
-          editTask: (editedTask, textController, importance, deadline) {
-            return Scaffold(
-              body: SafeArea(
-                child: _TaskEditPageDefault(
-                  editedTask,
-                  textController,
-                  importance,
-                  deadline,
-                ),
-              ),
-            );
-          },
-          newTask: (textController, importance, deadline) {
-            return Scaffold(
-              body: SafeArea(
-                child: _TaskEditPageDefault(
-                  null,
-                  textController,
-                  importance,
-                  deadline,
-                ),
-              ),
-            );
-          },
-        );
-      },
+    return Scaffold(
+      body: BlocBuilder<TaskEditViewModel, TaskEditState>(
+        builder: (context, state) {
+          return state.when(
+            editTask: (editedTask, textController, importance, deadline) {
+              return _TaskEditPageDefault(
+                editedTask,
+                textController,
+                importance,
+                deadline,
+              );
+            },
+            newTask: (textController, importance, deadline) {
+              return _TaskEditPageDefault(
+                null,
+                textController,
+                importance,
+                deadline,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
@@ -73,29 +67,36 @@ class _TaskEditPageDefault extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverAppBar(
-          pinned: true,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => onClose(context),
-            ),
-            const Spacer(),
-            TextButton(
-              onPressed: () => onSaveTask(context),
-              child: Text(context.localizations.saveTask.toUpperCase()),
-            ),
-          ],
+        SliverLayoutBuilder(
+          builder: (context, constraints) {
+            final scrolled = constraints.scrollOffset > 0;
+            return SliverAppBar(
+              pinned: true,
+              backgroundColor: scrolled
+                  ? context.theme.appBarTheme.backgroundColor
+                  : context.theme.scaffoldBackgroundColor,
+              automaticallyImplyLeading: false,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => onClose(context),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () => onSaveTask(context),
+                  child: Text(context.localizations.saveTask.toUpperCase()),
+                ),
+              ],
+            );
+          },
         ),
         SliverToBoxAdapter(
           child: Column(
             children: [
               _Editor(textController: textController),
-              // TODO: сделать dropdown
-              ListTile(
-                title: Text(context.localizations.taskImportance),
-                subtitle: Text(context.localizations.taskImportanceBasic),
+              _ImportanceSelector(
+                importance: importance,
+                onChanged: context.read<TaskEditViewModel>().setImportance,
               ),
               const Divider(
                 indent: 16,
@@ -105,8 +106,17 @@ class _TaskEditPageDefault extends StatelessWidget {
                 value: deadline != null,
                 onChanged: (value) => onDeadlineChanged(context, value),
                 title: Text(context.localizations.taskDeadline),
-                subtitle: getFormattedDeadlineTextWidget(context),
+                subtitle: deadline == null
+                    ? null
+                    : Text(
+                        DateFormat.yMMMMd(context.localizations.locale)
+                            .format(deadline!),
+                        style: context.textTheme.bodyText2!.copyWith(
+                          color: context.theme.colorBlue,
+                        ),
+                      ),
               ),
+              const SizedBox(height: 8),
               const Divider(),
               ListTile(
                 enabled: task != null,
@@ -123,25 +133,28 @@ class _TaskEditPageDefault extends StatelessWidget {
     );
   }
 
-  // TODO: виджеты в виде функций
-  Widget? getFormattedDeadlineTextWidget(BuildContext context) {
-    if (deadline == null) {
-      return null;
-    } else {
-      return Text(
-        DateFormat.yMMMMd(context.localizations.locale).format(deadline!),
-        style: context.textTheme.bodyText2!.copyWith(
-          color: context.theme.colorBlue,
-        ),
-      );
-    }
+  String getFormattedDeadlineText(BuildContext context) {
+    return DateFormat.yMMMMd(context.localizations.locale).format(deadline!);
   }
 
-  void onClose(BuildContext context) => context.navigateBack();
+  void onClose(BuildContext context) => context.pop();
 
-  void onSaveTask(BuildContext context) => context.navigateBack();
+  Future<void> onSaveTask(BuildContext context) async {
+    final navigator = context.navigator;
 
-  void onDeleteTask(BuildContext context) => context.navigateBack();
+    if (task == null) {
+      await context.read<TaskEditViewModel>().createTask();
+    } else {
+      await context.read<TaskEditViewModel>().editTask();
+    }
+
+    navigator.pop();
+  }
+
+  void onDeleteTask(BuildContext context) {
+    context.read<TaskEditViewModel>().deleteTask();
+    context.pop();
+  }
 
   void onDeadlineChanged(BuildContext context, bool value) async {
     FocusScope.of(context).unfocus();
@@ -159,6 +172,74 @@ class _TaskEditPageDefault extends StatelessWidget {
     }
 
     viewModel.setDeadline(null);
+  }
+}
+
+class _ImportanceSelector extends StatelessWidget {
+  const _ImportanceSelector({
+    required this.importance,
+    required this.onChanged,
+  });
+
+  final Importance importance;
+  final ValueChanged<Importance?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        ListTile(
+          title: Text(context.localizations.taskImportance),
+          subtitle: Text(
+            TaskImportanceLocalization.localize(context, importance),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<Importance>(
+              items: [
+                // TODO: оформить по дизайну
+                DropdownMenuItem(
+                  value: Importance.none,
+                  child: Text(
+                    TaskImportanceLocalization.localize(
+                      context,
+                      Importance.none,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: Importance.low,
+                  child: Text(
+                    TaskImportanceLocalization.localize(
+                      context,
+                      Importance.low,
+                    ),
+                  ),
+                ),
+                DropdownMenuItem(
+                  value: Importance.high,
+                  child: Text(
+                    "!! ${TaskImportanceLocalization.localize(
+                      context,
+                      Importance.high,
+                    )}",
+                    style: context.textTheme.bodyText1!.copyWith(
+                      color: context.theme.colorRed,
+                    ),
+                  ),
+                ),
+              ],
+              isExpanded: true,
+              iconSize: 0,
+              onChanged: onChanged,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
 

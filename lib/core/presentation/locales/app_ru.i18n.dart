@@ -43,9 +43,10 @@ class AppRu extends App {
   String get taskImportance => """Важность""";
   String get taskDeadline => """Сделать до""";
   String get taskDelete => """Удалить""";
-  String get taskImportanceBasic => """Нет""";
-  String get taskImportanceLow => """Низкий""";
-  String get taskImportanceHigh => """Высокий""";
+  String get none => """Нет""";
+  String get low => """Низкий""";
+  String get high => """Высокий""";
+  String get notFoundText => """Найдётся всё. Со временем""";
 }
 
 Map<String, String> get appRuMap => {
@@ -56,7 +57,8 @@ Map<String, String> get appRuMap => {
       """taskImportance""": """Важность""",
       """taskDeadline""": """Сделать до""",
       """taskDelete""": """Удалить""",
-      """taskImportanceBasic""": """Нет""",
-      """taskImportanceLow""": """Низкий""",
-      """taskImportanceHigh""": """Высокий""",
+      """none""": """Нет""",
+      """low""": """Низкий""",
+      """high""": """Высокий""",
+      """notFoundText""": """Найдётся всё. Со временем""",
     };

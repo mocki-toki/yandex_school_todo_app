@@ -6,12 +6,18 @@ import 'package:todo_app/core/infrastructure/infrastructure.dart';
 class DioFactory {
   static Dio create() {
     final dio = Dio(
-      BaseOptions(baseUrl: CoreInfrastructureConstants.apiUrl),
+      BaseOptions(
+        baseUrl: CoreInfrastructureConstants.apiUrl,
+        validateStatus: (status) => status == 200,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ),
     );
 
     (dio.transformer as DefaultTransformer).jsonDecodeCallback = (string) =>
         string.length > 5000 ? _convertToJson : compute(_convertToJson, string);
-    dio.interceptors.add(AuthInterceptor());
+    dio.interceptors.add(DioAuthInterceptor());
     return dio;
   }
 

@@ -1,8 +1,10 @@
 import 'package:todo_app/modules/task/domain/domain.dart';
 
 abstract class TaskRepository {
-  Future<Either<Failure, Iterable<Task>>> getTaskList();
-  Future<Either<Failure, Task>> getTask(UuidValue taskId);
-  Future<Either<Failure, Task>> deleteTask(UuidValue task);
-  Future<Either<Failure, Task>> editTask(Task task);
+  Stream<Iterable<Task>> get taskListFromStorage;
+  Future<Either<Failure, Iterable<Task>>> synchronizeStorageWithNetwork();
+  Stream<Either<Failure, Task>> getTask(UuidValue taskId);
+  Stream<Either<Failure, Task>> createTask(Task task);
+  Stream<Either<Failure, Task>> editTask(Task task);
+  Stream<Either<Failure, Task>> deleteTask(UuidValue taskId);
 }

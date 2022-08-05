@@ -26,7 +26,7 @@ mixin _$TaskListState {
     required TResult Function(
             bool visibleDoneTasks, TaskListSyncState syncState)
         loading,
-    required TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    required TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)
         loaded,
     required TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -40,7 +40,7 @@ mixin _$TaskListState {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -54,7 +54,7 @@ mixin _$TaskListState {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -215,7 +215,7 @@ class _$TaskListStateInitial implements TaskListStateInitial {
     required TResult Function(
             bool visibleDoneTasks, TaskListSyncState syncState)
         loading,
-    required TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    required TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)
         loaded,
     required TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -232,7 +232,7 @@ class _$TaskListStateInitial implements TaskListStateInitial {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -249,7 +249,7 @@ class _$TaskListStateInitial implements TaskListStateInitial {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -402,7 +402,7 @@ class _$TaskListStateLoading implements TaskListStateLoading {
     required TResult Function(
             bool visibleDoneTasks, TaskListSyncState syncState)
         loading,
-    required TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    required TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)
         loaded,
     required TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -419,7 +419,7 @@ class _$TaskListStateLoading implements TaskListStateLoading {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -436,7 +436,7 @@ class _$TaskListStateLoading implements TaskListStateLoading {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -511,9 +511,9 @@ abstract class _$$TaskListStateLoadedCopyWith<$Res>
       __$$TaskListStateLoadedCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Iterable<Task> tasks,
-      bool visibleDoneTasks,
-      TaskListSyncState syncState});
+      {TaskListData data, bool visibleDoneTasks, TaskListSyncState syncState});
+
+  $TaskListDataCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -529,15 +529,15 @@ class __$$TaskListStateLoadedCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? tasks = freezed,
+    Object? data = freezed,
     Object? visibleDoneTasks = freezed,
     Object? syncState = freezed,
   }) {
     return _then(_$TaskListStateLoaded(
-      tasks == freezed
-          ? _value.tasks
-          : tasks // ignore: cast_nullable_to_non_nullable
-              as Iterable<Task>,
+      data == freezed
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as TaskListData,
       visibleDoneTasks: visibleDoneTasks == freezed
           ? _value.visibleDoneTasks
           : visibleDoneTasks // ignore: cast_nullable_to_non_nullable
@@ -548,16 +548,23 @@ class __$$TaskListStateLoadedCopyWithImpl<$Res>
               as TaskListSyncState,
     ));
   }
+
+  @override
+  $TaskListDataCopyWith<$Res> get data {
+    return $TaskListDataCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$TaskListStateLoaded implements TaskListStateLoaded {
-  const _$TaskListStateLoaded(this.tasks,
+  const _$TaskListStateLoaded(this.data,
       {required this.visibleDoneTasks, required this.syncState});
 
   @override
-  final Iterable<Task> tasks;
+  final TaskListData data;
   @override
   final bool visibleDoneTasks;
   @override
@@ -565,7 +572,7 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
 
   @override
   String toString() {
-    return 'TaskListState.loaded(tasks: $tasks, visibleDoneTasks: $visibleDoneTasks, syncState: $syncState)';
+    return 'TaskListState.loaded(data: $data, visibleDoneTasks: $visibleDoneTasks, syncState: $syncState)';
   }
 
   @override
@@ -573,7 +580,7 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TaskListStateLoaded &&
-            const DeepCollectionEquality().equals(other.tasks, tasks) &&
+            const DeepCollectionEquality().equals(other.data, data) &&
             const DeepCollectionEquality()
                 .equals(other.visibleDoneTasks, visibleDoneTasks) &&
             const DeepCollectionEquality().equals(other.syncState, syncState));
@@ -582,7 +589,7 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(tasks),
+      const DeepCollectionEquality().hash(data),
       const DeepCollectionEquality().hash(visibleDoneTasks),
       const DeepCollectionEquality().hash(syncState));
 
@@ -601,14 +608,14 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
     required TResult Function(
             bool visibleDoneTasks, TaskListSyncState syncState)
         loading,
-    required TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    required TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)
         loaded,
     required TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
             TaskListSyncState syncState)
         error,
   }) {
-    return loaded(tasks, visibleDoneTasks, syncState);
+    return loaded(data, visibleDoneTasks, syncState);
   }
 
   @override
@@ -618,14 +625,14 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         error,
   }) {
-    return loaded?.call(tasks, visibleDoneTasks, syncState);
+    return loaded?.call(data, visibleDoneTasks, syncState);
   }
 
   @override
@@ -635,7 +642,7 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -644,7 +651,7 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(tasks, visibleDoneTasks, syncState);
+      return loaded(data, visibleDoneTasks, syncState);
     }
     return orElse();
   }
@@ -688,11 +695,11 @@ class _$TaskListStateLoaded implements TaskListStateLoaded {
 }
 
 abstract class TaskListStateLoaded implements TaskListState {
-  const factory TaskListStateLoaded(final Iterable<Task> tasks,
+  const factory TaskListStateLoaded(final TaskListData data,
       {required final bool visibleDoneTasks,
       required final TaskListSyncState syncState}) = _$TaskListStateLoaded;
 
-  Iterable<Task> get tasks;
+  TaskListData get data;
   @override
   bool get visibleDoneTasks;
   @override
@@ -801,7 +808,7 @@ class _$TaskListStateError implements TaskListStateError {
     required TResult Function(
             bool visibleDoneTasks, TaskListSyncState syncState)
         loading,
-    required TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    required TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)
         loaded,
     required TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -818,7 +825,7 @@ class _$TaskListStateError implements TaskListStateError {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -835,7 +842,7 @@ class _$TaskListStateError implements TaskListStateError {
         initial,
     TResult Function(bool visibleDoneTasks, TaskListSyncState syncState)?
         loading,
-    TResult Function(Iterable<Task> tasks, bool visibleDoneTasks,
+    TResult Function(TaskListData data, bool visibleDoneTasks,
             TaskListSyncState syncState)?
         loaded,
     TResult Function(Failure<dynamic> failure, bool visibleDoneTasks,
@@ -900,5 +907,173 @@ abstract class TaskListStateError implements TaskListState {
   @override
   @JsonKey(ignore: true)
   _$$TaskListStateErrorCopyWith<_$TaskListStateError> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$TaskListData {
+  Iterable<Task> get originalTasks => throw _privateConstructorUsedError;
+  List<Task> get sortedTasks => throw _privateConstructorUsedError;
+  int get completedTasksCount => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $TaskListDataCopyWith<TaskListData> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $TaskListDataCopyWith<$Res> {
+  factory $TaskListDataCopyWith(
+          TaskListData value, $Res Function(TaskListData) then) =
+      _$TaskListDataCopyWithImpl<$Res>;
+  $Res call(
+      {Iterable<Task> originalTasks,
+      List<Task> sortedTasks,
+      int completedTasksCount});
+}
+
+/// @nodoc
+class _$TaskListDataCopyWithImpl<$Res> implements $TaskListDataCopyWith<$Res> {
+  _$TaskListDataCopyWithImpl(this._value, this._then);
+
+  final TaskListData _value;
+  // ignore: unused_field
+  final $Res Function(TaskListData) _then;
+
+  @override
+  $Res call({
+    Object? originalTasks = freezed,
+    Object? sortedTasks = freezed,
+    Object? completedTasksCount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      originalTasks: originalTasks == freezed
+          ? _value.originalTasks
+          : originalTasks // ignore: cast_nullable_to_non_nullable
+              as Iterable<Task>,
+      sortedTasks: sortedTasks == freezed
+          ? _value.sortedTasks
+          : sortedTasks // ignore: cast_nullable_to_non_nullable
+              as List<Task>,
+      completedTasksCount: completedTasksCount == freezed
+          ? _value.completedTasksCount
+          : completedTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$$_TaskListDataCopyWith<$Res>
+    implements $TaskListDataCopyWith<$Res> {
+  factory _$$_TaskListDataCopyWith(
+          _$_TaskListData value, $Res Function(_$_TaskListData) then) =
+      __$$_TaskListDataCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {Iterable<Task> originalTasks,
+      List<Task> sortedTasks,
+      int completedTasksCount});
+}
+
+/// @nodoc
+class __$$_TaskListDataCopyWithImpl<$Res>
+    extends _$TaskListDataCopyWithImpl<$Res>
+    implements _$$_TaskListDataCopyWith<$Res> {
+  __$$_TaskListDataCopyWithImpl(
+      _$_TaskListData _value, $Res Function(_$_TaskListData) _then)
+      : super(_value, (v) => _then(v as _$_TaskListData));
+
+  @override
+  _$_TaskListData get _value => super._value as _$_TaskListData;
+
+  @override
+  $Res call({
+    Object? originalTasks = freezed,
+    Object? sortedTasks = freezed,
+    Object? completedTasksCount = freezed,
+  }) {
+    return _then(_$_TaskListData(
+      originalTasks == freezed
+          ? _value.originalTasks
+          : originalTasks // ignore: cast_nullable_to_non_nullable
+              as Iterable<Task>,
+      sortedTasks == freezed
+          ? _value._sortedTasks
+          : sortedTasks // ignore: cast_nullable_to_non_nullable
+              as List<Task>,
+      completedTasksCount == freezed
+          ? _value.completedTasksCount
+          : completedTasksCount // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_TaskListData implements _TaskListData {
+  const _$_TaskListData(this.originalTasks, final List<Task> sortedTasks,
+      this.completedTasksCount)
+      : _sortedTasks = sortedTasks;
+
+  @override
+  final Iterable<Task> originalTasks;
+  final List<Task> _sortedTasks;
+  @override
+  List<Task> get sortedTasks {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_sortedTasks);
+  }
+
+  @override
+  final int completedTasksCount;
+
+  @override
+  String toString() {
+    return 'TaskListData(originalTasks: $originalTasks, sortedTasks: $sortedTasks, completedTasksCount: $completedTasksCount)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_TaskListData &&
+            const DeepCollectionEquality()
+                .equals(other.originalTasks, originalTasks) &&
+            const DeepCollectionEquality()
+                .equals(other._sortedTasks, _sortedTasks) &&
+            const DeepCollectionEquality()
+                .equals(other.completedTasksCount, completedTasksCount));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(originalTasks),
+      const DeepCollectionEquality().hash(_sortedTasks),
+      const DeepCollectionEquality().hash(completedTasksCount));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_TaskListDataCopyWith<_$_TaskListData> get copyWith =>
+      __$$_TaskListDataCopyWithImpl<_$_TaskListData>(this, _$identity);
+}
+
+abstract class _TaskListData implements TaskListData {
+  const factory _TaskListData(
+      final Iterable<Task> originalTasks,
+      final List<Task> sortedTasks,
+      final int completedTasksCount) = _$_TaskListData;
+
+  @override
+  Iterable<Task> get originalTasks;
+  @override
+  List<Task> get sortedTasks;
+  @override
+  int get completedTasksCount;
+  @override
+  @JsonKey(ignore: true)
+  _$$_TaskListDataCopyWith<_$_TaskListData> get copyWith =>
       throw _privateConstructorUsedError;
 }

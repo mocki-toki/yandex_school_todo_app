@@ -6,7 +6,6 @@
     "**/.idea": true,
 
     "**/*.freezed.dart": true,
-    "**/*.gr.dart": true,
     "**/*.g.dart": true,
     "**/*.i18n.dart": true,
 

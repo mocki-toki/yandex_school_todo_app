@@ -13,7 +13,7 @@ class TaskListState with _$TaskListState {
     required TaskListSyncState syncState,
   }) = TaskListStateLoading;
   const factory TaskListState.loaded(
-    Iterable<Task> tasks, {
+    TaskListData data, {
     required bool visibleDoneTasks,
     required TaskListSyncState syncState,
   }) = TaskListStateLoaded;
@@ -28,4 +28,13 @@ enum TaskListSyncState {
   loading,
   loaded,
   error,
+}
+
+@freezed
+class TaskListData with _$TaskListData {
+  const factory TaskListData(
+    Iterable<Task> originalTasks,
+    List<Task> sortedTasks,
+    int completedTasksCount,
+  ) = _TaskListData;
 }

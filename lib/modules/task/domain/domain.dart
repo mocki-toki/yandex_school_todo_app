@@ -2,10 +2,12 @@
 
 library domain;
 
+export 'entities/local_task.dart';
 export 'entities/task.dart';
-export 'entities/task_list_request.dart';
-export 'entities/task_list_response.dart';
-export 'entities/task_request.dart';
-export 'entities/task_response.dart';
 export 'exports.dart';
+export 'models/task_list_request.dart';
+export 'models/task_list_response.dart';
+export 'models/task_request.dart';
+export 'models/task_response.dart';
+export 'services/task_properties_repository.dart';
 export 'services/task_repository.dart';

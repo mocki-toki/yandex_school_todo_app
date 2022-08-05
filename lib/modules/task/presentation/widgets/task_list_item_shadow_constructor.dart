@@ -15,6 +15,7 @@ class TaskListItemShadowConstructor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: context.theme.cardColor,
         borderRadius: BorderRadius.vertical(

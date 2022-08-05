@@ -30,6 +30,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     synchronizeStorageWithNetwork();
     setSyncTimer();
     subscribeToTaskListFromStorage();
+    subscribeToConnectivityState();
   }
 
   final TaskRepository _taskRepository;
@@ -38,13 +39,15 @@ class TaskListViewModel extends Cubit<TaskListState> {
 
   Timer? _syncTimer;
   Timer? _retrySyncAfterErrorTimer;
-  StreamSubscription? _taskListSubscription;
+  StreamSubscription<Iterable<Task>>? _taskListSubscription;
+  StreamSubscription<ConnectivityResult>? _connectivityStateSubscription;
 
   @override
   Future<void> close() {
     _syncTimer?.cancel();
     _retrySyncAfterErrorTimer?.cancel();
     _taskListSubscription?.cancel();
+    _connectivityStateSubscription?.cancel();
     return super.close();
   }
 
@@ -72,6 +75,16 @@ class TaskListViewModel extends Cubit<TaskListState> {
 
   void subscribeToTaskListFromStorage() {
     _taskListSubscription = getSubscriptionToTaskListFromStorage();
+  }
+
+  // TODO: перенести в репозиторий
+  void subscribeToConnectivityState() {
+    _connectivityStateSubscription = Connectivity()
+        .onConnectivityChanged
+        .listen((ConnectivityResult result) {
+      synchronizeStorageWithNetwork();
+      Logger("TaskListViewModel").info('Connectivity changed: $result');
+    });
   }
 
   StreamSubscription<Iterable<Task>> getSubscriptionToTaskListFromStorage() {
@@ -131,12 +144,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
             }
           },
           (taskList) {
-            return TaskListState.loaded(
-              TaskListData(
-                taskList,
-                _sortTasks(taskList, state.visibleDoneTasks),
-                taskList.where((task) => task.done).length,
-              ),
+            return state.copyWith(
               visibleDoneTasks: state.visibleDoneTasks,
               syncState: TaskListSyncState.loaded,
             );

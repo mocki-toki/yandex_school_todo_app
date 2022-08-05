@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:todo_app/modules/task/presentation/presentation.dart';
-import 'package:todo_app/core/infrastructure/infrastructure.dart';
 
 class TaskListScreen extends StatelessWidget {
   const TaskListScreen({super.key});
@@ -23,8 +20,6 @@ class _TaskListPage extends StatefulWidget {
 
 class _TaskListPageState extends State<_TaskListPage>
     with WidgetsBindingObserver {
-  late StreamSubscription connectivitySubscription;
-
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -37,18 +32,10 @@ class _TaskListPageState extends State<_TaskListPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-
-    connectivitySubscription = Connectivity()
-        .onConnectivityChanged
-        .listen((ConnectivityResult result) {
-      context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
-      Logger("TaskListPage").info('Connectivity changed: $result');
-    });
   }
 
   @override
   void dispose() {
-    connectivitySubscription.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

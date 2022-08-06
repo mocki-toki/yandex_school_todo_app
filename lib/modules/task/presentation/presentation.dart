@@ -12,4 +12,5 @@ export 'viewmodels/task_list/task_list_viewmodel.dart';
 export 'widgets/task_list_header.dart';
 export 'widgets/task_list_item.dart';
 export 'widgets/task_list_item_shadow_constructor.dart';
+export 'widgets/task_list_item_swiper.dart';
 export 'widgets/task_quick_creator.dart';

@@ -34,15 +34,16 @@ jobs:
       - name: Building APK
         run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
 
-      - name: Uploading artifacts
+      - name: Uploading artifact
         uses: actions/upload-artifact@v1
         with:
           name: app
           path: build/app/outputs/apk/release/app-release.apk
 
       - name: Uploading artifact to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         with:
-          appId: ${{secrets.FIREBASE_APP_ID}}
+          appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
           file: build/app/outputs/apk/release/app-release.apk

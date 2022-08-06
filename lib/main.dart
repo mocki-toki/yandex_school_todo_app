@@ -9,6 +9,8 @@ import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
 import 'firebase_options.dart';
 
+const _loggingEnabled = true;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -35,7 +37,7 @@ Future<void> main() async {
 }
 
 void initLogger() {
-  Logger.root.level = Level.ALL;
+  Logger.root.level = _loggingEnabled ? Level.ALL : Level.OFF;
   Logger.root.onRecord.listen((record) {
     if (kDebugMode) {
       print('${record.level.name}: ${record.time}: ${record.loggerName}'

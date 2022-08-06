@@ -16,8 +16,8 @@ Future<void> main() async {
 
   // TODO: перенести инициализацию
   initLogger();
-  await initHive();
   await initFirebase();
+  await initHive();
 
   final scope = await initDinoScope();
 
@@ -46,21 +46,6 @@ void initLogger() {
   });
 }
 
-Future<void> initHive() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(LocalTaskAdapter());
-
-  // TODO: добавить поддержку forced-миграции
-  await Hive.openBox<LocalTask>(
-    TaskInfrastructureConstants.taskListDataBoxName,
-  );
-  await Hive.openBox(
-    TaskInfrastructureConstants.taskListPropertiesBoxName,
-  );
-
-  Logger('main').info('Hive initialized');
-}
-
 Future<void> initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -78,6 +63,21 @@ Future<void> initFirebase() async {
   await remoteConfig.fetchAndActivate();
 
   Logger('main').info('Firebase initialized');
+}
+
+Future<void> initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalTaskAdapter());
+
+  // TODO: добавить поддержку forced-миграции
+  await Hive.openBox<LocalTask>(
+    TaskInfrastructureConstants.taskListDataBoxName,
+  );
+  await Hive.openBox(
+    TaskInfrastructureConstants.taskListPropertiesBoxName,
+  );
+
+  Logger('main').info('Hive initialized');
 }
 
 Future<ServiceScope> initDinoScope() async {

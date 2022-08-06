@@ -60,8 +60,6 @@ android {
     buildTypes {
         elease {
             signingConfig signingConfigs.debug
-            minifyEnabled false
-            shrinkResources false
         }
     }
 }

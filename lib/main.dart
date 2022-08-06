@@ -1,20 +1,68 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:todo_app/app/app.dart';
 import 'package:todo_app/modules/task/domain/domain.dart';
 import 'package:todo_app/modules/task/presentation/presentation.dart';
 import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
+import 'firebase_options.dart';
+
+const _loggingEnabled = true;
+
 Future<void> main() async {
-  await initHive();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // TODO: перенести инициализацию
   initLogger();
+  await initFirebase();
+  await initHive();
+
   final scope = await initDinoScope();
 
   runApp(
-    Provider.value(
-      value: scope.serviceProvider,
+    MultiProvider(
+      providers: [
+        Provider.value(
+          value: scope.serviceProvider,
+        ),
+        Provider.value(
+          value: SwitchPriorityColorConfig(),
+        ),
+      ],
       child: const Application(),
     ),
   );
+}
+
+void initLogger() {
+  Logger.root.level = _loggingEnabled ? Level.ALL : Level.OFF;
+  Logger.root.onRecord.listen((record) {
+    if (kDebugMode) {
+      print('${record.level.name}: ${record.time}: ${record.loggerName}'
+          '\n${record.message}');
+    }
+  });
+}
+
+Future<void> initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  if (!kDebugMode) {
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  }
+
+  final remoteConfig = FirebaseRemoteConfig.instance;
+  await remoteConfig.setConfigSettings(RemoteConfigSettings(
+    fetchTimeout: const Duration(minutes: 1),
+    minimumFetchInterval: const Duration(minutes: 5),
+  ));
+  await remoteConfig.fetchAndActivate();
+
+  Logger('main').info('Firebase initialized');
 }
 
 Future<void> initHive() async {
@@ -28,16 +76,8 @@ Future<void> initHive() async {
   await Hive.openBox(
     TaskInfrastructureConstants.taskListPropertiesBoxName,
   );
-}
 
-void initLogger() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    if (kDebugMode) {
-      print('${record.level.name}: ${record.time}: ${record.loggerName}'
-          '\n${record.message}');
-    }
-  });
+  Logger('main').info('Hive initialized');
 }
 
 Future<ServiceScope> initDinoScope() async {

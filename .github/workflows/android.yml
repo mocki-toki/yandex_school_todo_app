@@ -20,7 +20,7 @@ jobs:
         run: flutter pub get
 
       - name: Check code format
-        run: flutter format --set-exit-if-changed .
+        run: find . -name "*.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
 
       - name: Code generation
         run: flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator
@@ -34,8 +34,16 @@ jobs:
       - name: Building APK
         run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
 
-      - name: Uploading artifacts
+      - name: Uploading artifact
         uses: actions/upload-artifact@v1
         with:
           name: app
-          path: build/app/outputs/apk/release
+          path: build/app/outputs/apk/release/app-release.apk
+
+      - name: Uploading artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_APPID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: build/app/outputs/apk/release/app-release.apk

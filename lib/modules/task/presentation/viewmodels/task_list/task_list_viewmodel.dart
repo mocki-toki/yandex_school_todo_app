@@ -181,13 +181,13 @@ class TaskListViewModel extends Cubit<TaskListState> {
     );
   }
 
-  Future<void> quickCreateTask(String text, bool done) {
+  Future<void> quickCreateTask(String text) {
     return _createTask(
       Task(
         id: const Uuid().v1obj(),
         text: text,
         importance: Importance.none,
-        done: done,
+        done: false,
         color: null,
         deadline: null,
         createdAt: DateTime.now(),

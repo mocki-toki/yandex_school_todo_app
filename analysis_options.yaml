@@ -5,6 +5,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "**/*.i18n.dart"
+    - "**/firebase_options.dart"
   errors:
     invalid_annotation_target: ignore # https://github.com/rrousselGit/freezed/issues/488#issuecomment-894358980
 

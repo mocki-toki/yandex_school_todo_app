@@ -1,7 +1,7 @@
 import 'package:todo_app/modules/task/presentation/presentation.dart';
 
-class TaskListItemShadowConstructor extends StatelessWidget {
-  const TaskListItemShadowConstructor({
+class TaskListItemDecorator extends StatelessWidget {
+  const TaskListItemDecorator({
     super.key,
     required this.isFirst,
     required this.isLast,
@@ -41,7 +41,7 @@ class TaskListItemShadowConstructor extends StatelessWidget {
             ),
         ],
       ),
-      padding: !isFirst ? null : const EdgeInsets.only(top: 2),
+      padding: isFirst ? null : const EdgeInsets.only(top: 2),
       child: Material(
         type: MaterialType.transparency,
         child: child,

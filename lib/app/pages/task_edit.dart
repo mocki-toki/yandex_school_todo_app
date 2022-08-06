@@ -227,7 +227,7 @@ class _ImportanceSelector extends StatelessWidget {
                       Importance.high,
                     )}",
                     style: context.textTheme.bodyText1!.copyWith(
-                      color: context.theme.colorRed,
+                      color: getHighImportanceColor(context),
                     ),
                   ),
                 ),

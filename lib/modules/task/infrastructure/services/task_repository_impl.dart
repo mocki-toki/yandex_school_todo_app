@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:todo_app/modules/task/domain/domain.dart';
 import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
@@ -43,35 +42,24 @@ class TaskRepositoryImpl implements TaskRepository {
 
     return await mergedOrFailureTaskList.mapData(
       (mergedTaskList) async {
-        // если это имело смысл,
-        // или если данные в storage и network не совпадают,
-        // то сохраняем данные в storage,
-        // отправляем замерженные данные в network и возвращаем результат
-        if (!listEquals(
-                mergedTaskList.toList(), taskListFromStorage.toList()) ||
-            !listEquals(
-                mergedTaskList.toList(), responseFromNetwork.list!.toList())) {
-          await _storage.updateTaskList(mergedTaskList);
+        // TODO: отправлять только по необходимости
+        await _storage.updateTaskList(mergedTaskList);
 
-          final responseOrFailureFromNetwork = await _network
-              .updateTaskList(
-                responseFromNetwork.revision.value,
-                TaskListRequest(list: mergedTaskList),
-              )
-              .toEntity<TaskListResponse>()
-            ..log(Logger('TaskNetworkBackend'))
-            ..onData((data) async {
-              await _storage.saveStorageRevision(data.revision);
-              await _storage.resetLocalTaskStatesForSynchonizedTaskList(
-                data.list!.map((e) => e.id),
-              );
-            });
+        final responseOrFailureFromNetwork = await _network
+            .updateTaskList(
+              responseFromNetwork.revision.value,
+              TaskListRequest(list: mergedTaskList),
+            )
+            .toEntity<TaskListResponse>()
+          ..log(Logger('TaskNetworkBackend'))
+          ..onData((data) async {
+            await _storage.saveStorageRevision(data.revision);
+            await _storage.resetLocalTaskStatesForSynchonizedTaskList(
+              data.list!.map((e) => e.id),
+            );
+          });
 
-          return responseOrFailureFromNetwork.map((e) => e.list!);
-        }
-
-        // если не имело смысла мержить, то вернуть актуальные network данные
-        return Right(responseFromNetwork.list!);
+        return responseOrFailureFromNetwork.map((e) => e.list!);
       },
     );
   }

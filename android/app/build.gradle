@@ -58,7 +58,7 @@ android {
     }
 
     buildTypes {
-        elease {
+        release {
             signingConfig signingConfigs.debug
         }
     }

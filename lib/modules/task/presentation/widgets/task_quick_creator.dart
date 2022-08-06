@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:todo_app/modules/task/presentation/presentation.dart';
 
 class TaskQuickCreator extends StatefulWidget {
@@ -6,31 +9,41 @@ class TaskQuickCreator extends StatefulWidget {
     required this.onCreate,
   });
 
-  final void Function(String text, bool done) onCreate;
+  final void Function(String text) onCreate;
 
   @override
   State<TaskQuickCreator> createState() => _TaskQuickCreatorState();
 }
 
 class _TaskQuickCreatorState extends State<TaskQuickCreator> {
-  final _textController = TextEditingController();
+  final textController = TextEditingController();
+  late StreamSubscription<bool> keyboardVisiblitySubscription;
 
-  var taskDone = false;
-  var creatorMode = false;
+  final focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _textController.addListener(() {
-      if (mounted) {
-        setState(() => creatorMode = _textController.text.isNotEmpty);
-      }
-    });
+
+    keyboardVisiblitySubscription =
+        KeyboardVisibilityController().onChange.listen(
+      (visible) {
+        if (!visible) {
+          focusNode.unfocus();
+        }
+
+        if (!visible && textController.text.isNotEmpty) {
+          widget.onCreate(textController.text);
+          textController.clear();
+        }
+      },
+    );
   }
 
   @override
   void dispose() {
-    _textController.dispose();
+    textController.dispose();
+    keyboardVisiblitySubscription.cancel();
     super.dispose();
   }
 
@@ -41,30 +54,16 @@ class _TaskQuickCreatorState extends State<TaskQuickCreator> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Visibility(
-            maintainState: true,
-            maintainAnimation: true,
-            maintainSize: true,
-            visible: creatorMode,
-            child: Checkbox(
-              value: taskDone,
-              onChanged: (value) => onCompleted(value!),
-              activeColor: context.theme.colorGreen,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(2),
-              ),
-              checkColor: context.theme.cardColor,
-              side: BorderSide(
-                color: context.theme.dividerColor,
-                width: 2,
-              ),
-            ),
+          const SizedBox(
+            width: 50,
           ),
           Expanded(
             child: TextField(
+              focusNode: focusNode,
               style: context.textTheme.bodyText1,
-              controller: _textController,
+              controller: textController,
               maxLines: null,
+              keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: context.localizations.newTask,
@@ -75,24 +74,11 @@ class _TaskQuickCreatorState extends State<TaskQuickCreator> {
               ),
             ),
           ),
-          Visibility(
-            visible: creatorMode,
-            child: IconButton(
-              icon: const Icon(Icons.add_circle),
-              onPressed: () => _onCreate(context),
-            ),
+          const SizedBox(
+            width: 50,
           ),
         ],
       ),
     );
-  }
-
-  void onCompleted(bool value) {
-    setState(() => taskDone = value);
-  }
-
-  void _onCreate(BuildContext context) {
-    widget.onCreate(_textController.text, taskDone);
-    _textController.clear();
   }
 }

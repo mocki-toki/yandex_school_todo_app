@@ -30,9 +30,12 @@ class TaskListItem extends StatelessWidget {
             Expanded(
               child: _TaskListItemText(task),
             ),
-            IconButton(
-              icon: const Icon(Icons.info_outline),
-              onPressed: () => _onEdit(context),
+            SizedBox(
+              width: 50,
+              child: IconButton(
+                icon: const Icon(Icons.info_outline),
+                onPressed: () => _onEdit(context),
+              ),
             ),
           ],
         ),
@@ -56,29 +59,32 @@ class _TaskListItemCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        if (task.importance == Importance.high)
-          Container(
-            color: getHighImportanceColor(context).withOpacity(0.1),
-            height: 15,
-            width: 15,
+    return SizedBox(
+      width: 50,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (task.importance == Importance.high)
+            Container(
+              color: getHighImportanceColor(context).withOpacity(0.1),
+              height: 15,
+              width: 15,
+            ),
+          Checkbox(
+            value: task.done,
+            onChanged: (value) => onCompleted(task, value!),
+            activeColor: _getCheckboxBorderColor(context),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2),
+            ),
+            checkColor: context.theme.cardColor,
+            side: BorderSide(
+              color: _getCheckboxBorderColor(context),
+              width: 2,
+            ),
           ),
-        Checkbox(
-          value: task.done,
-          onChanged: (value) => onCompleted(task, value!),
-          activeColor: _getCheckboxBorderColor(context),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2),
-          ),
-          checkColor: context.theme.cardColor,
-          side: BorderSide(
-            color: _getCheckboxBorderColor(context),
-            width: 2,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

@@ -10,16 +10,17 @@ Done
 <h6 align="center">
   <a href="https://github.com/cirnok/todo_app/releases"><img alt="Releases" src="https://img.shields.io/badge/Releases-purple.svg"></a>
   <a href="CHANGELOG.md"><img alt="Changelog" src="https://img.shields.io/badge/Changelog-blue.svg"></a>
+  <a href="https://appdistribution.firebase.dev/i/a0e67ff9f4f8cddc"><img alt="Join to Firebase App Distribution" src="https://img.shields.io/badge/Join to Firebase App Distribution-yellow.svg"></a>
   <a href="https://github.com/cirnok/todo_app/actions/workflows/android.yml"><img alt="Android" src="https://github.com/cirnok/todo_app/actions/workflows/android.yml/badge.svg"></a>
 </h6>
 <br>
 </h3>
 
 <p align="center">
-  <img height="400" src="https://user-images.githubusercontent.com/25152332/182955150-c16f04af-6267-4119-93fb-24c8841ad143.png">
-  <img height="400" src="https://user-images.githubusercontent.com/25152332/182955177-3442352c-17ac-42be-a85d-effd6838262f.png">
-  <img height="400" src="https://user-images.githubusercontent.com/25152332/182955192-0211347a-026c-49eb-8775-e3f8563e59a4.png">
-  <img height="400" src="https://user-images.githubusercontent.com/25152332/182955209-0dc669be-bb16-45bc-bec8-8ec93764c3f0.png">
+  <img height="300" src="https://user-images.githubusercontent.com/25152332/182955150-c16f04af-6267-4119-93fb-24c8841ad143.png">
+  <img height="300" src="https://user-images.githubusercontent.com/25152332/182955177-3442352c-17ac-42be-a85d-effd6838262f.png">
+  <img height="300" src="https://user-images.githubusercontent.com/25152332/182955192-0211347a-026c-49eb-8775-e3f8563e59a4.png">
+  <img height="300" src="https://user-images.githubusercontent.com/25152332/182955209-0dc669be-bb16-45bc-bec8-8ec93764c3f0.png">
 </p>
 
 ## Описание
@@ -74,12 +75,13 @@ flutter pub run index_generator
 - [x] Тёмная тема
 - [x] Локализация
 - [x] Navigator 1.0
+- [x] Firebase App Distribution
+- [x] Firebase Crashlytics
+- [x] Remote Config: переключение цвета важности
 
 #### В планах
 
-- [ ] Firebase Crashlytics
 - [ ] Firebase Analytics
-- [ ] Remote Config: переключение цвета важности
 - [ ] Анимации
 - [ ] Переход на Navigator 2.0
 - [ ] Поддержка горизонтальной ориентации

@@ -111,7 +111,7 @@ class _TaskListPageLoaded extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (context, index) {
                 if (index == data.sortedTasks.length) {
-                  return TaskListItemShadowConstructor(
+                  return TaskListItemDecorator(
                     isFirst: index == 0,
                     isLast: true,
                     child: TaskQuickCreator(
@@ -121,7 +121,7 @@ class _TaskListPageLoaded extends StatelessWidget {
                   );
                 }
 
-                return TaskListItemShadowConstructor(
+                return TaskListItemDecorator(
                   isFirst: index == 0,
                   isLast: false,
                   child: TaskListItem(

@@ -11,47 +11,38 @@ class TaskEditScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TaskEditViewModelProvider(
-      editedTask: task,
-      child: const _TaskEditPage(),
-    );
-  }
-}
-
-class _TaskEditPage extends StatelessWidget {
-  const _TaskEditPage();
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<TaskEditViewModel, TaskEditState>(
-        builder: (context, state) {
-          return state.when(
-            editTask: (editedTask, textController, importance, deadline) {
-              return _TaskEditPageDefault(
-                editedTask,
-                textController,
-                importance,
-                deadline,
-              );
-            },
-            newTask: (textController, importance, deadline) {
-              return _TaskEditPageDefault(
-                null,
-                textController,
-                importance,
-                deadline,
-              );
-            },
-          );
-        },
+      body: TaskEditViewModelProvider(
+        editedTask: task,
+        child: BlocBuilder<TaskEditViewModel, TaskEditState>(
+          builder: (context, state) {
+            return state.when(
+              editTask: (editedTask, textController, importance, deadline) {
+                return _TaskEditPage(
+                  editedTask,
+                  textController,
+                  importance,
+                  deadline,
+                );
+              },
+              newTask: (textController, importance, deadline) {
+                return _TaskEditPage(
+                  null,
+                  textController,
+                  importance,
+                  deadline,
+                );
+              },
+            );
+          },
+        ),
       ),
     );
   }
 }
 
-class _TaskEditPageDefault extends StatelessWidget {
-  const _TaskEditPageDefault(
+class _TaskEditPage extends StatelessWidget {
+  const _TaskEditPage(
     this.task,
     this.textController,
     this.importance,

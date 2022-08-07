@@ -1,30 +1,19 @@
 import 'package:todo_app/modules/task/presentation/presentation.dart';
 
-class TaskListScreen extends StatelessWidget {
+class TaskListScreen extends StatefulWidget {
   const TaskListScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return TaskListViewModelProvider(
-      child: const _TaskListPage(),
-    );
-  }
+  State<TaskListScreen> createState() => _TaskListScreenState();
 }
 
-class _TaskListPage extends StatefulWidget {
-  const _TaskListPage();
-
-  @override
-  State<_TaskListPage> createState() => _TaskListPageState();
-}
-
-class _TaskListPageState extends State<_TaskListPage>
+class _TaskListScreenState extends State<TaskListScreen>
     with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
-      Logger("TaskListPage").info('App resumed');
+      Logger("TaskListScreen").info('App resumed');
     }
   }
 
@@ -42,33 +31,35 @@ class _TaskListPageState extends State<_TaskListPage>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TaskListViewModel, TaskListState>(
-      builder: (context, state) => state.maybeWhen(
-        loaded: (data, visibleDoneTasks, syncState) => Scaffold(
-          floatingActionButton: FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () => _onAddTask(context),
+    return TaskListViewModelProvider(
+      child: BlocBuilder<TaskListViewModel, TaskListState>(
+        builder: (context, state) => state.maybeWhen(
+          loaded: (data, visibleDoneTasks, syncState) => Scaffold(
+            floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () => _onAddTask(context),
+            ),
+            body: _TaskListPage(
+              data,
+              visibleDoneTasks,
+              syncState,
+            ),
           ),
-          body: _TaskListPageLoaded(
-            data,
-            visibleDoneTasks,
-            syncState,
-          ),
+          error: (failure, _, __) {
+            return Scaffold(
+              body: Center(
+                child: Text("Error: ${failure.type}"),
+              ),
+            );
+          },
+          orElse: () {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          },
         ),
-        error: (failure, _, __) {
-          return Scaffold(
-            body: Center(
-              child: Text("Error: ${failure.type}"),
-            ),
-          );
-        },
-        orElse: () {
-          return const Scaffold(
-            body: Center(
-              child: CircularProgressIndicator(),
-            ),
-          );
-        },
       ),
     );
   }
@@ -78,8 +69,8 @@ class _TaskListPageState extends State<_TaskListPage>
   }
 }
 
-class _TaskListPageLoaded extends StatelessWidget {
-  const _TaskListPageLoaded(
+class _TaskListPage extends StatelessWidget {
+  const _TaskListPage(
     this.data,
     this.visibleDoneTasks,
     this.syncState,

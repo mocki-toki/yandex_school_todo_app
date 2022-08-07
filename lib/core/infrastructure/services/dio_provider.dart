@@ -3,8 +3,10 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:todo_app/core/infrastructure/infrastructure.dart';
 
-class DioFactory {
-  static Dio create() {
+class DioProvider {
+  final Dio dio = _create();
+
+  static Dio _create() {
     final dio = Dio(
       BaseOptions(
         baseUrl: CoreInfrastructureConstants.apiUrl,

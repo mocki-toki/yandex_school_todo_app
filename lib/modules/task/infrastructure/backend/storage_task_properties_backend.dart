@@ -2,7 +2,14 @@ import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
 const _doneTasksVisiblityKey = 'done_tasks_visiblity';
 
-class StorageTaskPropertiesBackend {
+class StorageTaskPropertiesBackend implements Initializable {
+  @override
+  Future<void> initialize() {
+    return Hive.openBox(
+      TaskInfrastructureConstants.taskListPropertiesBoxName,
+    );
+  }
+
   bool get getDoneTasksVisiblity {
     final box = _taskListPropertiesBox();
     return box.get(_doneTasksVisiblityKey) ?? true;

@@ -3,8 +3,11 @@ import 'package:todo_app/core/infrastructure/infrastructure.dart';
 
 const _deviceIdentifierKey = 'device_identifier';
 
-class DeviceIdentifierProvider {
-  static Future<DeviceIdentifier> resolve() async {
+class DeviceIdentifierProvider implements Initializable {
+  late DeviceIdentifier deviceIdentifier;
+
+  @override
+  Future<void> initialize() async {
     final box =
         await Hive.openBox(CoreInfrastructureConstants.propertiesBoxName);
     var identifier = box.get(_deviceIdentifierKey);
@@ -14,6 +17,6 @@ class DeviceIdentifierProvider {
       box.put(_deviceIdentifierKey, identifier);
     }
 
-    return DeviceIdentifier(identifier);
+    deviceIdentifier = DeviceIdentifier(identifier);
   }
 }

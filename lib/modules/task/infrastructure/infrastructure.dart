@@ -12,3 +12,4 @@ export 'helpers/stream_extensions.dart';
 export 'remote_config/switch_priority_color_config.dart';
 export 'services/task_properties_repository.dart';
 export 'services/task_repository_impl.dart';
+export 'task_module.dart';

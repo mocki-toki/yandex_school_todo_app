@@ -5,7 +5,18 @@ import 'package:todo_app/modules/task/infrastructure/infrastructure.dart';
 
 const _revisionKey = 'revision';
 
-class StorageTaskBackend {
+class StorageTaskBackend implements Initializable {
+  @override
+  Future<void> initialize() async {
+    Hive.registerAdapter(LocalTaskAdapter());
+    await Hive.openBox<LocalTask>(
+      TaskInfrastructureConstants.taskListDataBoxName,
+    );
+    await Hive.openBox(
+      TaskInfrastructureConstants.taskListDataPropertiesBoxName,
+    );
+  }
+
   Iterable<Task> getTaskList() {
     final box = _taskListDataBox();
 
@@ -176,14 +187,14 @@ class StorageTaskBackend {
   }
 
   Revision get getStorageRevision {
-    final box = _taskListPropertiesBox();
+    final box = _taskListDataPropertiesBox();
 
     final value = box.get(_revisionKey) ?? 0;
     return Revision(value);
   }
 
   Future<void> saveStorageRevision(Revision revision) {
-    final box = _taskListPropertiesBox();
+    final box = _taskListDataPropertiesBox();
     return box.put(_revisionKey, revision.value);
   }
 
@@ -193,9 +204,9 @@ class StorageTaskBackend {
     );
   }
 
-  Box _taskListPropertiesBox() {
+  Box _taskListDataPropertiesBox() {
     return Hive.box(
-      TaskInfrastructureConstants.taskListPropertiesBoxName,
+      TaskInfrastructureConstants.taskListDataPropertiesBoxName,
     );
   }
 }

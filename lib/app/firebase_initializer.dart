@@ -21,5 +21,5 @@ Future<void> initFirebase() async {
   ));
   await remoteConfig.fetchAndActivate();
 
-  Logger('main').info('Firebase initialized');
+  Logger('app').info('Firebase initialized');
 }

@@ -151,7 +151,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
         ),
       );
     } on StateError catch (_) {
-      Logger("${runtimeType}").info(
+      getLogger().info(
           "StateError ignored (_syncTimer: ${_syncTimer?.isActive},"
           " _retrySyncAfterErrorTimer: ${_retrySyncAfterErrorTimer?.isActive}");
 

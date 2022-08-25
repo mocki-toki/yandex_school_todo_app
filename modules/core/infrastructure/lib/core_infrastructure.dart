@@ -8,6 +8,7 @@ export 'exports.dart';
 export 'constants.dart';
 export 'logger_initializer.dart';
 export 'helpers/either_extensions.dart';
+export 'helpers/object_extensions.dart';
 export 'services/dio_auth_interceptor.dart';
 export 'services/firebase_analytics_service_impl.dart';
 export 'services/firebase_analytics_provider.dart';

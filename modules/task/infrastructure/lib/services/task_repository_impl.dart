@@ -19,7 +19,7 @@ class TaskRepositoryImpl implements TaskRepository {
   @override
   Stream<void> get networkStateChangedStream {
     return _connectivityStream.map((event) {
-      Logger("${runtimeType}").info('Network state changed: $event');
+      getLogger().info('Network state changed: $event');
     });
   }
 

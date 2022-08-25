@@ -28,7 +28,7 @@ class FirebaseRemoteConfigProvider implements Initializable {
     await remoteConfig.fetchAndActivate();
     for (final config in configs) _initializeConfig(config);
 
-    Logger('$runtimeType').info('Service initialized');
+    getLogger().info('Service initialized');
   }
 
   void _initializeConfig<T>(RemoteConfig config) {

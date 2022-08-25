@@ -14,5 +14,6 @@ export 'i18n/app.i18n.dart';
 export 'assets/app_icons.dart';
 export 'pages/not_found.dart';
 export 'helpers/view_model_provider.dart';
+export 'helpers/object_extensions.dart';
 export 'helpers/stream_extensions.dart';
 export 'helpers/build_context_extensions.dart';

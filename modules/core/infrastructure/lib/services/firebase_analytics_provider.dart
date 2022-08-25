@@ -13,7 +13,7 @@ class FirebaseAnalyticsProvider implements Initializable {
     analytics = FirebaseAnalytics.instance;
     await analytics.setUserId(id: _deviceIdentifier.deviceId);
 
-    Logger('$runtimeType').info('Service initialized');
+    getLogger().info('Service initialized');
   }
 
   FirebaseAnalyticsObserver getObserver() {

@@ -15,7 +15,7 @@ class _TaskListScreenState extends State<TaskListScreen>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
-      Logger("${runtimeType}").info('App resumed');
+      getLogger().info('App resumed');
     }
   }
 

@@ -10,6 +10,6 @@ class FirebaseAnalyticsServiceImpl implements FirebaseAnalyticsService {
   Future<void> sendEvent(AnalyticsEvent event) async {
     await _analytics.logEvent(name: event.name, parameters: event.parameters);
 
-    Logger('$runtimeType').info('Event sent: $event');
+    getLogger().info('Event sent: $event');
   }
 }

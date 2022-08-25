@@ -17,11 +17,8 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Get dependencies
-        run: flutter pub get -t main/lib/main.dart
-
       - name: Check code format
-        run: find . -name "*.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
+        run: find . -name "*.dart" ! -name "firebase_options.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" ! -name "*.i18n.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
 
       - name: Statically analyze
         run: flutter analyze .
@@ -30,10 +27,11 @@ jobs:
       #   run: flutter test
 
       - name: Building APK
+        working-directory: ./todo_app
         run: flutter build apk --release --bundle-sksl-path android.sksl.json
 
       - name: Publishing release
         uses: ncipollo/release-action@v1
         with:
-          artifacts: "build/app/outputs/apk/release/*.apk"
+          artifacts: "todo_app/build/app/outputs/apk/release/*.apk"
           token: ${{ secrets.TOKEN }}

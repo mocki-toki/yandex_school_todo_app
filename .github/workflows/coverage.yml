@@ -15,14 +15,8 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Get dependencies
-        run: flutter pub get
-
       - name: Check code format
-        run: find . -name "*.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
-
-      - name: Code generation
-        run: flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator
+        run: find . -name "*.dart" ! -name "firebase_options.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" ! -name "*.i18n.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
 
       - name: Statically analyze
         run: flutter analyze .

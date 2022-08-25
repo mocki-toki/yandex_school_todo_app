@@ -18,13 +18,10 @@ jobs:
           channel: "stable"
 
       - name: Get dependencies
-        run: flutter pub get
+        run: flutter pub get -t main/lib/main.dart
 
       - name: Check code format
         run: find . -name "*.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
-
-      - name: Code generation
-        run: flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator
 
       - name: Statically analyze
         run: flutter analyze .
@@ -33,7 +30,7 @@ jobs:
       #   run: flutter test
 
       - name: Building APK
-        run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
+        run: flutter build apk --release --bundle-sksl-path android.sksl.json
 
       - name: Publishing release
         uses: ncipollo/release-action@v1

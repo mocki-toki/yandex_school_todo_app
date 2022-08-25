@@ -1,0 +1,130 @@
+import 'package:task_domain/task_domain.dart';
+import 'package:task_presentation/task_presentation.dart';
+
+class TaskListScreen extends StatefulWidget {
+  const TaskListScreen({super.key});
+
+  @override
+  State<TaskListScreen> createState() => _TaskListScreenState();
+}
+
+class _TaskListScreenState extends State<TaskListScreen>
+    with WidgetsBindingObserver {
+  // TODO: refactor
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
+      Logger("${runtimeType}").info('App resumed');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TaskListViewModelProvider(
+      child: BlocBuilder<TaskListViewModel, TaskListState>(
+        builder: (context, state) => state.maybeWhen(
+          loaded: (data, visibleDoneTasks, syncState) => Scaffold(
+            floatingActionButton: FloatingActionButton(
+              child: const Icon(Icons.add),
+              onPressed: () => _onAddTask(context),
+            ),
+            body: _TaskListPage(
+              data,
+              visibleDoneTasks,
+              syncState,
+            ),
+          ),
+          error: (failure, _, __) {
+            return Scaffold(
+              body: Center(
+                child: Text("Error: ${failure.type}"),
+              ),
+            );
+          },
+          orElse: () {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  void _onAddTask(BuildContext context) {
+    context.sp.getRequired<TaskNavigator>().createTask();
+  }
+}
+
+class _TaskListPage extends StatelessWidget {
+  const _TaskListPage(
+    this.data,
+    this.visibleDoneTasks,
+    this.syncState,
+  );
+
+  final TaskListData data;
+  final bool visibleDoneTasks;
+  final TaskListSyncState syncState;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        TaskListHeader(
+          taskCompletedCount: data.completedTasksCount,
+          visibilityButtonValue: visibleDoneTasks,
+          onVisibilityButtonChanged:
+              context.read<TaskListViewModel>().changeVisibilityDoneTasks,
+          syncState: syncState,
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 8)
+              .copyWith(top: 4, bottom: 100),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == data.sortedTasks.length) {
+                  return TaskListItemDecorator(
+                    isFirst: index == 0,
+                    isLast: true,
+                    child: TaskQuickCreator(
+                      onCreate:
+                          context.read<TaskListViewModel>().quickCreateTask,
+                    ),
+                  );
+                }
+
+                return TaskListItemDecorator(
+                  isFirst: index == 0,
+                  isLast: false,
+                  child: TaskListItem(
+                    data.sortedTasks[index],
+                    onDeleted: context.read<TaskListViewModel>().deleteTask,
+                    onCompleted: context.read<TaskListViewModel>().setDoneTask,
+                  ),
+                );
+              },
+              childCount: data.sortedTasks.length + 1,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}

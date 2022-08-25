@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.2
+
+### Добавлено
+
+- Подключен Firebase Anatytics
+
+### Изменено
+
+- Переход на Pansy Archeticture (см. readme)
+- Переход на Navigator 2.0
+
 ## 1.0.1
 
 ### Добавлено

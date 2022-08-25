@@ -8,7 +8,7 @@
     "**/*.freezed.dart": true,
     "**/*.g.dart": true,
     "**/*.i18n.dart": true,
-    "**/firebase_options.dart": true,
+    "**/generated_plugin_registrant.dart": true,
 
     "**/.flutter-plugins": true,
     "**/.flutter-plugins-dependencies": true,
@@ -17,6 +17,7 @@
 
     "**/.metadata": true,
     "**/pubspec.lock": true,
+    "**/pubspec_overrides.yaml": true,
     "**/todo_app.iml": true,
 
     "**/build": true

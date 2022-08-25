@@ -1,0 +1,178 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.todo_app"
+4    android:versionCode="1"
+5    android:versionName="1.0.1" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+9        android:targetSdkVersion="31" />
+10    <!--
+11         The INTERNET permission is required for development. Specifically,
+12         the Flutter tool needs it to communicate with the running application
+13         to allow setting breakpoints, to provide hot reload, etc.
+14    -->
+15    <uses-permission android:name="android.permission.INTERNET" />
+15-->/Users/nekokeyo/coding/Flutter/todo_app/android/app/src/main/AndroidManifest.xml:3:4-65
+15-->/Users/nekokeyo/coding/Flutter/todo_app/android/app/src/main/AndroidManifest.xml:3:21-63
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->[:connectivity_plus] /Users/nekokeyo/coding/Flutter/todo_app/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:9:5-79
+16-->[:connectivity_plus] /Users/nekokeyo/coding/Flutter/todo_app/build/connectivity_plus/intermediates/merged_manifest/debug/AndroidManifest.xml:9:22-76
+17
+18    <application
+19        android:name="android.app.Application"
+20        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+20-->[androidx.core:core:1.6.0] /Users/nekokeyo/.gradle/caches/transforms-3/0918eb3ce284343c43fac695e9cde16d/transformed/core-1.6.0/AndroidManifest.xml:24:18-86
+21        android:debuggable="true"
+22        android:icon="@mipmap/ic_launcher"
+23        android:label="@string/app_name" >
+24        <activity
+25            android:name="com.example.todo_app.MainActivity"
+26            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+27            android:exported="true"
+28            android:hardwareAccelerated="true"
+29            android:launchMode="singleTop"
+30            android:theme="@style/LaunchTheme"
+31            android:windowSoftInputMode="adjustResize" >
+32
+33            <!--
+34                 Specifies an Android theme to apply to this Activity as soon as
+35                 the Android process has started. This theme is visible to the user
+36                 while the Flutter UI initializes. After that, this theme continues
+37                 to determine the Window background behind the Flutter UI.
+38            -->
+39            <meta-data
+40                android:name="io.flutter.embedding.android.NormalTheme"
+41                android:resource="@style/NormalTheme" />
+42
+43            <intent-filter>
+44                <action android:name="android.intent.action.MAIN" />
+45
+46                <category android:name="android.intent.category.LAUNCHER" />
+47            </intent-filter>
+48        </activity>
+49        <!--
+50             Don't delete the meta-data below.
+51             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java
+52        -->
+53        <meta-data
+54            android:name="flutterEmbedding"
+55            android:value="2" />
+56
+57        <service
+57-->[:firebase_crashlytics] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_crashlytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:9-14:19
+58            android:name="com.google.firebase.components.ComponentDiscoveryService"
+58-->[:firebase_crashlytics] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_crashlytics/intermediates/merged_manifest/debug/AndroidManifest.xml:10:18-89
+59            android:directBootAware="true"
+59-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:35:13-43
+60            android:exported="false" >
+60-->[com.google.firebase:firebase-config:21.1.0] /Users/nekokeyo/.gradle/caches/transforms-3/4d5fdd03b6e94cd154a74bdfb89f09e6/transformed/jetified-firebase-config-21.1.0/AndroidManifest.xml:31:13-37
+61            <meta-data
+61-->[:firebase_crashlytics] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_crashlytics/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+62                android:name="com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar"
+62-->[:firebase_crashlytics] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_crashlytics/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-130
+63                android:value="com.google.firebase.components.ComponentRegistrar" />
+63-->[:firebase_crashlytics] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_crashlytics/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+64            <meta-data
+64-->[:firebase_remote_config] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_remote_config/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+65                android:name="com.google.firebase.components:io.flutter.plugins.firebase.firebaseremoteconfig.FlutterFirebaseAppRegistrar"
+65-->[:firebase_remote_config] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_remote_config/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-139
+66                android:value="com.google.firebase.components.ComponentRegistrar" />
+66-->[:firebase_remote_config] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_remote_config/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+67            <meta-data
+67-->[:firebase_core] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:11:13-13:85
+68                android:name="com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar"
+68-->[:firebase_core] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:12:17-124
+69                android:value="com.google.firebase.components.ComponentRegistrar" />
+69-->[:firebase_core] /Users/nekokeyo/coding/Flutter/todo_app/build/firebase_core/intermediates/merged_manifest/debug/AndroidManifest.xml:13:17-82
+70            <meta-data
+70-->[com.google.firebase:firebase-config:21.1.0] /Users/nekokeyo/.gradle/caches/transforms-3/4d5fdd03b6e94cd154a74bdfb89f09e6/transformed/jetified-firebase-config-21.1.0/AndroidManifest.xml:32:13-34:85
+71                android:name="com.google.firebase.components:com.google.firebase.remoteconfig.RemoteConfigRegistrar"
+71-->[com.google.firebase:firebase-config:21.1.0] /Users/nekokeyo/.gradle/caches/transforms-3/4d5fdd03b6e94cd154a74bdfb89f09e6/transformed/jetified-firebase-config-21.1.0/AndroidManifest.xml:33:17-117
+72                android:value="com.google.firebase.components.ComponentRegistrar" />
+72-->[com.google.firebase:firebase-config:21.1.0] /Users/nekokeyo/.gradle/caches/transforms-3/4d5fdd03b6e94cd154a74bdfb89f09e6/transformed/jetified-firebase-config-21.1.0/AndroidManifest.xml:34:17-82
+73            <meta-data
+73-->[com.google.firebase:firebase-crashlytics:18.2.11] /Users/nekokeyo/.gradle/caches/transforms-3/60885ec48326140a211bcc73738e7f7e/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:18:13-20:85
+74                android:name="com.google.firebase.components:com.google.firebase.crashlytics.CrashlyticsRegistrar"
+74-->[com.google.firebase:firebase-crashlytics:18.2.11] /Users/nekokeyo/.gradle/caches/transforms-3/60885ec48326140a211bcc73738e7f7e/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:19:17-115
+75                android:value="com.google.firebase.components.ComponentRegistrar" />
+75-->[com.google.firebase:firebase-crashlytics:18.2.11] /Users/nekokeyo/.gradle/caches/transforms-3/60885ec48326140a211bcc73738e7f7e/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:20:17-82
+76            <meta-data
+76-->[com.google.firebase:firebase-abt:21.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/29bbf203e8d638d81e91d93d0b07a307/transformed/jetified-firebase-abt-21.0.1/AndroidManifest.xml:13:13-15:85
+77                android:name="com.google.firebase.components:com.google.firebase.abt.component.AbtRegistrar"
+77-->[com.google.firebase:firebase-abt:21.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/29bbf203e8d638d81e91d93d0b07a307/transformed/jetified-firebase-abt-21.0.1/AndroidManifest.xml:14:17-109
+78                android:value="com.google.firebase.components.ComponentRegistrar" />
+78-->[com.google.firebase:firebase-abt:21.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/29bbf203e8d638d81e91d93d0b07a307/transformed/jetified-firebase-abt-21.0.1/AndroidManifest.xml:15:17-82
+79            <meta-data
+79-->[com.google.firebase:firebase-installations:17.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/e2895324cba94631fe53652926ae8a40/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:18:13-20:85
+80                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+80-->[com.google.firebase:firebase-installations:17.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/e2895324cba94631fe53652926ae8a40/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:19:17-127
+81                android:value="com.google.firebase.components.ComponentRegistrar" />
+81-->[com.google.firebase:firebase-installations:17.0.1] /Users/nekokeyo/.gradle/caches/transforms-3/e2895324cba94631fe53652926ae8a40/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:20:17-82
+82        </service>
+83
+84        <uses-library
+84-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:25:9-27:40
+85            android:name="androidx.window.extensions"
+85-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:26:13-54
+86            android:required="false" />
+86-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:27:13-37
+87        <uses-library
+87-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:28:9-30:40
+88            android:name="androidx.window.sidecar"
+88-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:29:13-51
+89            android:required="false" />
+89-->[androidx.window:window:1.0.0-beta04] /Users/nekokeyo/.gradle/caches/transforms-3/90c51c7663c41992ae18c59fcd562bf3/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:30:13-37
+90
+91        <provider
+91-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:26:9-31:39
+92            android:name="com.google.firebase.provider.FirebaseInitProvider"
+92-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:27:13-77
+93            android:authorities="com.example.todo_app.firebaseinitprovider"
+93-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:28:13-72
+94            android:directBootAware="true"
+94-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:29:13-43
+95            android:exported="false"
+95-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:30:13-37
+96            android:initOrder="100" />
+96-->[com.google.firebase:firebase-common:20.1.1] /Users/nekokeyo/.gradle/caches/transforms-3/832f9a71e0e33b3b5b88aceeb5fcea18/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:31:13-36
+97
+98        <meta-data
+98-->[com.google.android.gms:play-services-basement:18.0.0] /Users/nekokeyo/.gradle/caches/transforms-3/5a4c878e75fdd9285080504f38977348/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:21:9-23:69
+99            android:name="com.google.android.gms.version"
+99-->[com.google.android.gms:play-services-basement:18.0.0] /Users/nekokeyo/.gradle/caches/transforms-3/5a4c878e75fdd9285080504f38977348/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:22:13-58
+100            android:value="@integer/google_play_services_version" />
+100-->[com.google.android.gms:play-services-basement:18.0.0] /Users/nekokeyo/.gradle/caches/transforms-3/5a4c878e75fdd9285080504f38977348/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:23:13-66
+101
+102        <service
+102-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:29:9-35:19
+103            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+103-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:30:13-103
+104            android:exported="false" >
+104-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:31:13-37
+105            <meta-data
+105-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:32:13-34:39
+106                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+106-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:33:17-94
+107                android:value="cct" />
+107-->[com.google.android.datatransport:transport-backend-cct:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/0f54a425d9ba0b0d5b3157ffe0f87da5/transformed/jetified-transport-backend-cct-3.1.5/AndroidManifest.xml:34:17-36
+108        </service>
+109        <service
+109-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:26:9-30:19
+110            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+110-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:27:13-117
+111            android:exported="false"
+111-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:28:13-37
+112            android:permission="android.permission.BIND_JOB_SERVICE" >
+112-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:29:13-69
+113        </service>
+114
+115        <receiver
+115-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:32:9-34:40
+116            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+116-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:33:13-132
+117            android:exported="false" />
+117-->[com.google.android.datatransport:transport-runtime:3.1.5] /Users/nekokeyo/.gradle/caches/transforms-3/e77e4ade605ec9e20e239d575c1ec40d/transformed/jetified-transport-runtime-3.1.5/AndroidManifest.xml:34:13-37
+118    </application>
+119
+120</manifest>

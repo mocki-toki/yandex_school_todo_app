@@ -20,22 +20,16 @@ class TaskListHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final expanded = context.mediaQuery.orientation == Orientation.portrait;
-    return SliverLayoutBuilder(
-      builder: (context, constraints) {
-        final scrolled = constraints.scrollOffset > 0;
-        return SliverPersistentHeader(
-          delegate: _Header(
-            taskCompletedCount,
-            context.mediaQuery.viewPadding.top,
-            visibilityButtonValue,
-            onVisibilityButtonChanged,
-            syncState,
-            expanded: expanded,
-            overrideElevation: expanded ? null : (scrolled ? 4 : 0),
-          ),
-          pinned: true,
-        );
-      },
+    return SliverPersistentHeader(
+      delegate: _Header(
+        taskCompletedCount,
+        context.mediaQuery.viewPadding.top,
+        visibilityButtonValue,
+        onVisibilityButtonChanged,
+        syncState,
+        expanded: expanded,
+      ),
+      pinned: true,
     );
   }
 }
@@ -48,7 +42,6 @@ class _Header extends SliverPersistentHeaderDelegate {
     this.onVisibilityButtonChanged,
     this.syncState, {
     required this.expanded,
-    this.overrideElevation,
   });
 
   final int taskCompletedCount;
@@ -57,7 +50,6 @@ class _Header extends SliverPersistentHeaderDelegate {
   final ValueChanged<bool> onVisibilityButtonChanged;
   final TaskListSyncState syncState;
   final bool expanded;
-  final double? overrideElevation;
 
   @override
   Widget build(
@@ -71,9 +63,7 @@ class _Header extends SliverPersistentHeaderDelegate {
 
     return Card(
       color: Colors.transparent,
-      elevation: overrideElevation != null
-          ? overrideElevation
-          : (progress != 1 ? 0 : 4),
+      elevation: (expanded ? progress != 1 : shrinkOffset == 0) ? 0 : 4,
       margin: EdgeInsets.zero,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 100),

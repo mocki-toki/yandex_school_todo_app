@@ -31,5 +31,13 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+        <!-- Deep linking -->
+        <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
+        <intent-filter android:autoVerify="true">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="todoapp" android:host="todoapp"/>
+        </intent-filter>
     </application>
 </manifest>

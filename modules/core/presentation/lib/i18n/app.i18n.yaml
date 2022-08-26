@@ -13,3 +13,5 @@ low: "Low"
 high: "High"
 
 notFoundText: "Everything will be found. With time"
+errorText: "Error"
+errorCodeText(String code): "Code:\n$code"

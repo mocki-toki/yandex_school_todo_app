@@ -5,36 +5,38 @@ class TaskEditScreen extends StatelessWidget {
   const TaskEditScreen({
     super.key,
     this.taskId,
-    this.task,
-  }) : assert(task == null ? true : taskId != null);
+    this.cachedTask,
+  }) : assert(cachedTask == null ? true : taskId != null);
 
   final UuidValue? taskId;
-  final Task? task;
+  final Task? cachedTask;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: TaskEditViewModelProvider(
-        editedTask: task,
+        taskId: taskId,
+        cachedTask: cachedTask,
         child: BlocBuilder<TaskEditViewModel, TaskEditState>(
           builder: (context, state) {
-            return state.when(
-              editTask: (editedTask, textController, importance, deadline) {
+            return state.map(
+              loadedTask: (state) {
                 return _TaskEditPage(
-                  editedTask,
-                  textController,
-                  importance,
-                  deadline,
+                  state.textController,
+                  state.importance,
+                  state.deadline,
+                  task: cachedTask,
                 );
               },
-              newTask: (textController, importance, deadline) {
+              newTask: (state) {
                 return _TaskEditPage(
-                  null,
-                  textController,
-                  importance,
-                  deadline,
+                  state.textController,
+                  state.importance,
+                  state.deadline,
                 );
               },
+              errorTask: (state) => FailureDecoratorWidget(state.failure),
+              loadingTask: (state) => LoaderWidget(),
             );
           },
         ),
@@ -45,11 +47,11 @@ class TaskEditScreen extends StatelessWidget {
 
 class _TaskEditPage extends StatelessWidget {
   const _TaskEditPage(
-    this.task,
     this.textController,
     this.importance,
-    this.deadline,
-  );
+    this.deadline, {
+    this.task,
+  });
 
   final Task? task;
   final TextEditingController textController;
@@ -131,11 +133,11 @@ class _TaskEditPage extends StatelessWidget {
   }
 
   void onClose(BuildContext context) {
-    context.sp.getRequired<TaskNavigator>().showTaskList();
+    context.sp.getRequired<TaskNavigatorMixin>().showTaskList();
   }
 
   Future<void> onSaveTask(BuildContext context) async {
-    final navigator = context.sp.getRequired<TaskNavigator>();
+    final navigator = context.sp.getRequired<TaskNavigatorMixin>();
 
     if (task == null) {
       await context.read<TaskEditViewModel>().createTask();
@@ -148,7 +150,7 @@ class _TaskEditPage extends StatelessWidget {
 
   void onDeleteTask(BuildContext context) {
     context.read<TaskEditViewModel>().deleteTask();
-    context.sp.getRequired<TaskNavigator>().showTaskList();
+    context.sp.getRequired<TaskNavigatorMixin>().showTaskList();
   }
 
   Future<void> onDeadlineChanged(BuildContext context, bool value) async {

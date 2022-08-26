@@ -7,7 +7,6 @@ export 'models/task_request.dart';
 export 'models/task_response.dart';
 export 'models/task_list_response.dart';
 export 'models/task_list_request.dart';
-export 'services/navigator.dart';
 export 'services/task_repository.dart';
 export 'services/task_properties_repository.dart';
 export 'entities/local_task.dart';

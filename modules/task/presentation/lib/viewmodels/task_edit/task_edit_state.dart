@@ -11,10 +11,20 @@ class TaskEditState with _$TaskEditState {
     DateTime? deadline,
   }) = TaskEditStateNewTask;
 
-  const factory TaskEditState.editTask({
-    required Task editedTask,
+  const factory TaskEditState.loadingTask({
+    required UuidValue taskId,
+  }) = TaskEditStateLoadingTask;
+
+  const factory TaskEditState.loadedTask({
+    required UuidValue taskId,
+    required Task task,
     required TextEditingController textController,
     required Importance importance,
     DateTime? deadline,
-  }) = TaskEditStateEditTask;
+  }) = TaskEditStateLoadedTask;
+
+  const factory TaskEditState.errorTask({
+    required UuidValue taskId,
+    required Failure failure,
+  }) = TaskEditStateErrorTask;
 }

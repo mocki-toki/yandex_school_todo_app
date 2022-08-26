@@ -44,9 +44,9 @@ class TaskListItem extends StatelessWidget {
   }
 
   void _onEdit(BuildContext context) {
-    context.sp.getRequired<TaskNavigator>().editTask(
+    context.sp.getRequired<TaskNavigatorMixin>().editTask(
           taskId: task.id,
-          task: task,
+          cachedTask: task,
         );
   }
 }

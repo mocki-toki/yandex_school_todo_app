@@ -1,4 +1,3 @@
-import 'package:task_domain/task_domain.dart';
 import 'package:task_presentation/task_presentation.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -35,30 +34,26 @@ class _TaskListScreenState extends State<TaskListScreen>
   Widget build(BuildContext context) {
     return TaskListViewModelProvider(
       child: BlocBuilder<TaskListViewModel, TaskListState>(
-        builder: (context, state) => state.maybeWhen(
-          loaded: (data, visibleDoneTasks, syncState) => Scaffold(
+        builder: (context, state) => state.maybeMap(
+          loaded: (state) => Scaffold(
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.add),
               onPressed: () => _onAddTask(context),
             ),
             body: _TaskListPage(
-              data,
-              visibleDoneTasks,
-              syncState,
+              state.data,
+              state.visibleDoneTasks,
+              state.syncState,
             ),
           ),
-          error: (failure, _, __) {
+          error: (state) {
             return Scaffold(
-              body: Center(
-                child: Text("Error: ${failure.type}"),
-              ),
+              body: FailureDecoratorWidget(state.failure),
             );
           },
           orElse: () {
             return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
+              body: LoaderWidget(),
             );
           },
         ),
@@ -67,7 +62,7 @@ class _TaskListScreenState extends State<TaskListScreen>
   }
 
   void _onAddTask(BuildContext context) {
-    context.sp.getRequired<TaskNavigator>().createTask();
+    context.sp.getRequired<TaskNavigatorMixin>().createTask();
   }
 }
 

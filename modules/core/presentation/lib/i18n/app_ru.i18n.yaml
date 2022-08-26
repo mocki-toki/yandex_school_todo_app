@@ -13,3 +13,5 @@ low: "Низкий"
 high: "Высокий"
 
 notFoundText: "Найдётся всё. Со временем"
+errorText: "Произошла ошибка"
+errorCodeText(String code): "Код ошибки:\n$code"

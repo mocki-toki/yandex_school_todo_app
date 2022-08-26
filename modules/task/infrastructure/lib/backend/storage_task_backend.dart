@@ -17,7 +17,7 @@ class StorageTaskBackend implements Initializable {
     );
   }
 
-  Iterable<Task> getTaskList() {
+  Future<Iterable<Task>> getTaskList() async {
     final box = _taskListDataBox();
 
     final localTasks = box.values.where(
@@ -96,9 +96,9 @@ class StorageTaskBackend implements Initializable {
     );
   }
 
-  Iterable<Task> getMergedTaskList(
+  Future<Iterable<Task>> getMergedTaskList(
     Iterable<Task> tasksFromServer,
-  ) {
+  ) async {
     final box = _taskListDataBox();
     final mergedTasks = tasksFromServer.toList();
 
@@ -132,7 +132,7 @@ class StorageTaskBackend implements Initializable {
     return mergedTasks;
   }
 
-  Task getTask(UuidValue taskId) {
+  Future<Task> getTask(UuidValue taskId) async {
     final box = _taskListDataBox();
 
     final localTask = box.get(taskId.uuid);

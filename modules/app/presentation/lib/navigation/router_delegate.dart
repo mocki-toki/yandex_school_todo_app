@@ -1,51 +1,15 @@
 import 'package:app_presentation/app_presentation.dart';
-import 'package:task_domain/task_domain.dart';
 import 'package:task_presentation/task_presentation.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRouterConfig>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRouterConfig>
-    implements TaskNavigator {
+    with
+        ChangeNotifier,
+        CoreNavigatorMixin,
+        TaskNavigatorMixin,
+        PopNavigatorRouterDelegateMixin<AppRouterConfig> {
   AppRouterDelegate(this._firebaseObservers);
 
   final FirebaseAnalyticsObserver _firebaseObservers;
-
-  bool _isNotFound = false;
-  bool _isTask = false;
-  UuidValue? _taskId;
-  Task? _task;
-
-  @override
-  void showNotFound() {
-    _isNotFound = true;
-    notifyListeners();
-  }
-
-  @override
-  void showTaskList() {
-    _isNotFound = false;
-    _isTask = false;
-    _taskId = null;
-    _task = null;
-    notifyListeners();
-  }
-
-  @override
-  void createTask() {
-    _isNotFound = false;
-    _isTask = true;
-    _taskId = null;
-    _task = null;
-    notifyListeners();
-  }
-
-  @override
-  void editTask({required UuidValue taskId, Task? task}) {
-    _isNotFound = false;
-    _isTask = true;
-    _taskId = taskId;
-    _task = task;
-    notifyListeners();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +20,11 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfig>
         MaterialPage(
           child: TaskListScreen(),
         ),
-        if (_isTask)
+        if (isTask)
           MaterialPage(
-            child: TaskEditScreen(taskId: _taskId, task: _task),
+            child: TaskEditScreen(taskId: taskId, cachedTask: cachedTask),
           ),
-        if (_isNotFound)
+        if (isNotFound)
           MaterialPage(
             child: NotFoundScreen(),
           ),
@@ -74,14 +38,14 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfig>
 
   @override
   AppRouterConfig? get currentConfiguration {
-    if (_isNotFound == true) {
+    if (isNotFound == true) {
       return AppRouterConfig.notFound();
-    } else if (!_isTask) {
+    } else if (!isTask) {
       return AppRouterConfig.taskList();
-    } else if (_isTask && _taskId == null) {
+    } else if (isTask && taskId == null) {
       return AppRouterConfig.createTask();
-    } else if (_isTask && _taskId != null) {
-      return AppRouterConfig.editTask(_taskId!, task: _task);
+    } else if (isTask && taskId != null) {
+      return AppRouterConfig.editTask(taskId!, cachedTask: cachedTask);
     } else {
       return null;
     }
@@ -89,20 +53,9 @@ class AppRouterDelegate extends RouterDelegate<AppRouterConfig>
 
   @override
   Future<void> setNewRoutePath(AppRouterConfig configuration) async {
-    if (configuration.isNotFound) {
-      _isNotFound = true;
-    } else if (!configuration.isTask) {
-      _isNotFound = false;
-      _isTask = false;
-      _taskId = null;
-      _task = null;
-    } else if (configuration.taskId != null) {
-      _isNotFound = false;
-      _isTask = false;
-      _taskId = null;
-      _task = null;
-    } else {
-      throw UnimplementedError();
-    }
+    isNotFound = configuration.isNotFound;
+    isTask = configuration.isTask;
+    taskId = configuration.taskId;
+    cachedTask = configuration.cachedTask;
   }
 }

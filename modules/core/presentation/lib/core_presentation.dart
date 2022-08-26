@@ -2,6 +2,7 @@
 
 library core_presentation;
 
+export 'mixins/navigator_mixin.dart';
 export 'theme/themes.dart';
 export 'theme/text_theme.dart';
 export 'theme/light_theme_data.dart';
@@ -17,3 +18,5 @@ export 'helpers/view_model_provider.dart';
 export 'helpers/object_extensions.dart';
 export 'helpers/stream_extensions.dart';
 export 'helpers/build_context_extensions.dart';
+export 'widgets/loader_widget.dart';
+export 'widgets/failure_decorator_widget.dart';

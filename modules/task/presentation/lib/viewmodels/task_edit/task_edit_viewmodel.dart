@@ -4,14 +4,16 @@ import 'package:task_presentation/task_presentation.dart';
 class TaskEditViewModelProvider extends ViewModelProvider<TaskEditViewModel> {
   TaskEditViewModelProvider({
     super.key,
-    Task? editedTask,
+    UuidValue? taskId,
+    Task? cachedTask,
     super.child,
   }) : super(
           (_, sp) => TaskEditViewModel(
             sp.getRequired<TaskRepository>(),
             sp.getRequired<DeviceIdentifier>(),
             sp.getRequired<FirebaseAnalyticsService>(),
-            editedTask,
+            taskId,
+            cachedTask,
           ),
         );
 }
@@ -21,20 +23,28 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
     this._taskRepository,
     this._deviceIdentifier,
     this._analyticsService,
-    Task? _editedTask,
+    UuidValue? _taskId,
+    Task? _cachedTask,
   ) : super(
           TaskEditState.newTask(
             textController: TextEditingController(),
             importance: Importance.none,
           ),
         ) {
-    if (_editedTask != null) {
-      emit(TaskEditState.editTask(
-        editedTask: _editedTask,
-        textController: TextEditingController(text: _editedTask.text),
-        importance: _editedTask.importance,
-        deadline: _editedTask.deadline,
+    if (_cachedTask != null) {
+      emit(TaskEditState.loadedTask(
+        taskId: _cachedTask.id,
+        task: _cachedTask,
+        textController: TextEditingController(text: _cachedTask.text),
+        importance: _cachedTask.importance,
+        deadline: _cachedTask.deadline,
       ));
+
+      getData();
+    }
+
+    if (_taskId != null && _cachedTask == null) {
+      emit(TaskEditState.loadingTask(taskId: _taskId));
 
       getData();
     }
@@ -45,15 +55,33 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   final FirebaseAnalyticsService _analyticsService;
 
   Future<void> getData() {
-    assert(state is TaskEditStateEditTask);
-    final typedState = state as TaskEditStateEditTask;
+    assert(state is! TaskEditStateNewTask);
 
-    final response = _taskRepository.getTask(typedState.editedTask.id);
+    final taskId = state.maybeMap(
+      loadingTask: (state) => state.taskId,
+      loadedTask: (state) => state.taskId,
+      errorTask: (state) => state.taskId,
+      orElse: () => throw UnimplementedError(),
+    );
+
+    final response = _taskRepository.getTask(taskId);
     return response.last.then((event) {
       emit(event.fold(
-        (failure) => state,
-        (data) => TaskEditState.editTask(
-          editedTask: data,
+        (failure) {
+          if (failure.type == BackendFailureType.notFound) {
+            if (state is TaskEditStateLoadedTask) {
+              return state;
+            }
+          }
+
+          return TaskEditState.errorTask(
+            taskId: taskId,
+            failure: failure,
+          );
+        },
+        (data) => TaskEditState.loadedTask(
+          taskId: data.id,
+          task: data,
           textController: TextEditingController(text: data.text)
             ..selection = TextSelection.fromPosition(
                 TextPosition(offset: data.text.length)),
@@ -65,22 +93,30 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   }
 
   void setDeadline(DateTime? dateTime) {
-    if (state is TaskEditStateEditTask) {
-      final typedState = state as TaskEditStateEditTask;
-      emit(typedState.copyWith(deadline: dateTime));
-    } else {
-      final typedState = state as TaskEditStateNewTask;
-      emit(typedState.copyWith(deadline: dateTime));
-    }
+    assert(state is TaskEditStateNewTask || state is TaskEditStateLoadedTask);
+
+    emit(state.maybeMap(
+      newTask: (state) => state.copyWith(deadline: dateTime),
+      loadedTask: (state) => state.copyWith(deadline: dateTime),
+      orElse: () => throw UnimplementedError(),
+    ));
   }
 
   void setImportance(Importance? value) {
+    assert(state is TaskEditStateNewTask || state is TaskEditStateLoadedTask);
+
     if (value != null) {
-      emit(state.copyWith(importance: value));
+      emit(state.maybeMap(
+        newTask: (state) => state.copyWith(importance: value),
+        loadedTask: (state) => state.copyWith(importance: value),
+        orElse: () => throw UnimplementedError(),
+      ));
     }
   }
 
   Future<void> createTask([Task? requestTask]) {
+    assert(state is TaskEditStateNewTask);
+
     requestTask ??= _requestTaskFromState;
     final response =
         _taskRepository.createTask(requestTask).asBroadcastStream();
@@ -102,6 +138,8 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   }
 
   Future<void> editTask([Task? requestTask]) {
+    assert(state is TaskEditStateLoadedTask);
+
     requestTask ??= _requestTaskFromState;
     final response = _taskRepository.editTask(requestTask).asBroadcastStream();
 
@@ -122,12 +160,11 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   }
 
   Future<void> deleteTask() {
-    assert(state is TaskEditStateEditTask);
+    assert(state is TaskEditStateLoadedTask);
 
-    final typedState = state as TaskEditStateEditTask;
-    final response = _taskRepository
-        .deleteTask(typedState.editedTask.id)
-        .asBroadcastStream();
+    final typedState = state as TaskEditStateLoadedTask;
+    final response =
+        _taskRepository.deleteTask(typedState.taskId).asBroadcastStream();
 
     response.synchronizeData(
       onUnsynchronized: () async {
@@ -146,24 +183,26 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   }
 
   Task get _requestTaskFromState {
-    if (state is TaskEditStateEditTask) {
-      return (state as TaskEditStateEditTask).editedTask.copyWith(
-            text: (state as TaskEditStateEditTask).textController.text,
-            importance: (state as TaskEditStateEditTask).importance,
-            deadline: (state as TaskEditStateEditTask).deadline,
-          );
-    } else {
-      return Task(
+    assert(state is TaskEditStateNewTask || state is TaskEditStateLoadedTask);
+
+    return state.maybeMap(
+      loadedTask: (state) => state.task.copyWith(
+        text: state.textController.text,
+        importance: state.importance,
+        deadline: state.deadline,
+      ),
+      newTask: (state) => Task(
         id: const Uuid().v1obj(),
-        text: (state as TaskEditStateNewTask).textController.text,
-        importance: (state as TaskEditStateNewTask).importance,
-        deadline: (state as TaskEditStateNewTask).deadline,
+        text: state.textController.text,
+        importance: state.importance,
+        deadline: state.deadline,
         done: false,
         color: null,
         createdAt: DateTime.now(),
         changedAt: DateTime.now(),
         lastUpdatedBy: _deviceIdentifier,
-      );
-    }
+      ),
+      orElse: () => throw UnimplementedError(),
+    );
   }
 }

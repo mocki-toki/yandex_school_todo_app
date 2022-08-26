@@ -27,10 +27,9 @@ class TaskRepositoryImpl implements TaskRepository {
   Future<Either<Failure, Iterable<Task>>>
       synchronizeStorageWithNetwork() async {
     // получаем данные из storage и network
-    final taskListOrFailureFromStorage = _storage
-        .getTaskList()
-        .toEntity<Iterable<Task>>()
-      ..log(Logger('TaskStorageBackend'));
+    final taskListOrFailureFromStorage =
+        await _storage.getTaskList().toEntity<Iterable<Task>>()
+          ..log(Logger('TaskStorageBackend'));
     final responseOrFailureFromNetwork =
         await _network.getTaskList().toEntity<TaskListResponse>()
           ..log(Logger('TaskNetworkBackend'));
@@ -53,7 +52,7 @@ class TaskRepositoryImpl implements TaskRepository {
         .getMergedTaskList(responseFromNetwork.list!)
         .toEntity<Iterable<Task>>();
 
-    return await mergedOrFailureTaskList.mapData(
+    return (await mergedOrFailureTaskList).mapData(
       (mergedTaskList) async {
         // TODO: отправлять только по необходимости
         await _storage.updateTaskList(mergedTaskList);
@@ -79,7 +78,7 @@ class TaskRepositoryImpl implements TaskRepository {
 
   @override
   Stream<Either<Failure, Task>> getTask(UuidValue taskId) async* {
-    yield _storage.getTask(taskId).toEntity<Task>()
+    yield await _storage.getTask(taskId).toEntity<Task>()
       ..log(Logger('TaskStorageBackend'));
 
     final responseOrFailureFromNetwork =

@@ -5,7 +5,8 @@ class AppRouteInformationParser
     extends RouteInformationParser<AppRouterConfig> {
   @override
   Future<AppRouterConfig> parseRouteInformation(
-      RouteInformation routeInformation) async {
+    RouteInformation routeInformation,
+  ) async {
     final uri = Uri.parse(routeInformation.location ?? '');
 
     if (uri.pathSegments.isEmpty) {
@@ -14,12 +15,18 @@ class AppRouteInformationParser
 
     switch (uri.pathSegments[0]) {
       case AppRouterPaths.task:
-        try {
-          return AppRouterConfig.editTask(UuidValue(
-            uri.pathSegments.length > 1 ? uri.pathSegments[1] : '',
-          ));
-        } catch (e) {
+        final parameter =
+            uri.pathSegments.length > 1 ? uri.pathSegments[1] : '';
+
+        if (parameter == AppRouterPaths.createTask) {
           return AppRouterConfig.createTask();
+        }
+
+        try {
+          final taskId = UuidValue(parameter);
+          return AppRouterConfig.editTask(taskId);
+        } catch (e) {
+          return AppRouterConfig.notFound();
         }
 
       case AppRouterPaths.tasks:
@@ -42,7 +49,7 @@ class AppRouteInformationParser
 
     if (configuration.isTask && configuration.taskId == null) {
       return const RouteInformation(
-        location: "/${AppRouterPaths.createTask}",
+        location: "/${AppRouterPaths.task}/${AppRouterPaths.createTask}",
       );
     }
 

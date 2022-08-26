@@ -11,8 +11,8 @@ import 'package:app_presentation/navigation/router_delegate.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/src/widgets/router.dart';
 import 'package:flutter/src/foundation/change_notifier.dart';
-import 'package:task_domain/services/navigator.dart';
-import 'package:core_domain/services/navigator.dart';
+import 'package:core_presentation/mixins/navigator_mixin.dart';
+import 'package:task_presentation/mixins/navigator_mixin.dart';
 import 'package:core_infrastructure/services/device_identifier_provider.dart';
 import 'package:dino/src/lifecycle/lifecycle.dart';
 import 'package:core_infrastructure/services/dio_provider.dart';
@@ -50,8 +50,8 @@ class $ServiceCollection extends RuntimeServiceCollection {
         if (registerAliases) {
           addAlias<RouterDelegate, AppRouterDelegate>(true);
           addAlias<Listenable, AppRouterDelegate>(true);
-          addAlias<TaskNavigator, AppRouterDelegate>(true);
-          addAlias<CoreNavigator, AppRouterDelegate>(true);
+          addAlias<CoreNavigatorMixin, AppRouterDelegate>(true);
+          addAlias<TaskNavigatorMixin, AppRouterDelegate>(true);
           addAlias<PopNavigatorRouterDelegateMixin, AppRouterDelegate>(true);
         }
 

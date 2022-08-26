@@ -46,6 +46,9 @@ class App {
   String get low => """Low""";
   String get high => """High""";
   String get notFoundText => """Everything will be found. With time""";
+  String get errorText => """Error""";
+  String errorCodeText(String code) => """Code:
+$code""";
 }
 
 Map<String, String> get appMap => {
@@ -60,4 +63,5 @@ Map<String, String> get appMap => {
       """low""": """Low""",
       """high""": """High""",
       """notFoundText""": """Everything will be found. With time""",
+      """errorText""": """Error""",
     };

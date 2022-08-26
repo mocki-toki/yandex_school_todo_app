@@ -4,29 +4,29 @@ class AppRouterConfig {
   final bool isNotFound;
   final bool isTask;
   final UuidValue? taskId;
-  final Task? task;
+  final Task? cachedTask;
 
   AppRouterConfig.notFound()
       : isNotFound = true,
         isTask = false,
         taskId = null,
-        task = null;
+        cachedTask = null;
 
   AppRouterConfig.taskList()
       : isNotFound = false,
         isTask = false,
         taskId = null,
-        task = null;
+        cachedTask = null;
 
   AppRouterConfig.createTask()
       : isNotFound = false,
         isTask = true,
         taskId = null,
-        task = null;
+        cachedTask = null;
 
-  AppRouterConfig.editTask(UuidValue taskId, {Task? task})
+  AppRouterConfig.editTask(UuidValue taskId, {Task? cachedTask})
       : isNotFound = false,
         isTask = true,
         taskId = taskId,
-        task = task;
+        cachedTask = cachedTask;
 }

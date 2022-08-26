@@ -16,21 +16,21 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$TaskEditState {
-  TextEditingController get textController =>
-      throw _privateConstructorUsedError;
-  Importance get importance => throw _privateConstructorUsedError;
-  DateTime? get deadline => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)
         newTask,
+    required TResult Function(UuidValue taskId) loadingTask,
     required TResult Function(
-            Task editedTask,
+            UuidValue taskId,
+            Task task,
             TextEditingController textController,
             Importance importance,
             DateTime? deadline)
-        editTask,
+        loadedTask,
+    required TResult Function(UuidValue taskId, Failure<dynamic> failure)
+        errorTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,9 +38,15 @@ mixin _$TaskEditState {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,34 +54,42 @@ mixin _$TaskEditState {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TaskEditStateNewTask value) newTask,
-    required TResult Function(TaskEditStateEditTask value) editTask,
+    required TResult Function(TaskEditStateLoadingTask value) loadingTask,
+    required TResult Function(TaskEditStateLoadedTask value) loadedTask,
+    required TResult Function(TaskEditStateErrorTask value) errorTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
     required TResult orElse(),
   }) =>
-      throw _privateConstructorUsedError;
-
-  @JsonKey(ignore: true)
-  $TaskEditStateCopyWith<TaskEditState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -84,10 +98,6 @@ abstract class $TaskEditStateCopyWith<$Res> {
   factory $TaskEditStateCopyWith(
           TaskEditState value, $Res Function(TaskEditState) then) =
       _$TaskEditStateCopyWithImpl<$Res>;
-  $Res call(
-      {TextEditingController textController,
-      Importance importance,
-      DateTime? deadline});
 }
 
 /// @nodoc
@@ -98,37 +108,13 @@ class _$TaskEditStateCopyWithImpl<$Res>
   final TaskEditState _value;
   // ignore: unused_field
   final $Res Function(TaskEditState) _then;
-
-  @override
-  $Res call({
-    Object? textController = freezed,
-    Object? importance = freezed,
-    Object? deadline = freezed,
-  }) {
-    return _then(_value.copyWith(
-      textController: textController == freezed
-          ? _value.textController
-          : textController // ignore: cast_nullable_to_non_nullable
-              as TextEditingController,
-      importance: importance == freezed
-          ? _value.importance
-          : importance // ignore: cast_nullable_to_non_nullable
-              as Importance,
-      deadline: deadline == freezed
-          ? _value.deadline
-          : deadline // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
-  }
 }
 
 /// @nodoc
-abstract class _$$TaskEditStateNewTaskCopyWith<$Res>
-    implements $TaskEditStateCopyWith<$Res> {
+abstract class _$$TaskEditStateNewTaskCopyWith<$Res> {
   factory _$$TaskEditStateNewTaskCopyWith(_$TaskEditStateNewTask value,
           $Res Function(_$TaskEditStateNewTask) then) =
       __$$TaskEditStateNewTaskCopyWithImpl<$Res>;
-  @override
   $Res call(
       {TextEditingController textController,
       Importance importance,
@@ -218,12 +204,16 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
     required TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)
         newTask,
+    required TResult Function(UuidValue taskId) loadingTask,
     required TResult Function(
-            Task editedTask,
+            UuidValue taskId,
+            Task task,
             TextEditingController textController,
             Importance importance,
             DateTime? deadline)
-        editTask,
+        loadedTask,
+    required TResult Function(UuidValue taskId, Failure<dynamic> failure)
+        errorTask,
   }) {
     return newTask(textController, importance, deadline);
   }
@@ -234,9 +224,15 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
   }) {
     return newTask?.call(textController, importance, deadline);
   }
@@ -247,9 +243,15 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
     required TResult orElse(),
   }) {
     if (newTask != null) {
@@ -262,7 +264,9 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TaskEditStateNewTask value) newTask,
-    required TResult Function(TaskEditStateEditTask value) editTask,
+    required TResult Function(TaskEditStateLoadingTask value) loadingTask,
+    required TResult Function(TaskEditStateLoadedTask value) loadedTask,
+    required TResult Function(TaskEditStateErrorTask value) errorTask,
   }) {
     return newTask(this);
   }
@@ -271,7 +275,9 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
   }) {
     return newTask?.call(this);
   }
@@ -280,7 +286,9 @@ class _$TaskEditStateNewTask implements TaskEditStateNewTask {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
     required TResult orElse(),
   }) {
     if (newTask != null) {
@@ -296,56 +304,232 @@ abstract class TaskEditStateNewTask implements TaskEditState {
       required final Importance importance,
       final DateTime? deadline}) = _$TaskEditStateNewTask;
 
-  @override
   TextEditingController get textController;
-  @override
   Importance get importance;
-  @override
   DateTime? get deadline;
-  @override
   @JsonKey(ignore: true)
   _$$TaskEditStateNewTaskCopyWith<_$TaskEditStateNewTask> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$TaskEditStateEditTaskCopyWith<$Res>
-    implements $TaskEditStateCopyWith<$Res> {
-  factory _$$TaskEditStateEditTaskCopyWith(_$TaskEditStateEditTask value,
-          $Res Function(_$TaskEditStateEditTask) then) =
-      __$$TaskEditStateEditTaskCopyWithImpl<$Res>;
+abstract class _$$TaskEditStateLoadingTaskCopyWith<$Res> {
+  factory _$$TaskEditStateLoadingTaskCopyWith(_$TaskEditStateLoadingTask value,
+          $Res Function(_$TaskEditStateLoadingTask) then) =
+      __$$TaskEditStateLoadingTaskCopyWithImpl<$Res>;
+  $Res call({UuidValue taskId});
+}
+
+/// @nodoc
+class __$$TaskEditStateLoadingTaskCopyWithImpl<$Res>
+    extends _$TaskEditStateCopyWithImpl<$Res>
+    implements _$$TaskEditStateLoadingTaskCopyWith<$Res> {
+  __$$TaskEditStateLoadingTaskCopyWithImpl(_$TaskEditStateLoadingTask _value,
+      $Res Function(_$TaskEditStateLoadingTask) _then)
+      : super(_value, (v) => _then(v as _$TaskEditStateLoadingTask));
+
   @override
+  _$TaskEditStateLoadingTask get _value =>
+      super._value as _$TaskEditStateLoadingTask;
+
+  @override
+  $Res call({
+    Object? taskId = freezed,
+  }) {
+    return _then(_$TaskEditStateLoadingTask(
+      taskId: taskId == freezed
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as UuidValue,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TaskEditStateLoadingTask implements TaskEditStateLoadingTask {
+  const _$TaskEditStateLoadingTask({required this.taskId});
+
+  @override
+  final UuidValue taskId;
+
+  @override
+  String toString() {
+    return 'TaskEditState.loadingTask(taskId: $taskId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TaskEditStateLoadingTask &&
+            const DeepCollectionEquality().equals(other.taskId, taskId));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(taskId));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$TaskEditStateLoadingTaskCopyWith<_$TaskEditStateLoadingTask>
+      get copyWith =>
+          __$$TaskEditStateLoadingTaskCopyWithImpl<_$TaskEditStateLoadingTask>(
+              this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)
+        newTask,
+    required TResult Function(UuidValue taskId) loadingTask,
+    required TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)
+        loadedTask,
+    required TResult Function(UuidValue taskId, Failure<dynamic> failure)
+        errorTask,
+  }) {
+    return loadingTask(taskId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)?
+        newTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
+  }) {
+    return loadingTask?.call(taskId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)?
+        newTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
+    required TResult orElse(),
+  }) {
+    if (loadingTask != null) {
+      return loadingTask(taskId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TaskEditStateNewTask value) newTask,
+    required TResult Function(TaskEditStateLoadingTask value) loadingTask,
+    required TResult Function(TaskEditStateLoadedTask value) loadedTask,
+    required TResult Function(TaskEditStateErrorTask value) errorTask,
+  }) {
+    return loadingTask(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
+  }) {
+    return loadingTask?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
+    required TResult orElse(),
+  }) {
+    if (loadingTask != null) {
+      return loadingTask(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TaskEditStateLoadingTask implements TaskEditState {
+  const factory TaskEditStateLoadingTask({required final UuidValue taskId}) =
+      _$TaskEditStateLoadingTask;
+
+  UuidValue get taskId;
+  @JsonKey(ignore: true)
+  _$$TaskEditStateLoadingTaskCopyWith<_$TaskEditStateLoadingTask>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TaskEditStateLoadedTaskCopyWith<$Res> {
+  factory _$$TaskEditStateLoadedTaskCopyWith(_$TaskEditStateLoadedTask value,
+          $Res Function(_$TaskEditStateLoadedTask) then) =
+      __$$TaskEditStateLoadedTaskCopyWithImpl<$Res>;
   $Res call(
-      {Task editedTask,
+      {UuidValue taskId,
+      Task task,
       TextEditingController textController,
       Importance importance,
       DateTime? deadline});
 
-  $TaskCopyWith<$Res> get editedTask;
+  $TaskCopyWith<$Res> get task;
 }
 
 /// @nodoc
-class __$$TaskEditStateEditTaskCopyWithImpl<$Res>
+class __$$TaskEditStateLoadedTaskCopyWithImpl<$Res>
     extends _$TaskEditStateCopyWithImpl<$Res>
-    implements _$$TaskEditStateEditTaskCopyWith<$Res> {
-  __$$TaskEditStateEditTaskCopyWithImpl(_$TaskEditStateEditTask _value,
-      $Res Function(_$TaskEditStateEditTask) _then)
-      : super(_value, (v) => _then(v as _$TaskEditStateEditTask));
+    implements _$$TaskEditStateLoadedTaskCopyWith<$Res> {
+  __$$TaskEditStateLoadedTaskCopyWithImpl(_$TaskEditStateLoadedTask _value,
+      $Res Function(_$TaskEditStateLoadedTask) _then)
+      : super(_value, (v) => _then(v as _$TaskEditStateLoadedTask));
 
   @override
-  _$TaskEditStateEditTask get _value => super._value as _$TaskEditStateEditTask;
+  _$TaskEditStateLoadedTask get _value =>
+      super._value as _$TaskEditStateLoadedTask;
 
   @override
   $Res call({
-    Object? editedTask = freezed,
+    Object? taskId = freezed,
+    Object? task = freezed,
     Object? textController = freezed,
     Object? importance = freezed,
     Object? deadline = freezed,
   }) {
-    return _then(_$TaskEditStateEditTask(
-      editedTask: editedTask == freezed
-          ? _value.editedTask
-          : editedTask // ignore: cast_nullable_to_non_nullable
+    return _then(_$TaskEditStateLoadedTask(
+      taskId: taskId == freezed
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as UuidValue,
+      task: task == freezed
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
               as Task,
       textController: textController == freezed
           ? _value.textController
@@ -363,24 +547,27 @@ class __$$TaskEditStateEditTaskCopyWithImpl<$Res>
   }
 
   @override
-  $TaskCopyWith<$Res> get editedTask {
-    return $TaskCopyWith<$Res>(_value.editedTask, (value) {
-      return _then(_value.copyWith(editedTask: value));
+  $TaskCopyWith<$Res> get task {
+    return $TaskCopyWith<$Res>(_value.task, (value) {
+      return _then(_value.copyWith(task: value));
     });
   }
 }
 
 /// @nodoc
 
-class _$TaskEditStateEditTask implements TaskEditStateEditTask {
-  const _$TaskEditStateEditTask(
-      {required this.editedTask,
+class _$TaskEditStateLoadedTask implements TaskEditStateLoadedTask {
+  const _$TaskEditStateLoadedTask(
+      {required this.taskId,
+      required this.task,
       required this.textController,
       required this.importance,
       this.deadline});
 
   @override
-  final Task editedTask;
+  final UuidValue taskId;
+  @override
+  final Task task;
   @override
   final TextEditingController textController;
   @override
@@ -390,16 +577,16 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
 
   @override
   String toString() {
-    return 'TaskEditState.editTask(editedTask: $editedTask, textController: $textController, importance: $importance, deadline: $deadline)';
+    return 'TaskEditState.loadedTask(taskId: $taskId, task: $task, textController: $textController, importance: $importance, deadline: $deadline)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$TaskEditStateEditTask &&
-            const DeepCollectionEquality()
-                .equals(other.editedTask, editedTask) &&
+            other is _$TaskEditStateLoadedTask &&
+            const DeepCollectionEquality().equals(other.taskId, taskId) &&
+            const DeepCollectionEquality().equals(other.task, task) &&
             const DeepCollectionEquality()
                 .equals(other.textController, textController) &&
             const DeepCollectionEquality()
@@ -410,15 +597,16 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(editedTask),
+      const DeepCollectionEquality().hash(taskId),
+      const DeepCollectionEquality().hash(task),
       const DeepCollectionEquality().hash(textController),
       const DeepCollectionEquality().hash(importance),
       const DeepCollectionEquality().hash(deadline));
 
   @JsonKey(ignore: true)
   @override
-  _$$TaskEditStateEditTaskCopyWith<_$TaskEditStateEditTask> get copyWith =>
-      __$$TaskEditStateEditTaskCopyWithImpl<_$TaskEditStateEditTask>(
+  _$$TaskEditStateLoadedTaskCopyWith<_$TaskEditStateLoadedTask> get copyWith =>
+      __$$TaskEditStateLoadedTaskCopyWithImpl<_$TaskEditStateLoadedTask>(
           this, _$identity);
 
   @override
@@ -427,14 +615,18 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
     required TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)
         newTask,
+    required TResult Function(UuidValue taskId) loadingTask,
     required TResult Function(
-            Task editedTask,
+            UuidValue taskId,
+            Task task,
             TextEditingController textController,
             Importance importance,
             DateTime? deadline)
-        editTask,
+        loadedTask,
+    required TResult Function(UuidValue taskId, Failure<dynamic> failure)
+        errorTask,
   }) {
-    return editTask(editedTask, textController, importance, deadline);
+    return loadedTask(taskId, task, textController, importance, deadline);
   }
 
   @override
@@ -443,11 +635,17 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
   }) {
-    return editTask?.call(editedTask, textController, importance, deadline);
+    return loadedTask?.call(taskId, task, textController, importance, deadline);
   }
 
   @override
@@ -456,13 +654,19 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
     TResult Function(TextEditingController textController,
             Importance importance, DateTime? deadline)?
         newTask,
-    TResult Function(Task editedTask, TextEditingController textController,
-            Importance importance, DateTime? deadline)?
-        editTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
     required TResult orElse(),
   }) {
-    if (editTask != null) {
-      return editTask(editedTask, textController, importance, deadline);
+    if (loadedTask != null) {
+      return loadedTask(taskId, task, textController, importance, deadline);
     }
     return orElse();
   }
@@ -471,50 +675,240 @@ class _$TaskEditStateEditTask implements TaskEditStateEditTask {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TaskEditStateNewTask value) newTask,
-    required TResult Function(TaskEditStateEditTask value) editTask,
+    required TResult Function(TaskEditStateLoadingTask value) loadingTask,
+    required TResult Function(TaskEditStateLoadedTask value) loadedTask,
+    required TResult Function(TaskEditStateErrorTask value) errorTask,
   }) {
-    return editTask(this);
+    return loadedTask(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
   }) {
-    return editTask?.call(this);
+    return loadedTask?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TaskEditStateNewTask value)? newTask,
-    TResult Function(TaskEditStateEditTask value)? editTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
     required TResult orElse(),
   }) {
-    if (editTask != null) {
-      return editTask(this);
+    if (loadedTask != null) {
+      return loadedTask(this);
     }
     return orElse();
   }
 }
 
-abstract class TaskEditStateEditTask implements TaskEditState {
-  const factory TaskEditStateEditTask(
-      {required final Task editedTask,
+abstract class TaskEditStateLoadedTask implements TaskEditState {
+  const factory TaskEditStateLoadedTask(
+      {required final UuidValue taskId,
+      required final Task task,
       required final TextEditingController textController,
       required final Importance importance,
-      final DateTime? deadline}) = _$TaskEditStateEditTask;
+      final DateTime? deadline}) = _$TaskEditStateLoadedTask;
 
-  Task get editedTask;
-  @override
+  UuidValue get taskId;
+  Task get task;
   TextEditingController get textController;
-  @override
   Importance get importance;
-  @override
   DateTime? get deadline;
-  @override
   @JsonKey(ignore: true)
-  _$$TaskEditStateEditTaskCopyWith<_$TaskEditStateEditTask> get copyWith =>
+  _$$TaskEditStateLoadedTaskCopyWith<_$TaskEditStateLoadedTask> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$TaskEditStateErrorTaskCopyWith<$Res> {
+  factory _$$TaskEditStateErrorTaskCopyWith(_$TaskEditStateErrorTask value,
+          $Res Function(_$TaskEditStateErrorTask) then) =
+      __$$TaskEditStateErrorTaskCopyWithImpl<$Res>;
+  $Res call({UuidValue taskId, Failure<dynamic> failure});
+}
+
+/// @nodoc
+class __$$TaskEditStateErrorTaskCopyWithImpl<$Res>
+    extends _$TaskEditStateCopyWithImpl<$Res>
+    implements _$$TaskEditStateErrorTaskCopyWith<$Res> {
+  __$$TaskEditStateErrorTaskCopyWithImpl(_$TaskEditStateErrorTask _value,
+      $Res Function(_$TaskEditStateErrorTask) _then)
+      : super(_value, (v) => _then(v as _$TaskEditStateErrorTask));
+
+  @override
+  _$TaskEditStateErrorTask get _value =>
+      super._value as _$TaskEditStateErrorTask;
+
+  @override
+  $Res call({
+    Object? taskId = freezed,
+    Object? failure = freezed,
+  }) {
+    return _then(_$TaskEditStateErrorTask(
+      taskId: taskId == freezed
+          ? _value.taskId
+          : taskId // ignore: cast_nullable_to_non_nullable
+              as UuidValue,
+      failure: failure == freezed
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure<dynamic>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$TaskEditStateErrorTask implements TaskEditStateErrorTask {
+  const _$TaskEditStateErrorTask({required this.taskId, required this.failure});
+
+  @override
+  final UuidValue taskId;
+  @override
+  final Failure<dynamic> failure;
+
+  @override
+  String toString() {
+    return 'TaskEditState.errorTask(taskId: $taskId, failure: $failure)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$TaskEditStateErrorTask &&
+            const DeepCollectionEquality().equals(other.taskId, taskId) &&
+            const DeepCollectionEquality().equals(other.failure, failure));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(taskId),
+      const DeepCollectionEquality().hash(failure));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$TaskEditStateErrorTaskCopyWith<_$TaskEditStateErrorTask> get copyWith =>
+      __$$TaskEditStateErrorTaskCopyWithImpl<_$TaskEditStateErrorTask>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)
+        newTask,
+    required TResult Function(UuidValue taskId) loadingTask,
+    required TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)
+        loadedTask,
+    required TResult Function(UuidValue taskId, Failure<dynamic> failure)
+        errorTask,
+  }) {
+    return errorTask(taskId, failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)?
+        newTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
+  }) {
+    return errorTask?.call(taskId, failure);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(TextEditingController textController,
+            Importance importance, DateTime? deadline)?
+        newTask,
+    TResult Function(UuidValue taskId)? loadingTask,
+    TResult Function(
+            UuidValue taskId,
+            Task task,
+            TextEditingController textController,
+            Importance importance,
+            DateTime? deadline)?
+        loadedTask,
+    TResult Function(UuidValue taskId, Failure<dynamic> failure)? errorTask,
+    required TResult orElse(),
+  }) {
+    if (errorTask != null) {
+      return errorTask(taskId, failure);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(TaskEditStateNewTask value) newTask,
+    required TResult Function(TaskEditStateLoadingTask value) loadingTask,
+    required TResult Function(TaskEditStateLoadedTask value) loadedTask,
+    required TResult Function(TaskEditStateErrorTask value) errorTask,
+  }) {
+    return errorTask(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
+  }) {
+    return errorTask?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(TaskEditStateNewTask value)? newTask,
+    TResult Function(TaskEditStateLoadingTask value)? loadingTask,
+    TResult Function(TaskEditStateLoadedTask value)? loadedTask,
+    TResult Function(TaskEditStateErrorTask value)? errorTask,
+    required TResult orElse(),
+  }) {
+    if (errorTask != null) {
+      return errorTask(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class TaskEditStateErrorTask implements TaskEditState {
+  const factory TaskEditStateErrorTask(
+      {required final UuidValue taskId,
+      required final Failure<dynamic> failure}) = _$TaskEditStateErrorTask;
+
+  UuidValue get taskId;
+  Failure<dynamic> get failure;
+  @JsonKey(ignore: true)
+  _$$TaskEditStateErrorTaskCopyWith<_$TaskEditStateErrorTask> get copyWith =>
       throw _privateConstructorUsedError;
 }

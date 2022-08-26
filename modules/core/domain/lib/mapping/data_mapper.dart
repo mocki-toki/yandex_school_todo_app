@@ -2,21 +2,6 @@ import 'dart:io';
 
 import 'package:core_domain/core_domain.dart';
 
-extension DataMapper<T> on T {
-  Either<Failure, R> toEntity<R>([R Function(T data)? extract]) {
-    try {
-      final response = this;
-      return Right(extract?.call(response) ?? response as R);
-    } on DioError catch (e) {
-      return Left(_catchDioError(e));
-    } on StorageException catch (e) {
-      return Left(_catchStorageException(e));
-    } catch (e) {
-      return Left(_catchUnexpectedException(e));
-    }
-  }
-}
-
 extension FutureDataMapper<T> on Future<T> {
   Future<Either<Failure, R>> toEntity<R>([R Function(T data)? extract]) async {
     try {

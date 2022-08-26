@@ -47,6 +47,9 @@ class AppRu extends App {
   String get low => """Низкий""";
   String get high => """Высокий""";
   String get notFoundText => """Найдётся всё. Со временем""";
+  String get errorText => """Произошла ошибка""";
+  String errorCodeText(String code) => """Код ошибки:
+$code""";
 }
 
 Map<String, String> get appRuMap => {
@@ -61,4 +64,5 @@ Map<String, String> get appRuMap => {
       """low""": """Низкий""",
       """high""": """Высокий""",
       """notFoundText""": """Найдётся всё. Со временем""",
+      """errorText""": """Произошла ошибка""",
     };

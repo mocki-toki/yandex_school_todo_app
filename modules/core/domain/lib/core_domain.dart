@@ -15,7 +15,6 @@ export 'models/data_providable.dart';
 export 'exceptions/storage_exception.dart';
 export 'exports.dart';
 export 'services/firebase_analytics_service.dart';
-export 'services/navigator.dart';
 export 'entities/failure.dart';
 export 'entities/remote_config.dart';
 export 'entities/domain_failure.dart';

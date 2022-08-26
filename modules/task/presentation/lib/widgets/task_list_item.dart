@@ -15,11 +15,13 @@ class TaskListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: добавить возможность тапать по задаче
+    // TODO: добавить toast при добавлении или удалении задачи
     return TaskListItemSwiper(
       onChecked: () => onCompleted(task, !task.done),
       onDeleted: () => onDeleted(task),
       child: Padding(
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.symmetric(horizontal: 4.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,9 +80,9 @@ class _TaskListItemCheckbox extends StatelessWidget {
             onChanged: (value) => onCompleted(task, value!),
             activeColor: _getCheckboxBorderColor(context),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadiusConstants.checkbox.borderRadius,
             ),
-            checkColor: context.theme.cardColor,
+            checkColor: context.palette.colorBackSecondary,
             side: BorderSide(
               color: _getCheckboxBorderColor(context),
               width: 2,
@@ -92,13 +94,13 @@ class _TaskListItemCheckbox extends StatelessWidget {
   }
 
   Color _getCheckboxBorderColor(BuildContext context) {
-    if (task.done) return context.theme.colorGreen;
+    if (task.done) return context.palette.colorGreen;
 
     switch (task.importance) {
       case Importance.high:
         return getHighImportanceColor(context);
       default:
-        return context.theme.dividerColor;
+        return context.palette.colorSupportSeparator;
     }
   }
 }
@@ -124,7 +126,7 @@ class _TaskListItemText extends StatelessWidget {
             if (task.deadline != null)
               TextSpan(
                 text: _getFormattedDeadlineText(context),
-                style: context.textTheme.bodyText2,
+                style: context.textStyle.subhead,
               ),
           ],
         ),
@@ -140,13 +142,13 @@ class _TaskListItemText extends StatelessWidget {
 
   TextStyle _getTextStyle(BuildContext context) {
     if (task.done) {
-      return context.textTheme.bodyText1!.copyWith(
+      return context.textStyle.body.copyWith(
         decoration: TextDecoration.lineThrough,
-        color: context.textTheme.bodyText2!.color,
+        color: context.palette.colorLabelTertiary,
       );
     }
 
-    return context.textTheme.bodyText1!;
+    return context.textStyle.body;
   }
 
   String _getFormattedText() => task.text.replaceAll('\n', ' ');

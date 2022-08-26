@@ -26,18 +26,18 @@ class FailureDecoratorWidget extends StatelessWidget {
             Icon(
               Icons.error_outline_rounded,
               size: 50,
-              color: context.theme.colorRed,
+              color: context.palette.colorRed,
             ),
             SizedBox(height: 10),
             Text(
               context.localizations.errorText,
-              style: context.textTheme.bodyText1,
+              style: context.textStyle.body,
             ),
             SizedBox(height: 5),
             Text(
               context.localizations.errorCodeText("${failure.type}"),
               textAlign: TextAlign.center,
-              style: context.textTheme.bodyText2,
+              style: context.textStyle.subhead,
             ),
           ],
         ),

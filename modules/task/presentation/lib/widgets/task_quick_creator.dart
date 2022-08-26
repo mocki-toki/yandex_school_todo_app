@@ -59,15 +59,15 @@ class _TaskQuickCreatorState extends State<TaskQuickCreator> {
           Expanded(
             child: TextField(
               focusNode: focusNode,
-              style: context.textTheme.bodyText1,
+              style: context.textStyle.body,
               controller: textController,
               maxLines: null,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 hintText: context.localizations.newTask,
-                hintStyle: context.textTheme.bodyText1!.copyWith(
-                  color: context.textTheme.bodyText2!.color,
+                hintStyle: context.textStyle.body.copyWith(
+                  color: context.palette.colorLabelTertiary,
                 ),
                 contentPadding: const EdgeInsets.symmetric(vertical: 14),
               ),

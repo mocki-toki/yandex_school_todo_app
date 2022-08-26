@@ -34,7 +34,7 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
     super.initState();
 
     moveAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: DurationConstants.swipeAnimation.duration,
       vsync: this,
     );
     moveAnimation = Tween<Offset>(
@@ -47,7 +47,7 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
     ).animate(moveAnimationController);
 
     backgroundFadeAnimationController = AnimationController(
-      duration: const Duration(milliseconds: 200),
+      duration: DurationConstants.swipeAnimation.duration,
       vsync: this,
     );
     backgroundFadeAnimation = Tween<double>(
@@ -72,8 +72,8 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
           clipper: _Clipper(moveAnimation: moveAnimation),
           child: ColoredBox(
             color: dragExtent < 0
-                ? context.theme.colorRed
-                : context.theme.colorGreen,
+                ? context.palette.colorRed
+                : context.palette.colorGreen,
           ),
         ),
       ),
@@ -94,30 +94,33 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
       SlideTransition(
         position: moveAnimation,
         child: ColoredBox(
-          color: context.theme.cardColor,
+          color: context.palette.colorBackSecondary,
           child: widget.child,
         ),
       ),
       FadeTransition(
         opacity: backgroundFadeAnimation,
         child: ColoredBox(
-          color: context.theme.cardColor,
+          color: context.palette.colorBackSecondary,
           child: widget.child,
         ),
       ),
     ];
 
-    return IgnorePointer(
-      ignoring: locked,
-      child: GestureDetector(
-        onHorizontalDragUpdate: _handleDragUpdate,
-        onHorizontalDragEnd: _handleDragEnd,
-        onHorizontalDragCancel: _handleDragEnd,
-        behavior: HitTestBehavior.opaque,
-        child: Stack(
-          alignment:
-              dragExtent < 0 ? Alignment.centerRight : Alignment.centerLeft,
-          children: children,
+    return Material(
+      type: MaterialType.transparency,
+      child: IgnorePointer(
+        ignoring: locked,
+        child: GestureDetector(
+          onHorizontalDragUpdate: _handleDragUpdate,
+          onHorizontalDragEnd: _handleDragEnd,
+          onHorizontalDragCancel: _handleDragEnd,
+          behavior: HitTestBehavior.opaque,
+          child: Stack(
+            alignment:
+                dragExtent < 0 ? Alignment.centerRight : Alignment.centerLeft,
+            children: children,
+          ),
         ),
       ),
     );
@@ -169,13 +172,13 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
 
       moveAnimationController.animateTo(
         endValue,
-        duration: const Duration(milliseconds: 200),
+        duration: DurationConstants.swipeAnimation.duration,
         curve: Curves.ease,
       );
     } else {
       moveAnimationController.animateTo(
         0,
-        duration: const Duration(milliseconds: 200),
+        duration: DurationConstants.swipeAnimation.duration,
         curve: Curves.ease,
       );
 
@@ -194,7 +197,7 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
 
     await backgroundFadeAnimationController.animateTo(
       1,
-      duration: const Duration(milliseconds: 200),
+      duration: DurationConstants.swipeAnimation.duration,
       curve: Curves.ease,
     );
 
@@ -218,7 +221,7 @@ class _CheckBackground extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 27),
       child: Icon(
         Icons.check,
-        color: context.theme.colorWhite,
+        color: context.palette.colorWhite,
       ),
     );
   }
@@ -233,7 +236,7 @@ class _DeleteBackground extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 27),
       child: Icon(
         Icons.delete,
-        color: context.theme.colorWhite,
+        color: context.palette.colorWhite,
       ),
     );
   }

@@ -8,4 +8,9 @@ extension BuildContextExtensions on BuildContext {
 
   App get localizations => AppLocalizations.of(this);
   ServiceProvider get sp => read<ServiceProvider>();
+
+  DesignData get design => DesignProvider.of(this);
+  DesignStyles get styles => design.styles;
+  DesignPalette get palette => styles.palette;
+  DesignTextStyle get textStyle => design.textStyle;
 }

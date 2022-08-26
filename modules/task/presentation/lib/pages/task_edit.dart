@@ -1,6 +1,7 @@
 import 'package:task_domain/task_domain.dart';
 import 'package:task_presentation/task_presentation.dart';
 
+// TODO: вынести обработку колбеков в отдельную абстракцию
 class TaskEditScreen extends StatelessWidget {
   const TaskEditScreen({
     super.key,
@@ -60,18 +61,21 @@ class _TaskEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) => [
         SliverLayoutBuilder(
           builder: (context, constraints) {
             final scrolled = constraints.scrollOffset > 0;
             return SliverAppBar(
               pinned: true,
               backgroundColor: scrolled
-                  ? context.theme.appBarTheme.backgroundColor
-                  : context.theme.scaffoldBackgroundColor,
+                  ? context.palette.colorBackSecondary
+                  : context.palette.colorBackPrimary,
               automaticallyImplyLeading: false,
               actions: [
+                SizedBox(
+                    width: EdgeInsetsConstants
+                        .altAppBarElementPadding.edgeInsets.left),
                 IconButton(
                   icon: const Icon(Icons.close),
                   onPressed: () => onClose(context),
@@ -85,46 +89,48 @@ class _TaskEditPage extends StatelessWidget {
             );
           },
         ),
-        SliverToBoxAdapter(
-          child: Column(
-            children: [
-              _Editor(textController: textController),
-              _ImportanceSelector(
-                importance: importance,
-                onChanged: context.read<TaskEditViewModel>().setImportance,
-              ),
-              const Divider(
-                indent: 16,
-                endIndent: 16,
-              ),
-              SwitchListTile(
-                value: deadline != null,
-                onChanged: (value) => onDeadlineChanged(context, value),
-                title: Text(context.localizations.taskDeadline),
-                subtitle: deadline == null
-                    ? null
-                    : Text(
-                        DateFormat.yMMMMd(context.localizations.locale)
-                            .format(deadline!),
-                        style: context.textTheme.bodyText2!.copyWith(
-                          color: context.theme.colorBlue,
-                        ),
-                      ),
-              ),
-              const SizedBox(height: 8),
-              const Divider(),
-              ListTile(
-                enabled: task != null,
-                iconColor: context.theme.colorRed,
-                textColor: context.theme.colorRed,
-                leading: const Icon(Icons.delete),
-                title: Text(context.localizations.taskDelete),
-                onTap: () => onDeleteTask(context),
-              ),
-            ],
-          ),
-        ),
       ],
+      body: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          _Editor(textController: textController),
+          _ImportanceSelector(
+            importance: importance,
+            onChanged: context.read<TaskEditViewModel>().setImportance,
+          ),
+          MarginDivider(
+            EdgeInsetsConstants.standartDivider.edgeInsets,
+            indent: 16,
+            endIndent: 16,
+          ),
+          SwitchListTile(
+            contentPadding: EdgeInsetsConstants.cardMargin.edgeInsets,
+            value: deadline != null, // TODO: сложно подкорректировать дату
+            onChanged: (value) => onDeadlineChanged(context, value),
+            title: Text(context.localizations.taskDeadline),
+            subtitle: deadline == null
+                ? null
+                : Text(
+                    DateFormat.yMMMMd(context.localizations.locale)
+                        .format(deadline!),
+                    style: context.textStyle.subhead.copyWith(
+                      color: context.palette.colorBlue,
+                    ),
+                  ),
+          ),
+          MarginDivider(
+            EdgeInsetsConstants.altDivider.edgeInsets,
+          ),
+          ListTile(
+            enabled: task != null,
+            iconColor: context.palette.colorRed,
+            textColor: context.palette.colorRed,
+            leading: const Icon(Icons.delete),
+            title: Text(context.localizations.taskDelete),
+            onTap: () => onDeleteTask(context),
+          ),
+        ],
+      ),
     );
   }
 
@@ -163,7 +169,7 @@ class _TaskEditPage extends StatelessWidget {
         initialDate: DateTime.now(),
         firstDate: DateTime.now().subtract(const Duration(days: 100)),
         lastDate: DateTime.now().add(const Duration(days: 100)),
-      );
+      ); // TODO: диалог во всю ширину
 
       return viewModel.setDeadline(dateTime);
     }
@@ -223,7 +229,7 @@ class _ImportanceSelector extends StatelessWidget {
                       context,
                       Importance.high,
                     )}",
-                    style: context.textTheme.bodyText1!.copyWith(
+                    style: context.textStyle.body.copyWith(
                       color: getHighImportanceColor(context),
                     ),
                   ),
@@ -249,18 +255,25 @@ class _Editor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.all(16),
+    return Container(
+      margin: EdgeInsetsConstants.cardMargin.edgeInsets,
+      decoration: BoxDecoration(
+        color: context.palette.colorBackSecondary,
+        borderRadius: BorderRadiusConstants.card.borderRadius,
+        boxShadow: [
+          ShadowConstants.cardPart1.boxShadow,
+          ShadowConstants.cardPart2.boxShadow,
+        ],
+      ),
       child: TextField(
         controller: textController,
         autofocus: true,
         maxLines: null,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(16),
+          contentPadding: EdgeInsetsConstants.textFieldPadding.edgeInsets,
           border: InputBorder.none,
           hintText: context.localizations.taskEditHint,
-          // TODO: magic numbers
-          constraints: const BoxConstraints(minHeight: 104),
+          constraints: ConstraintsConstants.multiLineTextField.boxConstraints,
         ),
       ),
     );

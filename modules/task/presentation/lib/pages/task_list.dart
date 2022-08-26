@@ -9,7 +9,6 @@ class TaskListScreen extends StatefulWidget {
 
 class _TaskListScreenState extends State<TaskListScreen>
     with WidgetsBindingObserver {
-  // TODO: refactor
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -77,6 +76,7 @@ class _TaskListPage extends StatelessWidget {
   final bool visibleDoneTasks;
   final TaskListSyncState syncState;
 
+// TODO: анимация добавления удаления изменения тасков
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -89,8 +89,7 @@ class _TaskListPage extends StatelessWidget {
           syncState: syncState,
         ),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: 8)
-              .copyWith(top: 4, bottom: 100),
+          padding: EdgeInsetsConstants.listCardMargin.edgeInsets,
           sliver: SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {

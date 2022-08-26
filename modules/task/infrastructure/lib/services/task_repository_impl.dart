@@ -54,6 +54,7 @@ class TaskRepositoryImpl implements TaskRepository {
 
     return (await mergedOrFailureTaskList).mapData(
       (mergedTaskList) async {
+        // TODO: если в storage свежее, то не заменять
         // TODO: отправлять только по необходимости
         await _storage.updateTaskList(mergedTaskList);
 

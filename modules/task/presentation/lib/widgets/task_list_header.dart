@@ -61,57 +61,66 @@ class _Header extends SliverPersistentHeaderDelegate {
         ? min(1, shrinkOffset / (maxExtent - minExtent)).toDouble()
         : 1.0;
 
+    final elevation = (expanded ? progress != 1 : shrinkOffset == 0)
+        ? 0.0
+        : ElevationConstants.appBar.value;
+
+    final color = (expanded ? progress != 1 : shrinkOffset == 0)
+        ? context.palette.colorBackPrimary
+        : context.palette.colorBackSecondary;
+
     return Card(
       color: Colors.transparent,
-      elevation: (expanded ? progress != 1 : shrinkOffset == 0) ? 0 : 4,
+      elevation: elevation,
       margin: EdgeInsets.zero,
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 100),
-        color: progress != 1
-            ? context.theme.scaffoldBackgroundColor
-            : context.theme.appBarTheme.backgroundColor,
+        duration: DurationConstants.standartAnimation.duration,
+        color: color,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Align(
-              alignment: Alignment.lerp(
-                Alignment.bottomLeft,
-                Alignment.centerLeft,
-                progress,
-              )!,
-              child: Padding(
-                padding: EdgeInsets.only(
-                  top: statusBarHeight,
-                  bottom: lerpDouble(kToolbarHeight - 12, 0, progress)!,
-                  left: lerpDouble(60, 16, progress)!,
-                ),
+            Padding(
+              padding: EdgeInsets.only(
+                top: statusBarHeight,
+                left: lerpDouble(
+                  EdgeInsetsConstants.expandedAppBarPadding.edgeInsets.left,
+                  EdgeInsetsConstants.appBarElementPadding.edgeInsets.left,
+                  progress,
+                )!,
+              ),
+              child: Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
                   context.localizations.myTasks,
                   style: TextStyle.lerp(
-                    context.textTheme.headlineLarge!,
-                    context.textTheme.headline6!,
+                    context.textStyle.largeTitle,
+                    context.textStyle.title,
                     progress,
                   ),
                 ),
               ),
             ),
             Positioned(
-              left: 60,
+              left: EdgeInsetsConstants.expandedAppBarPadding.edgeInsets.left,
               bottom: kToolbarHeight / 3,
               child: AnimatedOpacity(
-                duration: const Duration(milliseconds: 100),
+                duration: DurationConstants.standartAnimation.duration,
                 opacity: progress != 0 ? 0 : 1,
                 child: Text(
                   context.localizations.tasksCompleted(taskCompletedCount),
-                  style: context.textTheme.bodyText1!
-                      .copyWith(color: context.theme.hintColor),
+                  style: context.textStyle.body
+                      .copyWith(color: context.palette.colorLabelTertiary),
                 ),
               ),
             ),
             Positioned(
               bottom: 0,
               left: 0,
-              right: 0,
+              right: lerpDouble(
+                EdgeInsetsConstants.expandedAppBarPadding.edgeInsets.right,
+                0,
+                progress,
+              )!,
               child: AppBar(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
@@ -119,7 +128,7 @@ class _Header extends SliverPersistentHeaderDelegate {
                   IconButton(
                     icon: Icon(
                       _getSyncStateIconData(),
-                      color: context.theme.dividerColor,
+                      color: context.palette.colorSupportSeparator,
                     ),
                     onPressed: null,
                   ),
@@ -128,7 +137,7 @@ class _Header extends SliverPersistentHeaderDelegate {
                       !visibilityButtonValue
                           ? Icons.visibility
                           : Icons.visibility_off,
-                      color: context.theme.primaryColor,
+                      color: context.palette.colorBlue,
                     ),
                     onPressed: _onVisibilityButtonPressed,
                   ),
@@ -143,7 +152,7 @@ class _Header extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => expanded ? 180 : minExtent;
+  double get maxExtent => expanded ? 156 : minExtent;
 
   @override
   double get minExtent => statusBarHeight + kToolbarHeight;

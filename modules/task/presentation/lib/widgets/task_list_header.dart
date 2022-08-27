@@ -67,7 +67,7 @@ class _Header extends SliverPersistentHeaderDelegate {
 
     final color = (expanded ? progress != 1 : shrinkOffset == 0)
         ? context.palette.colorBackPrimary
-        : context.palette.colorBackSecondary;
+        : context.theme.appBarTheme.backgroundColor;
 
     return Card(
       color: Colors.transparent,

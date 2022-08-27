@@ -69,7 +69,7 @@ class _TaskEditPage extends StatelessWidget {
             return SliverAppBar(
               pinned: true,
               backgroundColor: scrolled
-                  ? context.palette.colorBackSecondary
+                  ? context.theme.appBarTheme.backgroundColor
                   : context.palette.colorBackPrimary,
               automaticallyImplyLeading: false,
               actions: [

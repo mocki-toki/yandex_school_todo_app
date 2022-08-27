@@ -24,5 +24,6 @@
   },
 
   "editor.formatOnSave": true,
-  "explorer.compactFolders": false
+  "explorer.compactFolders": false,
+  "dart.runPubGetOnPubspecChanges": false
 }

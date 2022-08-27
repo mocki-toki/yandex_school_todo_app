@@ -10,12 +10,3 @@ index_file:
   exclude:
     - "**.g.dart"
     - "**.freezed.dart"
-
-scripts:
-  pub:get: "pansy run flutter pub get"
-  pub:major: 'pansy run "flutter pub upgrade --major-versions"'
-
-  bootstrap: "pansy bootstrap && pansy script pub:get"
-  generate: 'pansy bootstrap && pansy run --depend_on_packages build_runner "dart run build_runner build --delete-conflicting-outputs" && pansy bootstrap'
-
-  clean: "pansy run --depend_on_packages flutter flutter clean && pansy run rm pubspec.lock"

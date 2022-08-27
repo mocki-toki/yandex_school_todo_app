@@ -13,11 +13,17 @@ jobs:
         with:
           channel: "stable"
 
+      - name: Get dependencies in workspace directory
+        run: flutter pub get
+
+      - name: Get dependencies in other packages directory
+        run: flutter pub run melos run pub:get
+
       - name: Check code format
         run: find . -name "*.dart" ! -name "firebase_options.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" ! -name "*.i18n.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
 
       - name: Statically analyze
-        run: flutter analyze . --no-pub
+        run: flutter analyze .
 
       # - name: Run tests
       #   run: flutter test

@@ -14,7 +14,7 @@
     },
     {
       "label": "Pansy bootstrap (with pub get)",
-      "command": "pansy script bootstrap",
+      "command": "flutter pub run melos run bootstrap",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -25,7 +25,7 @@
     },
     {
       "label": "Generate code",
-      "command": "pansy script generate",
+      "command": "flutter pub run melos run generate",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -36,7 +36,7 @@
     },
     {
       "label": "Pub upgrade major versions",
-      "command": "pansy script pub:major",
+      "command": "flutter pub run melos run pub:major",
       "type": "shell",
       "args": [],
       "presentation": {
@@ -47,7 +47,7 @@
     },
     {
       "label": "Clean code",
-      "command": "pansy script clean",
+      "command": "flutter pub run melos run clean",
       "type": "shell",
       "args": [],
       "presentation": {

@@ -125,17 +125,21 @@ class _TaskListItemText extends StatelessWidget {
                 child: _PrefixIcon(importance: task.importance),
                 alignment: PlaceholderAlignment.middle,
               ),
-            TextSpan(text: _getFormattedText()),
+            TextSpan(
+              text: _getFormattedText(),
+              style: _getTextStyle(context),
+            ),
             if (task.deadline != null)
               TextSpan(
                 text: _getFormattedDeadlineText(context),
-                style: context.textStyle.subhead,
+                style: context.textStyle.subhead.copyWith(
+                  color: context.palette.colorLabelTertiary,
+                ),
               ),
           ],
         ),
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
-        style: _getTextStyle(context),
       ),
     );
   }

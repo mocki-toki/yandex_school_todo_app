@@ -11,37 +11,38 @@ class TaskListItem extends StatelessWidget {
 
   final Task task;
   final void Function(Task task) onDeleted;
-  final void Function(Task task, bool value) onCompleted;
+  final void Function(bool value) onCompleted;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: добавить возможность тапать по задаче
-    // TODO: добавить toast при добавлении или удалении задачи
     return Material(
       type: MaterialType.transparency,
-      child: TaskListItemSwiper(
-        onChecked: () => onCompleted(task, !task.done),
-        onDeleted: () => onDeleted(task),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _TaskListItemCheckbox(
-                task,
-                onCompleted: onCompleted,
-              ),
-              Expanded(
-                child: _TaskListItemText(task),
-              ),
-              SizedBox(
-                width: 50,
-                child: IconButton(
-                  icon: const Icon(Icons.info_outline),
-                  onPressed: () => _onEdit(context),
+      child: InkWell(
+        onTap: () => onCompleted(!task.done),
+        child: TaskListItemSwiper(
+          onChecked: () => onCompleted(!task.done),
+          onDeleted: () => onDeleted(task),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _TaskListItemCheckbox(
+                  task,
+                  onCompleted: onCompleted,
                 ),
-              ),
-            ],
+                Expanded(
+                  child: _TaskListItemText(task),
+                ),
+                SizedBox(
+                  width: 50,
+                  child: IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    onPressed: () => _onEdit(context),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -63,7 +64,7 @@ class _TaskListItemCheckbox extends StatelessWidget {
   });
 
   final Task task;
-  final void Function(Task task, bool value) onCompleted;
+  final void Function(bool value) onCompleted;
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +81,7 @@ class _TaskListItemCheckbox extends StatelessWidget {
             ),
           Checkbox(
             value: task.done,
-            onChanged: (value) => onCompleted(task, value!),
+            onChanged: (value) => onCompleted(value!),
             activeColor: _getCheckboxBorderColor(context),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadiusConstants.checkbox.borderRadius,

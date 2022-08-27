@@ -49,6 +49,9 @@ class App {
   String get errorText => """Error""";
   String errorCodeText(String code) => """Code:
 $code""";
+  String get taskCompleted => """Task is marked as completed""";
+  String get taskAdded => """Task added""";
+  String get taskRemoved => """Task removed""";
 }
 
 Map<String, String> get appMap => {
@@ -64,4 +67,7 @@ Map<String, String> get appMap => {
       """high""": """High""",
       """notFoundText""": """Everything will be found. With time""",
       """errorText""": """Error""",
+      """taskCompleted""": """Task is marked as completed""",
+      """taskAdded""": """Task added""",
+      """taskRemoved""": """Task removed""",
     };

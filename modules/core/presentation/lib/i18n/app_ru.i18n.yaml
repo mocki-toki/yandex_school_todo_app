@@ -15,3 +15,7 @@ high: "Высокий"
 notFoundText: "Найдётся всё. Со временем"
 errorText: "Произошла ошибка"
 errorCodeText(String code): "Код ошибки:\n$code"
+
+taskCompleted: "Задача помечена как выполненная"
+taskAdded: "Задача добавлена"
+taskRemoved: "Задача удалена"

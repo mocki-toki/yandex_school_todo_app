@@ -15,3 +15,7 @@ high: "High"
 notFoundText: "Everything will be found. With time"
 errorText: "Error"
 errorCodeText(String code): "Code:\n$code"
+
+taskCompleted: "Task is marked as completed"
+taskAdded: "Task added"
+taskRemoved: "Task removed"

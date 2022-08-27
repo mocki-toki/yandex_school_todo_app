@@ -110,21 +110,19 @@ class _TaskListPage extends StatelessWidget {
                   children: <Widget>[
                     SliverImplicitlyAnimatedList<Task>(
                       items: data.sortedTasks,
+                      equalityChecker: (a, b) => a.id == b.id,
                       itemBuilder: (context, item) {
                         return TaskListItem(
                           key: ValueKey(item.id),
                           item,
-                          onDeleted:
-                              context.read<TaskListViewModel>().deleteTask,
-                          onCompleted:
-                              context.read<TaskListViewModel>().setDoneTask,
+                          onDeleted: (task) => _onTaskDeleted(context, task),
+                          onCompleted: (value) =>
+                              _onTaskCompleted(context, item, value),
                         );
                       },
-                      equalityChecker: (a, b) => a.id == b.id,
                     ),
                     TaskQuickCreator(
-                      onCreate:
-                          context.read<TaskListViewModel>().quickCreateTask,
+                      onCreate: (text) => _onTaskCreated(context, text),
                     ),
                   ],
                 ),
@@ -134,5 +132,35 @@ class _TaskListPage extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  void _onTaskDeleted(BuildContext context, Task task) {
+    context.read<TaskListViewModel>().deleteTask(task);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      context.localizations.taskRemoved,
+    )));
+  }
+
+  void _onTaskCompleted(BuildContext context, Task task, bool value) {
+    context.read<TaskListViewModel>().setDoneTask(task, value);
+
+    if (!visibleDoneTasks) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          context.localizations.taskCompleted,
+        ),
+      ));
+    }
+  }
+
+  void _onTaskCreated(BuildContext context, String text) {
+    context.read<TaskListViewModel>().quickCreateTask(text);
+
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+      context.localizations.taskAdded,
+    )));
   }
 }

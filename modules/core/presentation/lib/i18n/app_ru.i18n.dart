@@ -50,6 +50,9 @@ class AppRu extends App {
   String get errorText => """Произошла ошибка""";
   String errorCodeText(String code) => """Код ошибки:
 $code""";
+  String get taskCompleted => """Задача помечена как выполненная""";
+  String get taskAdded => """Задача добавлена""";
+  String get taskRemoved => """Задача удалена""";
 }
 
 Map<String, String> get appRuMap => {
@@ -65,4 +68,7 @@ Map<String, String> get appRuMap => {
       """high""": """Высокий""",
       """notFoundText""": """Найдётся всё. Со временем""",
       """errorText""": """Произошла ошибка""",
+      """taskCompleted""": """Задача помечена как выполненная""",
+      """taskAdded""": """Задача добавлена""",
+      """taskRemoved""": """Задача удалена""",
     };

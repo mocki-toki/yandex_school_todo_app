@@ -92,8 +92,10 @@ class TaskListViewModel extends Cubit<TaskListState> {
         emit(
           TaskListState.loaded(
             TaskListData(
-              taskList,
-              _sortTasks(taskList, state.visibleDoneTasks),
+              UnmodifiableListView(taskList),
+              UnmodifiableListView(
+                _sortTasks(taskList, state.visibleDoneTasks),
+              ),
               taskList.where((task) => task.done).length,
             ),
             visibleDoneTasks: state.visibleDoneTasks,
@@ -290,7 +292,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
       emit(typedState.copyWith(
         data: TaskListData(
           data,
-          _sortTasks(data, visible),
+          UnmodifiableListView(_sortTasks(data, visible)),
           data.where((task) => task.done).length,
         ),
         visibleDoneTasks: visible,
@@ -302,7 +304,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
     }
   }
 
-  List<Task> _sortTasks(Iterable<Task> tasks, bool visibleDoneTasks) {
+  Iterable<Task> _sortTasks(Iterable<Task> tasks, bool visibleDoneTasks) {
     if (!visibleDoneTasks) {
       return tasks.where((element) => !element.done).toList()
         ..sort((b, a) => b.createdAt.compareTo(a.createdAt));

@@ -33,8 +33,8 @@ enum TaskListSyncState {
 @freezed
 class TaskListData with _$TaskListData {
   const factory TaskListData(
-    Iterable<Task> originalTasks,
-    List<Task> sortedTasks,
+    UnmodifiableListView<Task> originalTasks,
+    UnmodifiableListView<Task> sortedTasks,
     int completedTasksCount,
   ) = _TaskListData;
 }

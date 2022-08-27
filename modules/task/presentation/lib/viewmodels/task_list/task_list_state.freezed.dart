@@ -912,8 +912,10 @@ abstract class TaskListStateError implements TaskListState {
 
 /// @nodoc
 mixin _$TaskListData {
-  Iterable<Task> get originalTasks => throw _privateConstructorUsedError;
-  List<Task> get sortedTasks => throw _privateConstructorUsedError;
+  UnmodifiableListView<Task> get originalTasks =>
+      throw _privateConstructorUsedError;
+  UnmodifiableListView<Task> get sortedTasks =>
+      throw _privateConstructorUsedError;
   int get completedTasksCount => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -927,8 +929,8 @@ abstract class $TaskListDataCopyWith<$Res> {
           TaskListData value, $Res Function(TaskListData) then) =
       _$TaskListDataCopyWithImpl<$Res>;
   $Res call(
-      {Iterable<Task> originalTasks,
-      List<Task> sortedTasks,
+      {UnmodifiableListView<Task> originalTasks,
+      UnmodifiableListView<Task> sortedTasks,
       int completedTasksCount});
 }
 
@@ -950,11 +952,11 @@ class _$TaskListDataCopyWithImpl<$Res> implements $TaskListDataCopyWith<$Res> {
       originalTasks: originalTasks == freezed
           ? _value.originalTasks
           : originalTasks // ignore: cast_nullable_to_non_nullable
-              as Iterable<Task>,
+              as UnmodifiableListView<Task>,
       sortedTasks: sortedTasks == freezed
           ? _value.sortedTasks
           : sortedTasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as UnmodifiableListView<Task>,
       completedTasksCount: completedTasksCount == freezed
           ? _value.completedTasksCount
           : completedTasksCount // ignore: cast_nullable_to_non_nullable
@@ -971,8 +973,8 @@ abstract class _$$_TaskListDataCopyWith<$Res>
       __$$_TaskListDataCopyWithImpl<$Res>;
   @override
   $Res call(
-      {Iterable<Task> originalTasks,
-      List<Task> sortedTasks,
+      {UnmodifiableListView<Task> originalTasks,
+      UnmodifiableListView<Task> sortedTasks,
       int completedTasksCount});
 }
 
@@ -997,11 +999,11 @@ class __$$_TaskListDataCopyWithImpl<$Res>
       originalTasks == freezed
           ? _value.originalTasks
           : originalTasks // ignore: cast_nullable_to_non_nullable
-              as Iterable<Task>,
+              as UnmodifiableListView<Task>,
       sortedTasks == freezed
-          ? _value._sortedTasks
+          ? _value.sortedTasks
           : sortedTasks // ignore: cast_nullable_to_non_nullable
-              as List<Task>,
+              as UnmodifiableListView<Task>,
       completedTasksCount == freezed
           ? _value.completedTasksCount
           : completedTasksCount // ignore: cast_nullable_to_non_nullable
@@ -1013,19 +1015,13 @@ class __$$_TaskListDataCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_TaskListData implements _TaskListData {
-  const _$_TaskListData(this.originalTasks, final List<Task> sortedTasks,
-      this.completedTasksCount)
-      : _sortedTasks = sortedTasks;
+  const _$_TaskListData(
+      this.originalTasks, this.sortedTasks, this.completedTasksCount);
 
   @override
-  final Iterable<Task> originalTasks;
-  final List<Task> _sortedTasks;
+  final UnmodifiableListView<Task> originalTasks;
   @override
-  List<Task> get sortedTasks {
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_sortedTasks);
-  }
-
+  final UnmodifiableListView<Task> sortedTasks;
   @override
   final int completedTasksCount;
 
@@ -1042,7 +1038,7 @@ class _$_TaskListData implements _TaskListData {
             const DeepCollectionEquality()
                 .equals(other.originalTasks, originalTasks) &&
             const DeepCollectionEquality()
-                .equals(other._sortedTasks, _sortedTasks) &&
+                .equals(other.sortedTasks, sortedTasks) &&
             const DeepCollectionEquality()
                 .equals(other.completedTasksCount, completedTasksCount));
   }
@@ -1051,7 +1047,7 @@ class _$_TaskListData implements _TaskListData {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(originalTasks),
-      const DeepCollectionEquality().hash(_sortedTasks),
+      const DeepCollectionEquality().hash(sortedTasks),
       const DeepCollectionEquality().hash(completedTasksCount));
 
   @JsonKey(ignore: true)
@@ -1062,14 +1058,14 @@ class _$_TaskListData implements _TaskListData {
 
 abstract class _TaskListData implements TaskListData {
   const factory _TaskListData(
-      final Iterable<Task> originalTasks,
-      final List<Task> sortedTasks,
+      final UnmodifiableListView<Task> originalTasks,
+      final UnmodifiableListView<Task> sortedTasks,
       final int completedTasksCount) = _$_TaskListData;
 
   @override
-  Iterable<Task> get originalTasks;
+  UnmodifiableListView<Task> get originalTasks;
   @override
-  List<Task> get sortedTasks;
+  UnmodifiableListView<Task> get sortedTasks;
   @override
   int get completedTasksCount;
   @override

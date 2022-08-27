@@ -1,3 +1,4 @@
+import 'package:task_domain/task_domain.dart';
 import 'package:task_presentation/task_presentation.dart';
 
 class TaskListScreen extends StatefulWidget {
@@ -76,7 +77,6 @@ class _TaskListPage extends StatelessWidget {
   final bool visibleDoneTasks;
   final TaskListSyncState syncState;
 
-// TODO: анимация добавления удаления изменения тасков
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -90,32 +90,46 @@ class _TaskListPage extends StatelessWidget {
         ),
         SliverPadding(
           padding: EdgeInsetsConstants.listCardMargin.edgeInsets,
-          sliver: SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                if (index == data.sortedTasks.length) {
-                  return TaskListItemDecorator(
-                    isFirst: index == 0,
-                    isLast: true,
-                    child: TaskQuickCreator(
+          sliver: SliverStack(
+            children: <Widget>[
+              SliverPositioned.fill(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: context.palette.colorBackSecondary,
+                    boxShadow: [
+                      ShadowConstants.cardPart1.boxShadow,
+                      ShadowConstants.cardPart2.boxShadow,
+                    ],
+                    borderRadius: BorderRadiusConstants.card.borderRadius,
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: EdgeInsetsConstants.listCardPadding.edgeInsets,
+                sliver: MultiSliver(
+                  children: <Widget>[
+                    SliverImplicitlyAnimatedList<Task>(
+                      items: data.sortedTasks,
+                      itemBuilder: (context, item) {
+                        return TaskListItem(
+                          key: ValueKey(item.id),
+                          item,
+                          onDeleted:
+                              context.read<TaskListViewModel>().deleteTask,
+                          onCompleted:
+                              context.read<TaskListViewModel>().setDoneTask,
+                        );
+                      },
+                      equalityChecker: (a, b) => a.id == b.id,
+                    ),
+                    TaskQuickCreator(
                       onCreate:
                           context.read<TaskListViewModel>().quickCreateTask,
                     ),
-                  );
-                }
-
-                return TaskListItemDecorator(
-                  isFirst: index == 0,
-                  isLast: false,
-                  child: TaskListItem(
-                    data.sortedTasks[index],
-                    onDeleted: context.read<TaskListViewModel>().deleteTask,
-                    onCompleted: context.read<TaskListViewModel>().setDoneTask,
-                  ),
-                );
-              },
-              childCount: data.sortedTasks.length + 1,
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ],

@@ -32,3 +32,4 @@ export 'widgets/loader_widget.dart';
 export 'widgets/failure_decorator_widget.dart';
 export 'widgets/padding_divider.dart';
 export 'widgets/platform_theme_builder.dart';
+export 'widgets/sliver_implicitly_animated_list.dart';

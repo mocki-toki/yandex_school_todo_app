@@ -15,5 +15,4 @@ export 'helpers/task_importance_localization.dart';
 export 'widgets/task_list_header.dart';
 export 'widgets/task_list_item_swiper.dart';
 export 'widgets/task_quick_creator.dart';
-export 'widgets/task_list_item_decorator.dart';
 export 'widgets/task_list_item.dart';

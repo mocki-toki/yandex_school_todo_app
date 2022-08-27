@@ -17,29 +17,32 @@ class TaskListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: добавить возможность тапать по задаче
     // TODO: добавить toast при добавлении или удалении задачи
-    return TaskListItemSwiper(
-      onChecked: () => onCompleted(task, !task.done),
-      onDeleted: () => onDeleted(task),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _TaskListItemCheckbox(
-              task,
-              onCompleted: onCompleted,
-            ),
-            Expanded(
-              child: _TaskListItemText(task),
-            ),
-            SizedBox(
-              width: 50,
-              child: IconButton(
-                icon: const Icon(Icons.info_outline),
-                onPressed: () => _onEdit(context),
+    return Material(
+      type: MaterialType.transparency,
+      child: TaskListItemSwiper(
+        onChecked: () => onCompleted(task, !task.done),
+        onDeleted: () => onDeleted(task),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _TaskListItemCheckbox(
+                task,
+                onCompleted: onCompleted,
               ),
-            ),
-          ],
+              Expanded(
+                child: _TaskListItemText(task),
+              ),
+              SizedBox(
+                width: 50,
+                child: IconButton(
+                  icon: const Icon(Icons.info_outline),
+                  onPressed: () => _onEdit(context),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

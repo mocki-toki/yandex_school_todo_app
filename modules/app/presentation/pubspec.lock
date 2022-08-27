@@ -134,6 +134,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+  diffutil_dart:
+    dependency: transitive
+    description:
+      name: diffutil_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.0"
+  diffutil_sliverlist:
+    dependency: transitive
+    description:
+      name: diffutil_sliverlist
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.1"
   dino:
     dependency: transitive
     description:
@@ -434,6 +448,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  sliver_tools:
+    dependency: transitive
+    description:
+      name: sliver_tools
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.7"
   source_span:
     dependency: transitive
     description:

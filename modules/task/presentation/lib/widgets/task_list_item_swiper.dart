@@ -93,10 +93,7 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
         ),
       SlideTransition(
         position: moveAnimation,
-        child: ColoredBox(
-          color: context.palette.colorBackSecondary,
-          child: widget.child,
-        ),
+        child: widget.child,
       ),
       FadeTransition(
         opacity: backgroundFadeAnimation,
@@ -107,20 +104,17 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
       ),
     ];
 
-    return Material(
-      type: MaterialType.transparency,
-      child: IgnorePointer(
-        ignoring: locked,
-        child: GestureDetector(
-          onHorizontalDragUpdate: _handleDragUpdate,
-          onHorizontalDragEnd: _handleDragEnd,
-          onHorizontalDragCancel: _handleDragEnd,
-          behavior: HitTestBehavior.opaque,
-          child: Stack(
-            alignment:
-                dragExtent < 0 ? Alignment.centerRight : Alignment.centerLeft,
-            children: children,
-          ),
+    return IgnorePointer(
+      ignoring: locked,
+      child: GestureDetector(
+        onHorizontalDragUpdate: _handleDragUpdate,
+        onHorizontalDragEnd: _handleDragEnd,
+        onHorizontalDragCancel: _handleDragEnd,
+        behavior: HitTestBehavior.opaque,
+        child: Stack(
+          alignment:
+              dragExtent < 0 ? Alignment.centerRight : Alignment.centerLeft,
+          children: children,
         ),
       ),
     );
@@ -191,10 +185,11 @@ class _TaskListItemSwiperState extends State<TaskListItemSwiper>
       locked = true;
     });
 
-    await Future.delayed(const Duration(milliseconds: 300));
+    await Future.delayed(DurationConstants.swipeAnimation.duration);
 
     onCompleted();
 
+    await Future.delayed(DurationConstants.swipeAnimation.duration);
     await backgroundFadeAnimationController.animateTo(
       1,
       duration: DurationConstants.swipeAnimation.duration,

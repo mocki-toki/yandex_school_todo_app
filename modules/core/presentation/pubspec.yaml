@@ -25,6 +25,9 @@ dependencies:
   flutter_svg: ^1.1.1+1
   flutter_keyboard_visibility: ^5.3.0
 
+  sliver_tools: ^0.2.7
+  diffutil_sliverlist: ^0.5.1
+
 dev_dependencies:
   build_runner: ^2.2.0
   freezed: ^2.1.0+1

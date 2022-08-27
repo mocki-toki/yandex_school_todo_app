@@ -103,10 +103,9 @@ class _TaskEditPage extends StatelessWidget {
             indent: 16,
             endIndent: 16,
           ),
-          SwitchListTile(
+          ListTile(
             contentPadding: EdgeInsetsConstants.cardMargin.edgeInsets,
-            value: deadline != null, // TODO: сложно подкорректировать дату
-            onChanged: (value) => onDeadlineChanged(context, value),
+            onTap: () => onDeadlineChanged(context, deadline == null),
             title: Text(context.localizations.taskDeadline),
             subtitle: deadline == null
                 ? null
@@ -117,6 +116,20 @@ class _TaskEditPage extends StatelessWidget {
                       color: context.palette.colorBlue,
                     ),
                   ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (deadline != null)
+                  IconButton(
+                    icon: Icon(Icons.edit_calendar),
+                    onPressed: () => onDeadlineChanged(context, true, deadline),
+                  ),
+                Switch(
+                  value: deadline != null,
+                  onChanged: (value) => onDeadlineChanged(context, value),
+                ),
+              ],
+            ),
           ),
           MarginDivider(
             EdgeInsetsConstants.altDivider.edgeInsets,
@@ -159,22 +172,28 @@ class _TaskEditPage extends StatelessWidget {
     context.sp.getRequired<TaskNavigatorMixin>().showTaskList();
   }
 
-  Future<void> onDeadlineChanged(BuildContext context, bool value) async {
+  Future<void> onDeadlineChanged(
+    BuildContext context,
+    bool value, [
+    DateTime? currentDeadline,
+  ]) async {
     FocusScope.of(context).unfocus();
 
     final viewModel = context.read<TaskEditViewModel>();
     if (value) {
       final dateTime = await showDatePicker(
         context: context,
-        initialDate: DateTime.now(),
+        initialDate: currentDeadline ?? DateTime.now(),
         firstDate: DateTime.now().subtract(const Duration(days: 100)),
         lastDate: DateTime.now().add(const Duration(days: 100)),
       ); // TODO: диалог во всю ширину
 
-      return viewModel.setDeadline(dateTime);
-    }
+      if (dateTime == null) return;
 
-    viewModel.setDeadline(null);
+      viewModel.setDeadline(dateTime);
+    } else {
+      viewModel.setDeadline(null);
+    }
   }
 }
 

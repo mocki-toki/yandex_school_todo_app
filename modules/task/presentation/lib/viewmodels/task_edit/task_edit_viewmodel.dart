@@ -117,7 +117,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   Future<void> createTask([Task? requestTask]) {
     assert(state is TaskEditStateNewTask);
 
-    requestTask ??= _requestTaskFromState;
+    requestTask ??= requestTaskFromState;
     final response =
         _taskRepository.createTask(requestTask).asBroadcastStream();
 
@@ -140,7 +140,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
   Future<void> editTask([Task? requestTask]) {
     assert(state is TaskEditStateLoadedTask);
 
-    requestTask ??= _requestTaskFromState;
+    requestTask ??= requestTaskFromState;
     final response = _taskRepository.editTask(requestTask).asBroadcastStream();
 
     response.synchronizeData(
@@ -182,7 +182,7 @@ class TaskEditViewModel extends Cubit<TaskEditState> {
     });
   }
 
-  Task get _requestTaskFromState {
+  Task get requestTaskFromState {
     assert(state is TaskEditStateNewTask || state is TaskEditStateLoadedTask);
 
     return state.maybeMap(

@@ -45,3 +45,6 @@ migrate_working_dir/
 **/android/app/debug
 **/android/app/profile
 **/android/app/release
+ios/Flutter/Generated.xcconfig
+android/local.properties
+ios/Flutter/flutter_export_environment.sh

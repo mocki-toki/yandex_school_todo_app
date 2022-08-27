@@ -32,7 +32,7 @@ class DesignThemeData {
   }
 
   ListTileThemeData _listTileTheme() {
-    return ListTileThemeData(minLeadingWidth: 0);
+    return const ListTileThemeData(minLeadingWidth: 0);
   }
 
   TextButtonThemeData _textButtonTheme() {
@@ -46,13 +46,13 @@ class DesignThemeData {
 
   ColorScheme _getColorScheme() {
     if (!isDark) {
-      return ColorScheme.light().copyWith(
+      return const ColorScheme.light().copyWith(
         secondary: palette.colorBlue,
         onSecondary: palette.colorWhite,
         primary: palette.colorBlue,
       );
     } else {
-      return ColorScheme.dark().copyWith(
+      return const ColorScheme.dark().copyWith(
         secondary: palette.colorBlue,
         onSecondary: palette.colorWhite,
         primary: palette.colorBlue,

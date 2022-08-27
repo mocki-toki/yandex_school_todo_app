@@ -13,7 +13,7 @@ class FailureDecoratorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     if (failure.type == BackendFailureType.notFound ||
         failure.type == StorageExceptionType.notFound) {
-      return NotFoundScreen();
+      return const NotFoundScreen();
     }
 
     return Scaffold(
@@ -28,12 +28,12 @@ class FailureDecoratorWidget extends StatelessWidget {
               size: 50,
               color: context.palette.colorRed,
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               context.localizations.errorText,
               style: context.textStyle.body,
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Text(
               context.localizations.errorCodeText("${failure.type}"),
               textAlign: TextAlign.center,

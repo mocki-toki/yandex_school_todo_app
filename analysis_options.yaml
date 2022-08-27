@@ -8,6 +8,7 @@ analyzer:
     - "**/firebase_options.dart"
   errors:
     invalid_annotation_target: ignore # https://github.com/rrousselGit/freezed/issues/488#issuecomment-894358980
+    depend_on_referenced_packages: ignore # зависимости слоев подключаются через pubspec_override.yaml
 
 linter:
   rules:

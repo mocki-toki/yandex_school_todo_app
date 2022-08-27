@@ -41,18 +41,18 @@ class _AnimatedItem extends StatelessWidget {
     return SizeTransition(
       sizeFactor: CurvedAnimation(
         parent: animation,
-        curve: Interval(0.0, 0.7, curve: Curves.easeInOut),
-        reverseCurve: Interval(0.0, 0.5, curve: Curves.easeInOutSine),
+        curve: const Interval(0.0, 0.7, curve: Curves.easeInOut),
+        reverseCurve: const Interval(0.0, 0.5, curve: Curves.easeInOutSine),
       ),
       child: FadeTransition(
         opacity: CurvedAnimation(
           parent: animation,
-          curve: Interval(0.8, 1, curve: Curves.linearToEaseOut),
+          curve: const Interval(0.8, 1, curve: Curves.linearToEaseOut),
         ),
         child: ScaleTransition(
           scale: CurvedAnimation(
             parent: animation,
-            curve: Interval(0.5, 1, curve: Curves.linearToEaseOut),
+            curve: const Interval(0.5, 1, curve: Curves.linearToEaseOut),
           ),
           child: child,
         ),

@@ -10,7 +10,7 @@ class DesignTextStyle {
   final TextStyle? defaultTextStyle;
 
   TextStyle get font {
-    return (defaultTextStyle ?? TextStyle()).copyWith(
+    return (defaultTextStyle ?? const TextStyle()).copyWith(
       color: palette.colorLabelPrimary,
     );
   }

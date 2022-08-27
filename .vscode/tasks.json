@@ -55,6 +55,17 @@
       },
       "group": "build",
       "problemMatcher": []
+    },
+    {
+      "label": "Analyze",
+      "command": "flutter analyze . --no-pub",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
     }
   ]
 }

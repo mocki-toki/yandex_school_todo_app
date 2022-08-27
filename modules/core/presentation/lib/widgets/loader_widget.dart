@@ -8,7 +8,7 @@ class LoaderWidget extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(elevation: 0),
-      body: Center(
+      body: const Center(
         child: CircularProgressIndicator(),
       ),
     );

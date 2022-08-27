@@ -20,7 +20,7 @@ Future<void> main() async {
       runApp(
         Provider.value(
           value: serviceProvider,
-          child: Application(),
+          child: const Application(),
         ),
       );
     },

@@ -28,31 +28,28 @@ class StorageTaskBackend implements Initializable {
   }
 
   Stream<Iterable<Task>> get taskList {
-    void listener(
-      StreamController<Iterable<Task>> controller,
-      Box<LocalTask> box,
-    ) {
-      controller.add(
-        box.values
-            .toList()
-            .where((e) => e.state != LocalTaskState.deleted)
-            .map((e) => e.task),
-      );
-    }
-
-    final controller = StreamController<Iterable<Task>>();
+    final controller = StreamController<Box<LocalTask>>();
     final box = _taskListDataBox().listenable();
 
+    final notify = () {
+      controller.add(box.value);
+    };
+
     controller.onListen = controller.onResume = () {
-      listener(controller, box.value);
-      box.addListener(() => listener(controller, box.value));
+      notify();
+      box.addListener(notify);
     };
 
     controller.onCancel = controller.onPause = () {
-      box.removeListener(() => listener(controller, box.value));
+      box.removeListener(notify);
     };
 
-    return controller.stream;
+    return controller.stream.map(
+      (event) => event.values
+          .toList()
+          .where((e) => e.state != LocalTaskState.deleted)
+          .map((e) => e.task),
+    );
   }
 
   Future<void> updateTaskList(Iterable<Task> tasksFromServer) async {

@@ -15,9 +15,13 @@ class NotFoundScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('404', style: context.textStyle.title),
+            Text('404', style: context.textStyle.largeTitle),
             const SizedBox(height: 4),
-            Text(context.localizations.notFoundText),
+            Text(
+              context.localizations.notFoundText,
+              style: context.textStyle.subhead
+                  .copyWith(color: context.palette.colorLabelSecondary),
+            ),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:core_domain/core_domain.dart';
 
-class StringToDateTimeConvertor implements JsonConverter<DateTime, int> {
-  const StringToDateTimeConvertor();
+class IntToDateTimeConvertor implements JsonConverter<DateTime, int> {
+  const IntToDateTimeConvertor();
 
   @override
   DateTime fromJson(int timestamp) {

@@ -25,7 +25,7 @@ import 'package:task_infrastructure/backend/storage_task_properties_backend.dart
 import 'package:task_infrastructure/backend/storage_task_backend.dart';
 import 'package:task_infrastructure/backend/network_task_backend.dart';
 import 'package:dio/src/dio.dart';
-import 'package:task_infrastructure/services/task_properties_repository.dart';
+import 'package:task_infrastructure/services/task_properties_repository_impl.dart';
 import 'package:task_domain/services/task_properties_repository.dart';
 import 'package:task_infrastructure/services/task_repository_impl.dart';
 import 'package:task_domain/services/task_repository.dart';

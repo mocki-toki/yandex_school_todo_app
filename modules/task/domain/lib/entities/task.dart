@@ -14,10 +14,10 @@ class Task with _$Task {
     @StringToDateTimeOrNullConverter() required DateTime? deadline,
     required bool done,
     @HexToColorOrNullConverter() required Color? color,
-    @StringToDateTimeConvertor()
+    @IntToDateTimeConvertor()
     @JsonKey(name: 'created_at')
         required DateTime createdAt,
-    @StringToDateTimeConvertor()
+    @IntToDateTimeConvertor()
     @JsonKey(name: 'changed_at')
         required DateTime changedAt,
     @StringToDeviceIdentifierConvertor()

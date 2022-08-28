@@ -16,9 +16,9 @@ _$_Task _$$_TaskFromJson(Map<String, dynamic> json) => _$_Task(
       color:
           const HexToColorOrNullConverter().fromJson(json['color'] as String?),
       createdAt:
-          const StringToDateTimeConvertor().fromJson(json['created_at'] as int),
+          const IntToDateTimeConvertor().fromJson(json['created_at'] as int),
       changedAt:
-          const StringToDateTimeConvertor().fromJson(json['changed_at'] as int),
+          const IntToDateTimeConvertor().fromJson(json['changed_at'] as int),
       lastUpdatedBy: const StringToDeviceIdentifierConvertor()
           .fromJson(json['last_updated_by'] as String),
     );
@@ -31,10 +31,8 @@ Map<String, dynamic> _$$_TaskToJson(_$_Task instance) => <String, dynamic>{
           const StringToDateTimeOrNullConverter().toJson(instance.deadline),
       'done': instance.done,
       'color': const HexToColorOrNullConverter().toJson(instance.color),
-      'created_at':
-          const StringToDateTimeConvertor().toJson(instance.createdAt),
-      'changed_at':
-          const StringToDateTimeConvertor().toJson(instance.changedAt),
+      'created_at': const IntToDateTimeConvertor().toJson(instance.createdAt),
+      'changed_at': const IntToDateTimeConvertor().toJson(instance.changedAt),
       'last_updated_by': const StringToDeviceIdentifierConvertor()
           .toJson(instance.lastUpdatedBy),
     };

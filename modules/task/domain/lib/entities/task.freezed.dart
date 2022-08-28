@@ -29,10 +29,10 @@ mixin _$Task {
   bool get done => throw _privateConstructorUsedError;
   @HexToColorOrNullConverter()
   Color? get color => throw _privateConstructorUsedError;
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'changed_at')
   DateTime get changedAt => throw _privateConstructorUsedError;
   @StringToDeviceIdentifierConvertor()
@@ -58,10 +58,10 @@ abstract class $TaskCopyWith<$Res> {
       bool done,
       @HexToColorOrNullConverter()
           Color? color,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'created_at')
           DateTime createdAt,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'changed_at')
           DateTime changedAt,
       @StringToDeviceIdentifierConvertor()
@@ -145,10 +145,10 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
       bool done,
       @HexToColorOrNullConverter()
           Color? color,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'created_at')
           DateTime createdAt,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'changed_at')
           DateTime changedAt,
       @StringToDeviceIdentifierConvertor()
@@ -231,10 +231,10 @@ class _$_Task implements _Task {
       required this.done,
       @HexToColorOrNullConverter()
           required this.color,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'created_at')
           required this.createdAt,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'changed_at')
           required this.changedAt,
       @StringToDeviceIdentifierConvertor()
@@ -259,11 +259,11 @@ class _$_Task implements _Task {
   @HexToColorOrNullConverter()
   final Color? color;
   @override
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'changed_at')
   final DateTime changedAt;
   @override
@@ -332,10 +332,10 @@ abstract class _Task implements Task {
       required final bool done,
       @HexToColorOrNullConverter()
           required final Color? color,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'created_at')
           required final DateTime createdAt,
-      @StringToDateTimeConvertor()
+      @IntToDateTimeConvertor()
       @JsonKey(name: 'changed_at')
           required final DateTime changedAt,
       @StringToDeviceIdentifierConvertor()
@@ -360,11 +360,11 @@ abstract class _Task implements Task {
   @HexToColorOrNullConverter()
   Color? get color;
   @override
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
-  @StringToDateTimeConvertor()
+  @IntToDateTimeConvertor()
   @JsonKey(name: 'changed_at')
   DateTime get changedAt;
   @override

@@ -29,6 +29,7 @@ export 'helpers/view_model_provider.dart';
 export 'helpers/object_extensions.dart';
 export 'helpers/stream_extensions.dart';
 export 'helpers/build_context_extensions.dart';
+export 'widgets/environment_banner.dart';
 export 'widgets/loader_widget.dart';
 export 'widgets/failure_decorator_widget.dart';
 export 'widgets/padding_divider.dart';

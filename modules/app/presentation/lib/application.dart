@@ -1,7 +1,13 @@
+import 'package:app_domain/app_domain.dart';
 import 'package:app_presentation/app_presentation.dart';
 
 class Application extends StatelessWidget {
-  const Application({super.key});
+  const Application({
+    super.key,
+    required this.environmentConfig,
+  });
+
+  final EnvironmentConfig environmentConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -21,19 +27,22 @@ class Application extends StatelessWidget {
         return Design(
           data: currentDesign,
           builder: (_, theme) {
-            return MaterialApp.router(
-              routerDelegate: context.sp.getRequired<AppRouterDelegate>(),
-              routeInformationParser: AppRouteInformationParser(),
-              debugShowCheckedModeBanner: false,
-              title: CorePresentationConstants.appName,
-              theme: theme,
-              localizationsDelegates: [
-                AppLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
+            return EnvironmentBanner(
+              environmentConfig,
+              child: MaterialApp.router(
+                routerDelegate: context.sp.getRequired<AppRouterDelegate>(),
+                routeInformationParser: AppRouteInformationParser(),
+                debugShowCheckedModeBanner: false,
+                title: CorePresentationConstants.appName,
+                theme: theme,
+                localizationsDelegates: [
+                  AppLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: AppLocalizations.supportedLocales,
+              ),
             );
           },
         );

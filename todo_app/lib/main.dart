@@ -1,15 +1,10 @@
 import 'dart:async';
 
+import 'package:core_domain/core_domain.dart';
 import 'package:app_presentation/app_presentation.dart';
 import 'package:task_infrastructure/task_infrastructure.dart';
 
 import 'main.dino.g.dart';
-
-enum EnvironmentConfig {
-  testing,
-  production,
-  debug,
-}
 
 late final EnvironmentConfig environment;
 
@@ -33,7 +28,9 @@ Future<void> main() async {
       runApp(
         Provider.value(
           value: serviceProvider,
-          child: const Application(),
+          child: Application(
+            environmentConfig: environment,
+          ),
         ),
       );
     },

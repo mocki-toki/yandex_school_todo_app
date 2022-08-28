@@ -17,6 +17,7 @@ export 'exports.dart';
 export 'services/firebase_analytics_service.dart';
 export 'entities/failure.dart';
 export 'entities/remote_config.dart';
+export 'entities/environment_config.dart';
 export 'entities/domain_failure.dart';
 export 'entities/analytics_event.dart';
 export 'entities/revision.dart';

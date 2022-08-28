@@ -13,8 +13,12 @@ class _TaskListScreenState extends State<TaskListScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
-      getLogger().info('App resumed');
+      try {
+        context.read<TaskListViewModel>().synchronizeStorageWithNetwork();
+        getLogger().info('App resumed');
+      } on ProviderNotFoundException catch (_) {
+        getLogger().info('Skipped storage synchronization');
+      }
     }
   }
 

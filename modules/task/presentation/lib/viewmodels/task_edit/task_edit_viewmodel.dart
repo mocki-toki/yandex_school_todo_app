@@ -1,12 +1,13 @@
 import 'package:task_domain/task_domain.dart';
 import 'package:task_presentation/task_presentation.dart';
 
-class TaskEditViewModelProvider extends ViewModelProvider<TaskEditViewModel> {
+class TaskEditViewModelProvider
+    extends ViewModelInputProvider<TaskEditViewModel, UuidValue?> {
   TaskEditViewModelProvider({
     super.key,
     UuidValue? taskId,
     Task? cachedTask,
-    super.child,
+    required super.child,
   }) : super(
           (_, sp) => TaskEditViewModel(
             sp.getRequired<TaskRepository>(),
@@ -15,6 +16,7 @@ class TaskEditViewModelProvider extends ViewModelProvider<TaskEditViewModel> {
             taskId,
             cachedTask,
           ),
+          input: taskId,
         );
 }
 

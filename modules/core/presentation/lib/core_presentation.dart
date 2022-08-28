@@ -32,5 +32,6 @@ export 'helpers/build_context_extensions.dart';
 export 'widgets/loader_widget.dart';
 export 'widgets/failure_decorator_widget.dart';
 export 'widgets/padding_divider.dart';
+export 'widgets/bloc_input_provider.dart';
 export 'widgets/platform_theme_builder.dart';
 export 'widgets/sliver_implicitly_animated_list.dart';

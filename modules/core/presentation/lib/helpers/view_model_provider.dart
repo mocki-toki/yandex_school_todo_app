@@ -19,3 +19,13 @@ class ViewModelProvider<T extends BlocBase> extends BlocProvider<T> {
     super.child,
   }) : super(create: (context) => _createProvider(create, context));
 }
+
+class ViewModelInputProvider<T extends BlocBase, Input>
+    extends BlocInputProvider<T, Input> {
+  ViewModelInputProvider(
+    CreateProviderCallback<T> create, {
+    super.key,
+    required super.input,
+    required super.child,
+  }) : super(create: (context, _) => _createProvider(create, context));
+}

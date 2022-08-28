@@ -1,0 +1,21 @@
+# GENERATED CODE - DO NOT MODIFY BY HAND. RUN "pansy bootstrap" FOR UPDATE
+
+dependency_overrides:
+  core_domain:
+    path: modules/core/domain
+  core_infrastructure:
+    path: modules/core/infrastructure
+  core_presentation:
+    path: modules/core/presentation
+  app_domain:
+    path: modules/app/domain
+  app_infrastructure:
+    path: modules/app/infrastructure
+  app_presentation:
+    path: modules/app/presentation
+  task_domain:
+    path: modules/task/domain
+  task_infrastructure:
+    path: modules/task/infrastructure
+  task_presentation:
+    path: modules/task/presentation

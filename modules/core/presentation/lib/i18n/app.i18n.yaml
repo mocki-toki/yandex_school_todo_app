@@ -1,0 +1,21 @@
+myTasks: "My Tasks"
+tasksCompleted(int count): "Сompleted — $count"
+newTask: "New"
+
+saveTask: "Save"
+taskEditHint: "What need to do..."
+taskImportance: "Importance"
+taskDeadline: "Deadline"
+taskDelete: "Delete"
+
+none: "None"
+low: "Low"
+high: "High"
+
+notFoundText: "Everything will be found. With time"
+errorText: "Error"
+errorCodeText(String code): "Code:\n$code"
+
+taskCompleted: "Task is marked as completed"
+taskAdded: "Task added"
+taskRemoved: "Task removed"

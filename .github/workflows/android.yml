@@ -16,29 +16,30 @@ jobs:
         with:
           channel: "stable"
 
-      - name: Get dependencies
+      - name: Get dependencies in workspace directory
         run: flutter pub get
 
-      - name: Check code format
-        run: find . -name "*.dart" ! -name "firebase_options.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
+      - name: Get dependencies in other packages directory
+        run: flutter pub run melos run pub:get
 
-      - name: Code generation
-        run: flutter pub run index_generator && flutter pub run build_runner build --delete-conflicting-outputs && flutter pub run index_generator
+      - name: Check code format
+        run: find . -name "*.dart" ! -name "firebase_options.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" ! -name "*.i18n.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
 
       - name: Statically analyze
         run: flutter analyze .
 
-      # - name: Passing tests
-      #   run: flutter test
+      - name: Run tests
+        run: flutter pub run melos run test
 
       - name: Building APK
-        run: flutter build apk --release --bundle-sksl-path assets/android.sksl.json
+        working-directory: ./todo_app
+        run: flutter build apk --release --bundle-sksl-path android.sksl.json
 
-      - name: Uploading artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app
-          path: build/app/outputs/apk/release/app-release.apk
+      # - name: Uploading artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app
+      #     path: todo_app/build/app/outputs/apk/release/app-release.apk
 
       - name: Uploading artifact to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
@@ -46,4 +47,4 @@ jobs:
           appId: ${{secrets.FIREBASE_ANDROID_APPID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: build/app/outputs/apk/release/app-release.apk
+          file: todo_app/build/app/outputs/apk/release/app-release.apk

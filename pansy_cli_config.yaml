@@ -1,0 +1,12 @@
+workspace:
+  project:
+    name: todo_app
+
+global_pubspec:
+  environment:
+    sdk: ">=2.17.6 <3.0.0"
+
+index_file:
+  exclude:
+    - "**.g.dart"
+    - "**.freezed.dart"

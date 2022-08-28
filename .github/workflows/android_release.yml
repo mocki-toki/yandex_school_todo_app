@@ -34,7 +34,7 @@ jobs:
 
       - name: Building APK
         working-directory: ./todo_app
-        run: flutter build apk --release --bundle-sksl-path android.sksl.json
+        run: flutter build apk --release --bundle-sksl-path android.sksl.json --dart-define=environment=production
 
       - name: Publishing release
         uses: ncipollo/release-action@v1

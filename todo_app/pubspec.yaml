@@ -16,5 +16,10 @@ dev_dependencies:
       url: https://github.com/Exeteres/dino
       path: packages/dino_generator
 
+  integration_test:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+
 flutter:
   uses-material-design: true

@@ -1,17 +1,30 @@
 import 'dart:async';
 
 import 'package:app_presentation/app_presentation.dart';
-import 'package:flutter/foundation.dart';
 import 'package:task_infrastructure/task_infrastructure.dart';
 
 import 'main.dino.g.dart';
 
+enum EnvironmentConfig {
+  testing,
+  production,
+  debug,
+}
+
+late final EnvironmentConfig environment;
+
 Future<void> main() async {
+  environment = EnvironmentConfig.values.byName(const String.fromEnvironment(
+    'environment',
+    defaultValue: 'debug',
+  ));
+
   runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
 
       initLogger();
+      Logger('main').config("Current environment: ${environment.name}");
       await _initDependencies();
 
       final scope = await _initDinoScope();
@@ -32,9 +45,12 @@ Future<void> main() async {
 Future<void> _initDependencies() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  await FirebaseCrashlytics.instance
-      .setCrashlyticsCollectionEnabled(!kDebugMode);
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  if (environment == EnvironmentConfig.production) {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  } else {
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
 
   await Hive.initFlutter();
 }
@@ -50,7 +66,9 @@ Future<ServiceScope> _initDinoScope() async {
   );
   services.addSingleton<AppRouterDelegate>();
 
-  services.initializeAndAddRemoteConfigs();
+  if (environment != EnvironmentConfig.testing) {
+    services.initializeAndAddRemoteConfigs();
+  }
 
   final scope = services.buildRootScope();
   await scope.initialize();

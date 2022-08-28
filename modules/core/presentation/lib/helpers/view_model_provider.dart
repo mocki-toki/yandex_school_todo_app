@@ -12,10 +12,10 @@ T _createProvider<T>(
   return create(context, context.sp);
 }
 
-class ViewModelProvider<T extends BlocBase> extends ProxyProvider0<T> {
+class ViewModelProvider<T extends BlocBase> extends BlocProvider<T> {
   ViewModelProvider(
     CreateProviderCallback<T> create, {
     super.key,
     super.child,
-  }) : super(update: (context, _) => _createProvider(create, context));
+  }) : super(create: (context) => _createProvider(create, context));
 }

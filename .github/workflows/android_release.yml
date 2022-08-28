@@ -29,8 +29,8 @@ jobs:
       - name: Statically analyze
         run: flutter analyze .
 
-      # - name: Passing tests
-      #   run: flutter test
+      - name: Run tests
+        run: flutter pub run melos run test
 
       - name: Building APK
         working-directory: ./todo_app

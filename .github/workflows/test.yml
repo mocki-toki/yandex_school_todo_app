@@ -25,5 +25,5 @@ jobs:
       - name: Statically analyze
         run: flutter analyze .
 
-      # - name: Run tests
-      #   run: flutter test
+      - name: Run tests
+        run: flutter pub run melos run test

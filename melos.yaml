@@ -8,8 +8,8 @@ packages:
 scripts:
   pub:get: "flutter pub run melos exec flutter pub get"
   pub:major: 'flutter pub run melos exec "flutter pub upgrade --major-versions"'
-
+  test: 'flutter pub run melos exec --dir-exists="test" "flutter test" && flutter pub run melos exec --dir-exists="integration_test" "flutter test" '
+  coverage: 'flutter pub run melos exec --dir-exists="test" "flutter test --coverage"'
   bootstrap: "pansy bootstrap && flutter pub run melos run pub:get"
-  generate: 'pansy bootstrap && flutter pub run melos exec --depend_on_packages build_runner "dart run build_runner build --delete-conflicting-outputs" && pansy bootstrap'
-
-  clean: "flutter pub run melos exec --depend_on_packages flutter flutter clean && flutter pub run melos exec rm pubspec.lock"
+  generate: 'pansy bootstrap && flutter pub run melos exec --depends-on build_runner "dart run build_runner build --delete-conflicting-outputs" && pansy bootstrap'
+  clean: "flutter pub run melos exec --depends-on flutter flutter clean && flutter pub run melos exec rm pubspec.lock"

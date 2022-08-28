@@ -57,8 +57,19 @@
       "problemMatcher": []
     },
     {
-      "label": "Analyze",
+      "label": "Run analyzer",
       "command": "flutter analyze . --no-pub",
+      "type": "shell",
+      "args": [],
+      "presentation": {
+        "reveal": "always"
+      },
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Run tests",
+      "command": "flutter pub run melos run test",
       "type": "shell",
       "args": [],
       "presentation": {

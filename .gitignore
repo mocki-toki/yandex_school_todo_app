@@ -30,7 +30,8 @@ migrate_working_dir/
 **/.packages
 **/.pub-cache/
 **/.pub/
-/todo_app/build/
+**/build/
+build/
 
 # Web related
 **/lib/generated_plugin_registrant.dart
@@ -45,6 +46,5 @@ migrate_working_dir/
 **/android/app/debug
 **/android/app/profile
 **/android/app/release
-ios/Flutter/Generated.xcconfig
-android/local.properties
-ios/Flutter/flutter_export_environment.sh
+android/
+ios/

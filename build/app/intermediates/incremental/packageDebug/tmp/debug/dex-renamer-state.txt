@@ -1,4 +1,0 @@
-#Mon Aug 22 00:37:57 MSK 2022
-base.0=/Users/nekokeyo/coding/Flutter/todo_app/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
-renamed.0=classes.dex
-path.0=classes.dex

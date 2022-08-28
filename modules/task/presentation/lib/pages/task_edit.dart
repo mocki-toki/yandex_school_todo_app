@@ -26,7 +26,7 @@ class TaskEditScreen extends StatelessWidget {
                   state.textController,
                   state.importance,
                   state.deadline,
-                  task: cachedTask,
+                  task: state.task,
                 );
               },
               newTask: (state) {

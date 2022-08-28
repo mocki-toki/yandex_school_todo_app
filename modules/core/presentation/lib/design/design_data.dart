@@ -22,4 +22,12 @@ class DesignData {
       designTextStyle: textStyle,
     ).themeData;
   }
+
+  DeviceFormFactor getDeviceFormFactorFromContext(BuildContext context) {
+    if (context.mediaQuery.size.width < 600) {
+      return DeviceFormFactor.phone;
+    } else {
+      return DeviceFormFactor.tablet;
+    }
+  }
 }

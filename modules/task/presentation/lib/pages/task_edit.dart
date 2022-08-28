@@ -61,6 +61,19 @@ class _TaskEditPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceFormFactor =
+        context.design.getDeviceFormFactorFromContext(context);
+
+    late final EdgeInsets listMargin;
+
+    if (deviceFormFactor == DeviceFormFactor.phone) {
+      listMargin = EdgeInsets.zero;
+    } else {
+      listMargin = deviceFormFactor.getPaddingForScrollView(context).copyWith(
+            top: EdgeInsetsConstants.expandedAppBarPadding.edgeInsets.top,
+          );
+    }
+
     return NestedScrollView(
       headerSliverBuilder: (_, __) => [
         SliverLayoutBuilder(
@@ -91,7 +104,7 @@ class _TaskEditPage extends StatelessWidget {
         ),
       ],
       body: ListView(
-        padding: EdgeInsets.zero,
+        padding: listMargin,
         children: [
           _Editor(textController: textController),
           _ImportanceSelector(
@@ -186,7 +199,7 @@ class _TaskEditPage extends StatelessWidget {
         initialDate: currentDeadline ?? DateTime.now(),
         firstDate: DateTime.now().subtract(const Duration(days: 100)),
         lastDate: DateTime.now().add(const Duration(days: 100)),
-      ); // TODO: диалог во всю ширину
+      );
 
       if (dateTime == null) return;
 

@@ -79,6 +79,19 @@ class _TaskListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final deviceFormFactor =
+        context.design.getDeviceFormFactorFromContext(context);
+
+    late final EdgeInsets listMargin;
+
+    if (deviceFormFactor == DeviceFormFactor.phone) {
+      listMargin = EdgeInsetsConstants.listCardMargin.edgeInsets;
+    } else {
+      listMargin = deviceFormFactor.getPaddingForScrollView(context).copyWith(
+            top: EdgeInsetsConstants.expandedAppBarPadding.edgeInsets.top,
+          );
+    }
+
     return CustomScrollView(
       slivers: [
         TaskListHeader(
@@ -89,7 +102,7 @@ class _TaskListPage extends StatelessWidget {
           syncState: syncState,
         ),
         SliverPadding(
-          padding: EdgeInsetsConstants.listCardMargin.edgeInsets,
+          padding: listMargin,
           sliver: SliverStack(
             children: <Widget>[
               SliverPositioned.fill(

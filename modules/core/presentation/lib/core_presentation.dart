@@ -10,6 +10,7 @@ export 'design/constants/edge_insets_constants.dart';
 export 'design/constants/duration_constants.dart';
 export 'design/constants/border_radius_constants.dart';
 export 'design/design_data.dart';
+export 'design/device.dart';
 export 'design/styles/text_theme.dart';
 export 'design/styles/palette.dart';
 export 'design/styles/styles.dart';

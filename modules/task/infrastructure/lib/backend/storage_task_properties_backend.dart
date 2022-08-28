@@ -1,6 +1,6 @@
 import 'package:task_infrastructure/task_infrastructure.dart';
 
-const _doneTasksVisiblityKey = 'done_tasks_visiblity';
+const doneTasksVisiblityKey = 'done_tasks_visiblity';
 
 class StorageTaskPropertiesBackend implements Initializable {
   @override
@@ -10,14 +10,14 @@ class StorageTaskPropertiesBackend implements Initializable {
     );
   }
 
-  bool get getDoneTasksVisiblity {
+  bool get doneTasksVisibility {
     final box = _taskListPropertiesBox();
-    return box.get(_doneTasksVisiblityKey) ?? true;
+    return box.get(doneTasksVisiblityKey) ?? true;
   }
 
   Future<void> setDoneTasksVisiblity(bool value) {
     final box = _taskListPropertiesBox();
-    return box.put(_doneTasksVisiblityKey, value);
+    return box.put(doneTasksVisiblityKey, value);
   }
 
   Box _taskListPropertiesBox() {

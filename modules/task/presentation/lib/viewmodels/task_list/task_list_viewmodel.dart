@@ -278,7 +278,7 @@ class TaskListViewModel extends Cubit<TaskListState> {
   }
 
   void restoreVisibleDoneTasksState() {
-    final doneTasksVisibility = _taskPropertiesRepository.getDoneTasksVisiblity;
+    final doneTasksVisibility = _taskPropertiesRepository.doneTasksVisiblity;
     emit(state.copyWith(visibleDoneTasks: doneTasksVisibility));
   }
 

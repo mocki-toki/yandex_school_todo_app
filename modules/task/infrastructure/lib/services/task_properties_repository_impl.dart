@@ -6,7 +6,7 @@ class TaskPropertiesRepositoryImpl extends TaskPropertiesRepository {
   final StorageTaskPropertiesBackend _storage;
 
   @override
-  bool get getDoneTasksVisiblity => _storage.getDoneTasksVisiblity;
+  bool get doneTasksVisiblity => _storage.doneTasksVisibility;
 
   @override
   Future<void> setDoneTasksVisiblity(bool isVisible) {

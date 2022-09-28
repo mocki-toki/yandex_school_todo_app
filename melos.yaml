@@ -1,0 +1,16 @@
+name: todo_app_monorepo
+
+packages:
+  - modules/**
+  - todo_app
+  - .
+
+scripts:
+  pub:get: "flutter pub run melos exec flutter pub get"
+  pub:major: 'flutter pub run melos exec "flutter pub upgrade --major-versions"'
+  test: 'flutter pub run melos exec --dir-exists="test" "flutter test --dart-define=environment=testing" '
+  integration_test: 'flutter pub run melos exec --dir-exists="integration_test" "flutter test integration_test --dart-define=environment=testing" '
+  coverage: 'flutter pub run melos exec --dir-exists="test" "flutter test --coverage"'
+  bootstrap: "pansy bootstrap && flutter pub run melos run pub:get"
+  generate: 'pansy bootstrap && flutter pub run melos exec --depends-on build_runner "dart run build_runner build --delete-conflicting-outputs" && pansy bootstrap'
+  clean: "flutter pub run melos exec --depends-on flutter flutter clean && flutter pub run melos exec rm pubspec.lock"

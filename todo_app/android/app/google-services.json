@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "519372495804",
+    "project_id": "yandex-school-todo-app",
+    "storage_bucket": "yandex-school-todo-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:519372495804:android:1672ff996e47351665a9b9",
+        "android_client_info": {
+          "package_name": "com.example.todo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "519372495804-j0c2bo8shia2mifgr6242gpp2n8753ul.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC0_OzJGh0q5UJZXW6YoVdzz7hCt0XPIAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "519372495804-j0c2bo8shia2mifgr6242gpp2n8753ul.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "519372495804-21rdg9qdpbenaa81hhprirvgifnaij23.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.todoApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,5 @@
+# GENERATED CODE - DO NOT MODIFY BY HAND. RUN "pansy bootstrap" FOR UPDATE
+
+dependency_overrides:
+  core_domain:
+    path: ../../core/domain

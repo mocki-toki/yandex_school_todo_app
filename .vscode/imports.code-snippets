@@ -1,0 +1,49 @@
+{
+  "app-domain": {
+    "scope": "dart",
+    "prefix": "app-domain",
+    "body": ["import 'package:app_domain/app_domain.dart';"]
+  },
+  "app-infrastructure": {
+    "scope": "dart",
+    "prefix": "app-infrastructure",
+    "body": ["import 'package:app_infrastructure/app_infrastructure.dart';"]
+  },
+  "app-presentation": {
+    "scope": "dart",
+    "prefix": "app-presentation",
+    "body": ["import 'package:app_presentation/app_presentation.dart';"]
+  },
+
+  "core-domain": {
+    "scope": "dart",
+    "prefix": "core-domain",
+    "body": ["import 'package:core_domain/core_domain.dart';"]
+  },
+  "core-infrastructure": {
+    "scope": "dart",
+    "prefix": "core-infrastructure",
+    "body": ["import 'package:core_infrastructure/core_infrastructure.dart';"]
+  },
+  "core-presentation": {
+    "scope": "dart",
+    "prefix": "core-presentation",
+    "body": ["import 'package:core_presentation/core_presentation.dart';"]
+  },
+
+  "task-domain": {
+    "scope": "dart",
+    "prefix": "task-domain",
+    "body": ["import 'package:task_domain/task_domain.dart';"]
+  },
+  "task-infrastructure": {
+    "scope": "dart",
+    "prefix": "task-infrastructure",
+    "body": ["import 'package:task_infrastructure/task_infrastructure.dart';"]
+  },
+  "task-presentation": {
+    "scope": "dart",
+    "prefix": "task-presentation",
+    "body": ["import 'package:task_presentation/task_presentation.dart';"]
+  }
+}

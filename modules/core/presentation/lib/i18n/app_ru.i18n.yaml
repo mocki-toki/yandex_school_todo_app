@@ -1,0 +1,21 @@
+myTasks: "Мои дела"
+tasksCompleted(int count): "Выполнено — $count"
+newTask: "Новое"
+
+saveTask: "Сохранить"
+taskEditHint: "Что надо сделать..."
+taskImportance: "Важность"
+taskDeadline: "Сделать до"
+taskDelete: "Удалить"
+
+none: "Нет"
+low: "Низкий"
+high: "Высокий"
+
+notFoundText: "Найдётся всё. Со временем"
+errorText: "Произошла ошибка"
+errorCodeText(String code): "Код ошибки:\n$code"
+
+taskCompleted: "Задача помечена как выполненная"
+taskAdded: "Задача добавлена"
+taskRemoved: "Задача удалена"

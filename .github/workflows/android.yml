@@ -1,0 +1,50 @@
+name: android
+
+on:
+  - push
+
+jobs:
+  build:
+    name: Build and uploading artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: "12.x"
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Get dependencies in workspace directory
+        run: flutter pub get
+
+      - name: Get dependencies in other packages directory
+        run: flutter pub run melos run pub:get
+
+      - name: Check code format
+        run: find . -name "*.dart" ! -name "firebase_options.dart" ! -name "*.g.dart" ! -name "*.freezed.dart" ! -name "*.i18n.dart" | tr '\n' ' ' | xargs flutter format --set-exit-if-changed
+
+      - name: Statically analyze
+        run: flutter analyze .
+
+      - name: Run tests
+        run: flutter pub run melos run test
+
+      - name: Building APK
+        working-directory: ./todo_app
+        run: flutter build apk --release --bundle-sksl-path android.sksl.json
+
+      # - name: Uploading artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app
+      #     path: todo_app/build/app/outputs/apk/release/app-release.apk
+
+      - name: Uploading artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+        with:
+          appId: ${{secrets.FIREBASE_ANDROID_APPID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: todo_app/build/app/outputs/apk/release/app-release.apk
